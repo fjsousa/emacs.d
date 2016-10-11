@@ -1,0 +1,47 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/Users/" . "fsousa/")
+ ("/Users/fsousa/src/conde-nast/" . "style.com/")
+ ("/Users/fsousa/src/" . "conde-nast/")
+ ("/Users/fsousa/.emacs.d/" . "customizations/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/Users/fsousa/src/conde-nast/style.com/"
+ "/Users/fsousa/.emacs.d/"
+ "/Users/fsousa/notes/"
+ "/Users/fsousa/.emacs.d/customizations/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "project.clj"
+ "init.el"
+ "lack-female-missianic-figures.md"
+ "ui.el"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/Users/fsousa/src/conde-nast/style.com/" (22523 53074 0 0) "test/" "target/" "style.iml" "style.com.iml" "src/" "setup.sh" "run-server.sh" "resources/" "README.md" "project.clj" "package.json" "node_modules/" "Makefile" "Jenkinsfile" "gulpfile.js" "figwheel_server.log" "env/" "docs/" "Dockerfile" "dev-resources/" "dev/" "checkouts/" ".lein-repl-history" ".idea/" ".gitignore" ".git/" ".e2e-test/" ".DS_Store" "../" "./")
+
+ ("/Users/fsousa/" (22524 45603 0 0) "VirtualBox VMs/" "src/" "SpiderOak Hive/" "Public/" "projects/" "Pictures/" "npm-debug.log" "notes/" "Music/" "Movies/" "license-bkup/" "Library/" "Downloads/" "Documents/" "Desktop/" "Applications/" "algs4/" "algorithms/" ".zshrc" ".zlogin" ".wireshark/" ".wget-hsts" ".WebStorm10/" ".vimrc" ".viminfo.tmp" ".viminfo" ".vim/" ".vault-token" ".vault-github-token" ".v8flags.4.5.103.35.fsousa.json" ".v8flags.3.28.73.fsousa.json" ".v8flags.3.14.5.9.fsousa.json" ".Trash/" ".terraform.d/" ".subversion/" ".stack/" ".ssh/" ".spyder2/" ".rvm/" ".rnd" ".python-eggs/" ".oracle_jre_usage/" ".openvpn-connect.json" ".nvm/" ".npm/" ".node_repl_history" ".node_history" ".node-gyp/" ".netrc" ".mongorc.js" ".mkshrc" ".md/" ".m2/" ".local/" ".lobo/" ".lesshst" ".lein_history" ".lein/" ".jspm/" ".iStats/" ".irb-history" ".IntelliJIdea15/" ".inputrc" ".htoprc" ".hgignore_global" ".heroku/" ".gradle/" ".gitignore_global" ".gitconfig" ".git-completion.sh" ".gem/" ".erlang.cookie" ".emacs.d/" ".DS_Store" ".drjava" ".docker/" ".dbshell" ".datadog-agent/" ".cups/" ".config/" ".chromedriver-helper/" ".CFUserTextEncoding" ".cache/" ".boot2docker/" ".boot/" ".bashrc" ".bash_sessions/" ".bash_profile" ".bash_history" ".bash_aliases" ".babel.json" ".aws/" ".android/" ".account" "../" "./")
+
+ ("/Users/fsousa/.emacs.d/" (22522 29391 0 0) "themes/" "README.md" "projectile-bookmarks.eld" "places" "init.el" "ido.last" "elpa/" "customizations/" "backups/" "auto-save-list/" ".smex-items" ".recentf" ".gitignore" ".git/" "../" "./")
+
+ ("/Users/fsousa/notes/" (22391 63906 0 0) "work/" "melhordazona.md" "lack-female-missianic-figures.md" "bitcoin.md" ".gitignore" ".git/" ".DS_Store" "../" "./")
+
+ ("/Users/" (22194 8002 0 0) "Shared/" "fsousa/" "casper/" "backups/" "admin/" ".localized" "../" "./")
+
+ ("/Users/fsousa/src/conde-nast/" (22488 5888 0 0) "style.com-shared/" "style.com/" "poseidon/" "mock-operator/" "metrics-collector/" "kong-config/" "feed-processor/" "consul-config/" "cn-product/" "cn-ingester/" "cn-fashion-manager/" "cn-e2e-test/" "cn-deploy/" "cn-catalog/" "bellboy/" "beetlejuice/" "barrier-page/" ".idea/" ".DS_Store" "../" "./")
+
+ ("/Users/fsousa/src/" (22498 19842 0 0) "zuperito/" "webrtc/" "translation/" "security/" "poisson-solver/" "poisson/" "pixels_camp_2016_talks/" "openresty-image/" "node-request-retry/" "nginx-barrier-page/" "mywebsite/" "muzzley/" "jq/" "go-test/" "emacs-for-clojure/" "dot-files/" "datajournal/" "cuda-fgm/" "conde-nast/" "boot-test/" "best-in-the-zone/" "bash_scripts/" "async-proj/" ".idea/" ".DS_Store" "../" "./")
+
+ ("/Users/fsousa/.emacs.d/customizations/" (22498 19849 0 0) "ui.el" "shell-integration.el" "setup-js.el" "setup-clojure.el" "navigation.el" "misc.el" "elisp-editing.el" "editing.el" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

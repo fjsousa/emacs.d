@@ -1,0 +1,6 @@
+|----------|------------|
+| C-x b    | New buffer |
+| C-g      | Quit all the things |
+| C-x C-f  | File Open |
+| C-x C-s  | File Save |
+|
