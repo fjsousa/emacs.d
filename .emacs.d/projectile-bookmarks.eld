@@ -1,1 +1,0 @@
-("~/src/mackup/" "~/src/conde-nast/style.com/" "~/src/emacs-for-clojure/" "~/emacs-test/" "~/notes/")
