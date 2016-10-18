@@ -10,3 +10,8 @@
 
 ;; Go straight to scratch buffer on startup
 (setq inhibit-startup-message t)
+
+;; dired listing options
+(setq insert-directory-program "/usr/local/bin/gls")
+(setq dired-listing-switches "--color -alh --group-directories-first")
+
