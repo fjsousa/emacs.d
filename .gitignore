@@ -7,3 +7,4 @@
 .emacs.d/.recentf
 *.swp
 .emacs.d/elpa/archives/*
+.emacs.d/eshell/
