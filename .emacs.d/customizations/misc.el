@@ -15,3 +15,5 @@
 (setq insert-directory-program "/usr/local/bin/gls")
 (setq dired-listing-switches "--color -alh --group-directories-first")
 
+;; Allow hash to be entered  
+(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
