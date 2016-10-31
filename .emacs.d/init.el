@@ -139,7 +139,7 @@
  '(markdown-preview-style "/Users/fsousa/src/github-markdown-css/github-markdown.css")
  '(package-selected-packages
    (quote
-    (markdown-preview-mode markdown-mode direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking cider)))
+    (cider cider-eval-sexp-fu list-packages-ext markdown-preview-mode markdown-mode direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking)))
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
