@@ -9,3 +9,4 @@
 .emacs.d/elpa/archives/*
 .emacs.d/eshell/
 .emacs.d/bookmarks
+.emacs.d/places
