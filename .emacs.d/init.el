@@ -66,7 +66,11 @@
     tagedit
 
     ;; git integration
-    magit))
+    magit
+
+    ;; clj-refactor https://github.com/clojure-emacs/clj-refactor.el
+    clj-refactor
+    ))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -135,6 +139,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cider-prompt-for-symbol t)
  '(coffee-tab-width 2)
  '(markdown-preview-style "/Users/fsousa/src/github-markdown-css/github-markdown.css")
  '(package-selected-packages
@@ -147,3 +152,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'erase-buffer 'disabled nil)

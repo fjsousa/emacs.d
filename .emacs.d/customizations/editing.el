@@ -52,7 +52,7 @@
 (global-set-key (kbd "C-;") 'toggle-comment-on-line)
 
 ;; yay rainbows!
-(global-rainbow-delimiters-mode t)
+(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 
 ;; use 2 spaces for tabs
 (defun die-tabs ()
@@ -78,3 +78,5 @@
 (setq auto-mode-alist (cons '("\\.mdown$" . gfm-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.mdt$" . gfm-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.markdown$" . gfm-mode) auto-mode-alist))
+
+(global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
