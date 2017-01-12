@@ -70,6 +70,9 @@
 
     ;; clj-refactor https://github.com/clojure-emacs/clj-refactor.el
     clj-refactor
+
+    ;; github open browser tab in current file and stuff
+    github-browse-file
     ))
 
 ;; On OS X, an Emacs instance started from the graphical user
@@ -141,6 +144,7 @@
  ;; If there is more than one, they won't work right.
  '(cider-prompt-for-symbol t)
  '(coffee-tab-width 2)
+ '(github-browse-file-show-line-at-point t)
  '(markdown-preview-style "/Users/fsousa/src/github-markdown-css/github-markdown.css")
  '(package-selected-packages
    (quote
