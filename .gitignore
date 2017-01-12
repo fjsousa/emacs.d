@@ -12,3 +12,4 @@
 .emacs.d/places
 .emacs.d/elpa
 .emacs.d/network-security.data
+.emacs.d/ac-comphist.dat
