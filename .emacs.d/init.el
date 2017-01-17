@@ -73,6 +73,9 @@
 
     ;; github open browser tab in current file and stuff
     github-browse-file
+
+    ;; helm - incremental completion and selection
+    helm
     ))
 
 ;; On OS X, an Emacs instance started from the graphical user
@@ -145,10 +148,12 @@
  '(cider-prompt-for-symbol t)
  '(coffee-tab-width 2)
  '(github-browse-file-show-line-at-point t)
+ '(github-browse-file-visit-url nil)
  '(markdown-preview-style "/Users/fsousa/src/github-markdown-css/github-markdown.css")
  '(package-selected-packages
    (quote
-    (cider cider-eval-sexp-fu list-packages-ext markdown-preview-mode markdown-mode direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking)))
+    (helm cider cider-eval-sexp-fu list-packages-ext markdown-preview-mode markdown-mode direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking)))
+ '(show-trailing-whitespace t)
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
