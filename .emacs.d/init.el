@@ -145,6 +145,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector [default bold shadow bold underline bold bold-italic bold])
  '(cider-prompt-for-symbol t)
  '(coffee-tab-width 2)
  '(github-browse-file-show-line-at-point t)
@@ -152,7 +153,7 @@
  '(markdown-preview-style "/Users/fsousa/src/github-markdown-css/github-markdown.css")
  '(package-selected-packages
    (quote
-    (helm cider cider-eval-sexp-fu list-packages-ext markdown-preview-mode markdown-mode direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking)))
+    (multiple-cursors helm cider cider-eval-sexp-fu list-packages-ext markdown-preview-mode markdown-mode direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking)))
  '(show-trailing-whitespace t)
  '(winner-mode t))
 (custom-set-faces

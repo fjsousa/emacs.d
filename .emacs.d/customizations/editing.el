@@ -80,3 +80,10 @@
 (setq auto-mode-alist (cons '("\\.markdown$" . gfm-mode) auto-mode-alist))
 
 (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
+
+
+;; multiple cursors
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C-.") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-,") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)
