@@ -48,6 +48,13 @@
 ;; enable paredit in your REPL
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
 
+;;autocomplete hooks
+(add-hook 'cider-repl-mode-hook #'company-mode)
+(add-hook 'cider-mode-hook #'company-mode)
+
+;; To make TAB complete, without losing the ability to manually indent, you can add this:
+(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+
 ;; Use clojure mode for other extensions
 (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
@@ -81,5 +88,5 @@
      (define-key clojure-mode-map (kbd "C-c u") 'cider-user-ns)
      (define-key cider-mode-map (kbd "C-c u") 'cider-user-ns)))
 
-;; setting cider output line to 100 char so that it doesn't break feezes the repl
+;; setting cider output line to 100 char so that it doesn't break the repl
 (setq cider-repl-print-length 100)

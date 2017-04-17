@@ -2,7 +2,7 @@
 
 ;; Key binding to use "hippie expand" for text autocompletion
 ;; http://www.emacswiki.org/emacs/HippieExpand
-(global-set-key (kbd "M-/") 'hippie-expand)
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
 
 ;; Lisp-friendly hippie expand
 (setq hippie-expand-try-functions-list
@@ -43,7 +43,6 @@
                                                "backups"))))
 (setq auto-save-default nil)
 
-
 ;; comments
 (defun toggle-comment-on-line ()
   "comment or uncomment current line"
@@ -69,7 +68,8 @@
       (ns-get-selection-internal 'CLIPBOARD)
     (quit nil)))
 
-(setq electric-indent-mode nil)
+;; commenting this so that RET works as fucking intended.
+;;(setq electric-indent-mode nil)
 
 ;;; Markdown mode
 (autoload 'gfm-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
@@ -80,7 +80,6 @@
 (setq auto-mode-alist (cons '("\\.markdown$" . gfm-mode) auto-mode-alist))
 
 (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
-
 
 ;; multiple cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)

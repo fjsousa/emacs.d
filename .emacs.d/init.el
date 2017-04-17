@@ -153,7 +153,8 @@
  '(markdown-preview-style "/Users/fsousa/src/github-markdown-css/github-markdown.css")
  '(package-selected-packages
    (quote
-    (multiple-cursors helm cider cider-eval-sexp-fu list-packages-ext markdown-preview-mode markdown-mode direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking)))
+    (github-browse-file clj-refactor company multiple-cursors helm cider cider-eval-sexp-fu list-packages-ext markdown-preview-mode markdown-mode direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking)))
+ '(show-paren-style (quote expression))
  '(show-trailing-whitespace t)
  '(winner-mode t))
 (custom-set-faces
