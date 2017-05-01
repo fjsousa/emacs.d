@@ -18,3 +18,4 @@
 .emacs.d/ido.last~
 .emacs.d/url/cookies
 .DS_Store
+.emacs.d/tramp
