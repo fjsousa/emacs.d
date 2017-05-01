@@ -23,3 +23,6 @@
 (setq ispell-program-name "aspell")
 ;;(setq ispell-personal-dictionary "C:/path/to/your/.ispell")
 (require 'ispell)
+
+;; magit
+(global-set-key (kbd "C-x g") 'magit-status)
