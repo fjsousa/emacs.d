@@ -90,3 +90,9 @@
 
 ;; setting cider output line to 100 char so that it doesn't break the repl
 (setq cider-repl-print-length 100)
+
+;;
+;; Sayid
+;;
+;; loads key bindings for clojure major mode
+(eval-after-load 'clojure-mode '(sayid-setup-package))

@@ -76,6 +76,12 @@
 
     ;; helm - incremental completion and selection
     helm
+
+    ;;Markdown
+    markdown-mode
+
+    ;;Omniscient debugger
+    sayid
     ))
 
 ;; On OS X, an Emacs instance started from the graphical user
