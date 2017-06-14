@@ -82,6 +82,9 @@
 
     ;;Omniscient debugger
     sayid
+
+    ;;json validator etc (jsonlint)
+    flymake-json
     ))
 
 ;; On OS X, an Emacs instance started from the graphical user
