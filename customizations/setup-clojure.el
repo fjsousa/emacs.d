@@ -88,6 +88,20 @@
      (define-key clojure-mode-map (kbd "C-c u") 'cider-user-ns)
      (define-key cider-mode-map (kbd "C-c u") 'cider-user-ns)))
 
+;;auto reload namespaces with tools.refresh after a cider buffer gets saved
+(add-hook 'cider-mode-hook
+          '(lambda () (add-hook 'after-save-hook
+                                '(lambda ()
+                                   (if (and (boundp 'cider-mode) cider-mode)
+                                       (cider-namespace-refresh)
+                                     )))))
+
+(defun cider-namespace-refresh ()
+  (interactive)
+  (cider-interactive-eval
+   "(require 'clojure.tools.namespace.repl)
+  (clojure.tools.namespace.repl/refresh)"))
+
 ;; setting cider output line to 100 char so that it doesn't break the repl
 (setq cider-repl-print-length 100)
 
