@@ -4,3 +4,5 @@
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-envs
    '("PATH")))
+
+(add-hook 'shell-mode-hook (lambda () (setq show-trailing-whitespace nil)))
