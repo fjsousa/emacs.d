@@ -61,7 +61,8 @@
 (add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode))
 
-
+;;doesn't highlight trailing whitespace
+(add-hook 'cider-repl-mode-hook (lambda () (setq show-trailing-whitespace nil)))
 ;; key bindings
 ;; these help me out with the way I usually develop web apps
 (defun cider-start-http-server ()
