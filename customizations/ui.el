@@ -15,7 +15,7 @@
 ;; (when (fboundp 'tool-bar-mode)
 ;;   (tool-bar-mode -1))
 
-;; Don't show native OS scroll bars for buffers because they're redundant
+;; Don't show native OS scroll bars for buffers because they're Redundant
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
@@ -29,7 +29,7 @@
 (load-theme 'tomorrow-night-bright t)
 
 ;; increase font size for better readability
-(set-face-attribute 'default nil :height 100)
+(set-face-attribute 'default nil :height 120)
 
 ;; Uncomment the lines below by removing semicolons and play with the
 ;; values in order to set the width (in characters wide) and height
