@@ -23,7 +23,17 @@
                ("(\\(background?\\)"
                 (1 font-lock-keyword-face))))
             (define-clojure-indent (fact 1))
-            (define-clojure-indent (facts 1))))
+            (define-clojure-indent (facts 1))
+            (define-clojure-indent
+              (context 1)
+              (describe 1)
+              (it 1)
+              (with-redefs 1)
+              (with 1)
+              (around 1)
+              (before 1)
+              (fdef 1)
+              (try 1))))
 
 ;;;;
 ;; Cider
