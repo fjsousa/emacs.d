@@ -13,7 +13,7 @@
 
 ;; dired listing options
 (setq insert-directory-program "/usr/local/bin/gls")
-(setq dired-listing-switches "--color -alh --group-directories-first")
+(setq dired-listing-switches "-aBhl --group-directories-first")
 
 ;; Allow hash to be entered
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
@@ -26,3 +26,6 @@
 
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
+
+;;helm
+(global-set-key (kbd "C-x C-h") 'helm-for-files)
