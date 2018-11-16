@@ -1,5 +1,9 @@
 ;; riped off from
 ;; https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html
+(require 'js2-mode)
+(require 'js2-refactor)
+(require 'xref-js2)
+
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 ;; Better imenu
