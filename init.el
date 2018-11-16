@@ -79,6 +79,12 @@
 
     ;;json validator etc (jsonlint)
     flymake-json
+
+    ;;better javascript mode, refactoring tools, jump to defs, etc
+    js2-mode
+    js2-refactor
+    xref-js2
+    ag;; xref-js2 uses ag in the backend
     ))
 
 ;; On OS X, an Emacs instance started from the graphical user
@@ -95,7 +101,6 @@
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
-
 
 ;; Place downloaded elisp files in ~/.emacs.d/vendor. You'll then be able
 ;; to load them.
@@ -143,6 +148,8 @@
 ;; Langauage-specific
 (load "setup-clojure.el")
 (load "setup-js.el")
+(load "javascript.el")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -156,7 +163,7 @@
  '(markdown-preview-style "/Users/fsousa/src/github-markdown-css/github-markdown.css")
  '(package-selected-packages
    (quote
-    (restclient nyan-mode stylus-mode lua-mode jade-mode jade github-browse-file clj-refactor company multiple-cursors helm cider cider-eval-sexp-fu list-packages-ext direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking)))
+    (yaml-mode command-log-mode restclient nyan-mode stylus-mode lua-mode jade-mode jade github-browse-file clj-refactor company multiple-cursors helm cider cider-eval-sexp-fu list-packages-ext direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking)))
  '(show-paren-style (quote expression))
  '(show-trailing-whitespace t)
  '(winner-mode t))
