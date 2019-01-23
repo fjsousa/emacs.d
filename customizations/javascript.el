@@ -9,6 +9,9 @@
 ;; Better imenu
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 
+;; highlight trailing white spaces. Any non nil value is fine
+(add-hook 'js2-mode-hook (lambda () (setq show-trailing-whitespace "true")))
+
 (add-hook 'js2-mode-hook #'js2-refactor-mode)
 (js2r-add-keybindings-with-prefix "C-c C-r")
 (define-key js2-mode-map (kbd "C-k") #'js2r-kill)
