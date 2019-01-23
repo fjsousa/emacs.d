@@ -29,3 +29,17 @@
 
 ;;helm
 (global-set-key (kbd "C-x C-h") 'helm-for-files)
+
+
+;;org mode - should be moved to a seperate file or something
+
+(defun org-line-wrap ()
+            ;; explodes all items
+            (set-fill-column 100))
+(add-hook 'org-mode-hook 'org-line-wrap)
+(add-hook 'org-mode-hook 'visual-line-mode)
+(add-hook 'org-mode-hook 'visual-fill-column-mode)
+(add-hook 'org-mode-hook 'org-show-block-all)
+
+
+
