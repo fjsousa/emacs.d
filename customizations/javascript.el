@@ -20,3 +20,7 @@
 
 (add-hook 'js2-mode-hook (lambda ()
                            (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
+
+;; redefining the ignored dirs list to exclude "lib" as it was causing
+;; issues with some of the repos
+(setq xref-js2-ignored-dirs '("bower_components" "node_modules" "build"))
