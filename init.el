@@ -45,6 +45,7 @@
     ;; integration with a Clojure REPL
     ;; https://github.com/clojure-emacs/cider
     cider
+    cider-eval-sexp-fu
 
     ;; allow ido usage in as many contexts as possible. see
     ;; customizations/navigation.el line 23 for a description
@@ -176,14 +177,11 @@
  '(ansi-color-faces-vector [default bold shadow bold underline bold bold-italic bold])
  '(cider-prompt-for-symbol t)
  '(coffee-tab-width 2)
- '(github-browse-file-show-line-at-point t)
- '(github-browse-file-visit-url nil)
- '(markdown-preview-style "/Users/fsousa/src/github-markdown-css/github-markdown.css")
  '(package-selected-packages
    (quote
-    (yaml-mode command-log-mode restclient nyan-mode stylus-mode lua-mode jade-mode jade github-browse-file clj-refactor company multiple-cursors helm cider cider-eval-sexp-fu list-packages-ext direx tagedit smex rainbow-delimiters projectile paredit magit ido-ubiquitous exec-path-from-shell clojure-mode-extra-font-locking)))
+    (logview buffer-move yaml-mode command-log-mode restclient stylus-mode lua-mode jade-mode jade company multiple-cursors list-packages-ext direx tagedit smex)))
+ '(show-paren-mode t)
  '(show-paren-style (quote expression))
- '(show-trailing-whitespace t)
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -192,3 +190,9 @@
  ;; If there is more than one, they won't work right.
  )
 (put 'erase-buffer 'disabled nil)
+
+(seconds-to-time 1507456691120)
+
+(format-time-string "<%Y-%m-%d %a %H:%M:%S>" (seconds-to-time (/ 1507456691120 1000)))
+
+(current-time-zone)
