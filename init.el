@@ -85,13 +85,21 @@
 
     ;;json validator etc (jsonlint)
     flymake-json
+    json-mode
+    json-navigator
 
     ;;better javascript mode, refactoring tools, jump to defs, etc
+    indium ; repl
     js2-mode
     js2-refactor
     xref-js2
     ag;; xref-js2 uses ag in the backend
-    ))
+    mocha;; mocha tests with integration
+
+    ;;minor mode colum wrap for visual line mode
+    ;;(instead of having visual line wrapping around the edge of the buffer)
+    visual-fill-column
+   ))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
