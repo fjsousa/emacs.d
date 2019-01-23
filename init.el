@@ -72,7 +72,7 @@
     clj-refactor
 
     ;; github open browser tab in current file and stuff
-    github-browse-file
+    git-link
 
     ;; helm - incremental completion and selection
     helm
