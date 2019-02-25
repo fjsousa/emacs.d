@@ -10,4 +10,8 @@
 
 ;; '(markdown-preview-style "/Users/fsousa/src/github-markdown-css/github-markdown.css")
 
-
+(add-hook 'markdown-mode-hook '(lambda () (set-fill-column 100)))
+(add-hook 'markdown-mode-hook 'visual-line-mode)
+;wrap lines acording to fill-column
+(add-hook 'markdown-mode-hook 'visual-fill-column-mode)
+(add-hook 'markdown-mode-hook 'org-show-block-all)
