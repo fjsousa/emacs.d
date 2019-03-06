@@ -5,6 +5,8 @@
 ;; Define package repositories
 (require 'package)
 
+;; what's up with the three repos:
+;; https://emacs.stackexchange.com/questions/10500/do-i-still-need-gnu-elpa-if-i-have-melpa/10501#10501
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
@@ -100,6 +102,11 @@
     ;;minor mode colum wrap for visual line mode
     ;;(instead of having visual line wrapping around the edge of the buffer)
     visual-fill-column
+
+    ;;ruby
+    feature-mode  ;Emacs mode for editing Cucumber plain text stories.
+    enh-ruby-mode ;Enhanced Ruby Mode replaces the emacs ruby mode that comes with ruby
+    robe
    ))
 
 ;; On OS X, an Emacs instance started from the graphical user
@@ -168,31 +175,19 @@
 ;;markdown
 (load "markdown.el")
 
+(load "ruby.el")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector [default bold shadow bold underline bold bold-italic bold])
- '(cider-prompt-for-symbol t)
- '(coffee-tab-width 2)
- '(package-selected-packages
-   (quote
-    (logview buffer-move yaml-mode command-log-mode restclient stylus-mode lua-mode jade-mode jade company multiple-cursors list-packages-ext direx tagedit smex)))
- '(show-paren-mode t)
- '(show-paren-style (quote expression))
- '(winner-mode t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; save emacs custumizations to a separate file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+   (when (file-exists-p custom-file)
+       (load custom-file))
+
+;; set cider-jack-in custom profile:
+(set-variable 'cider-lein-parameters "with-profile +mirrors repl")
+
 (put 'erase-buffer 'disabled nil)
 
-(seconds-to-time 1507456691120)
-
+;; need to move to some function soon
 (format-time-string "<%Y-%m-%d %a %H:%M:%S>" (seconds-to-time (/ 1507456691120 1000)))
 
 (current-time-zone)
