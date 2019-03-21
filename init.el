@@ -43,10 +43,6 @@
     cider
     cider-eval-sexp-fu
 
-    ;; find files anywhere
-    ;; https://github.com/technomancy/find-file-in-project
-    find-file-in-project
-
     ;; allow ido usage in as many contexts as possible. see
     ;; customizations/navigation.el line 23 for a description
     ;; of ido
