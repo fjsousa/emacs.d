@@ -107,6 +107,9 @@
     feature-mode  ;Emacs mode for editing Cucumber plain text stories.
     enh-ruby-mode ;Enhanced Ruby Mode replaces the emacs ruby mode that comes with ruby
     robe
+
+    ;; misc
+    use-package
    ))
 
 ;; On OS X, an Emacs instance started from the graphical user

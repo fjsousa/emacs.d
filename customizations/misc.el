@@ -36,5 +36,9 @@
 (add-hook 'org-mode-hook 'visual-fill-column-mode)
 (add-hook 'org-mode-hook 'org-show-block-all)
 
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode))
 
 
