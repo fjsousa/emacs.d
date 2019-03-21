@@ -34,3 +34,33 @@
 
 
 #+END_SRC
+
+* Navigation
+
+** IDO
+
+*** Ido Vertical
+#+BEGIN_SRC emacs-lisp
+  (use-package ido-vertical-mode
+    :ensure t
+    :init
+    (ido-vertical-mode 1))
+
+  (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+#+END_SRC
+
+*** Smex
+Enhances M-x to allow easier execution of commands. Provides
+a filterable list of possible commands in the minibuffer
+http://www.emacswiki.org/emacs/Smex
+
+#+BEGIN_SRC emacs-lisp
+  (use-package smex
+    :ensure t
+    :init (smex-initialize)
+    :bind ;; binds keys after it initializes
+    ("M-x" . smex))
+
+  (setq smex-save-file (concat user-emacs-directory ".smex-items"))
+#+END_SRC
+

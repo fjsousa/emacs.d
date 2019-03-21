@@ -12,3 +12,18 @@
 (add-hook 'org-mode-hook 'visual-line-mode)
 (add-hook 'org-mode-hook 'visual-fill-column-mode)
 (add-hook 'org-mode-hook 'org-show-block-all)
+
+(use-package ido-vertical-mode
+  :ensure t
+  :init
+  (ido-vertical-mode 1))
+
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
+
+(use-package smex
+  :ensure t
+  :init (smex-initialize)
+  :bind ;; binds keys after it initializes
+  ("M-x" . smex))
+
+(setq smex-save-file (concat user-emacs-directory ".smex-items"))

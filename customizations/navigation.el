@@ -26,13 +26,17 @@
 ;; name, ido will narrow down the list of buffers to match the text
 ;; you've typed in
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
-(ido-mode t)
+(setq ido-everywhere t)
+(ido-mode 1)
+
+;; Don't ask for permission. Other choices are prompt and never.
+(setq ido-create-new-buffer 'always)
 
 ;; This allows partial matches, e.g. "tl" will match "Tyrion Lannister"
 (setq ido-enable-flex-matching t)
 
 ;; Turn this behavior off because it's annoying
-(setq ido-use-filename-at-point nil)
+(setq ido-use-filename-at-point 'guess)
 
 ;; Don't try to match file across all "work" directories; only match files
 ;; in the current directory displayed in the minibuffer
@@ -49,13 +53,13 @@
 ;; Shows a list of buffers
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; Fix
+;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
+(defvar ido-cur-item nil)
+(defvar ido-default-item nil)
+(defvar ido-cur-list nil)
 
-;; Enhances M-x to allow easier execution of commands. Provides
-;; a filterable list of possible commands in the minibuffer
-;; http://www.emacswiki.org/emacs/Smex
-(setq smex-save-file (concat user-emacs-directory ".smex-items"))
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
+
 
 ;; projectile everywhere!
 (projectile-global-mode)
