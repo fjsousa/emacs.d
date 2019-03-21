@@ -27,10 +27,6 @@
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;;helm
-(global-set-key (kbd "C-x C-h") 'helm-for-files)
-
-
 ;;org mode - should be moved to a seperate file or something
 
 (defun org-line-wrap ()

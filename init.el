@@ -78,7 +78,7 @@
     git-link
 
     ;; helm - incremental completion and selection
-    helm
+    ;;helm
 
     ;;Markdown
     markdown-mode

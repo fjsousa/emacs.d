@@ -70,4 +70,11 @@
 (global-set-key (kbd "M-i") 'imenu)
 
 ;; helm configuration
-(require 'helm-config)
+;;(require 'helm-config)
+;;(global-set-key (kbd "C-x C-h") 'helm-for-files)
+
+
+
+
+
+
