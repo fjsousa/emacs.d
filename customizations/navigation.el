@@ -61,8 +61,7 @@
 
 
 
-;; projectile everywhere!
-(projectile-global-mode)
+
 
 ;; Directional window selection
 (windmove-default-keybindings)

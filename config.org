@@ -64,6 +64,20 @@ http://www.emacswiki.org/emacs/Smex
   (setq smex-save-file (concat user-emacs-directory ".smex-items"))
 #+END_SRC
 
+
+** Projectile
+
+   Enable it everywhere
+#+BEGIN_SRC elisp
+  (use-package projectile
+    :ensure t
+    :init
+    (projectile-mode 1))
+
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map);;super is meta
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+#+END_SRC
+   Bind
 * Misc
 
 ** which-key
