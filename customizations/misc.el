@@ -26,10 +26,3 @@
 
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)
-
-(use-package which-key
-  :ensure t
-  :init
-  (which-key-mode))
-
-

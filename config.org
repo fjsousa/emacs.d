@@ -64,3 +64,15 @@ http://www.emacswiki.org/emacs/Smex
   (setq smex-save-file (concat user-emacs-directory ".smex-items"))
 #+END_SRC
 
+* Misc
+
+** which-key
+
+Adds helper minibuffer with key completions
+
+#+BEGIN_SRC elisp
+  (use-package which-key
+    :ensure t
+    :init
+    (which-key-mode))
+#+END_SRC
