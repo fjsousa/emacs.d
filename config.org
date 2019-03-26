@@ -68,14 +68,15 @@ http://www.emacswiki.org/emacs/Smex
 ** Projectile
 
    Enable it everywhere
-#+BEGIN_SRC elisp
+#+BEGIN_SRC emacs-lisp
   (use-package projectile
     :ensure t
-    :init
-    (projectile-mode 1))
-
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map);;super is meta
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+    :config
+    (projectile-mode 1)
+    :bind ((:map projectile-mode-map
+                ("s-p" . 'projectile-command-map))
+           (:map projectile-mode-map
+                ("C-c p" . 'projectile-command-map))))
 #+END_SRC
    Bind
 * Misc
@@ -84,9 +85,19 @@ http://www.emacswiki.org/emacs/Smex
 
 Adds helper minibuffer with key completions
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC emacs-lisp
   (use-package which-key
     :ensure t
-    :init
+    :config
     (which-key-mode))
+#+END_SRC
+
+** Colors in compilation buffer
+
+#+BEGIN_SRC emacs-lisp
+  (require 'ansi-color)
+  (defun my/ansi-colorize-buffer ()
+    (let ((buffer-read-only nil))
+      (ansi-color-apply-on-region (point-min) (point-max))))
+  (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 #+END_SRC
