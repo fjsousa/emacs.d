@@ -53,16 +53,6 @@
 ;; Shows a list of buffers
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;; Fix
-;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
-(defvar ido-cur-item nil)
-(defvar ido-default-item nil)
-(defvar ido-cur-list nil)
-
-
-
-
-
 ;; Directional window selection
 (windmove-default-keybindings)
 

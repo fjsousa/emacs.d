@@ -17,12 +17,19 @@
 ;; This also sets the load path.
 (package-initialize)
 
+;; Fix
+;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
+(defvar ido-cur-item nil)
+(defvar ido-default-item nil)
+(defvar ido-cur-list nil)
+
 ;; Download the ELPA archive description if needed.
 ;; This informs Emacs about the latest versions of all packages, and
 ;; makes them available for download.
 (when (not package-archive-contents)
   (package-refresh-contents))
 
+;; Some packages are installed with use-package
 ;; The packages you want installed. You can also install these
 ;; manually with M-x package-install
 ;; Add in your own as you wish:
