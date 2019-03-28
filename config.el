@@ -27,3 +27,23 @@
   ("M-x" . smex))
 
 (setq smex-save-file (concat user-emacs-directory ".smex-items"))
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode 1)
+  :bind ((:map projectile-mode-map
+              ("s-p" . 'projectile-command-map))
+         (:map projectile-mode-map
+              ("C-c p" . 'projectile-command-map))))
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
+(require 'ansi-color)
+(defun my/ansi-colorize-buffer ()
+  (let ((buffer-read-only nil))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+(add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
