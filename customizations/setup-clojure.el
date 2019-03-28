@@ -15,6 +15,9 @@
 ;; adds trailing white space
 (add-hook 'clojure-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
+;;error check in clojure
+(add-hook 'clojure-mode-hook 'flyspell-prog-mode)
+
 ;; syntax hilighting for midje
 (add-hook 'clojure-mode-hook
           (lambda ()
@@ -66,13 +69,14 @@
 (add-hook 'cider-mode-hook #'company-mode)
 
 ;; To make TAB complete, without losing the ability to manually indent, you can add this:
-(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+(add-hook 'clojure-mode (lambda ()
+                          (local-set-key (kbd "TAB") #'company-indent-or-complete-common)))
 
 ;; Use clojure mode for other extensions
 (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojure-mode))
-(add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("lein-env" . clojure-mode))
 
 ;; key bindings
 ;; these help me out with the way I usually develop web apps
@@ -123,3 +127,14 @@
 ;;
 ;; loads key bindings for clojure major mode
 (eval-after-load 'clojure-mode '(sayid-setup-package))
+
+;;cljr need to use package on this
+(require 'clj-refactor)
+
+(defun my-clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import statements
+    ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+    (cljr-add-keybindings-with-prefix "s-c"))
+
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
