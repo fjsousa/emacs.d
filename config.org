@@ -35,6 +35,40 @@
 
 #+END_SRC
 
+* Markdown Editing
+
+** Setup file extensions
+
+#+BEGIN_SRC emacs-lisp
+  (autoload 'gfm-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
+
+  (setq auto-mode-allist (append '(("\\.text$" . gfm-mode)
+                                   ("\\.md$" . gfm-mode)
+                                   ("\\.mdown$" . gfm-mode)
+                                   ("\\.mdt$" . gfm-mode)) auto-mode-alist))
+#+END_SRC
+
+** Preview Style
+
+   You can set the preview style with this. Not sure it works executing properly...
+
+#+BEGIN_SRC emacs-lisp
+   ;;'(markdown-preview-style "/Users/fsousa/src/github-markdown-css/github-markdown.css")
+#+END_SRC
+
+** Configures text column width
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'markdown-mode-hook '(lambda () (set-fill-column 100)))
+  (add-hook 'markdown-mode-hook 'visual-line-mode)
+
+  ;wrap lines acording to fill-column
+  (add-hook 'markdown-mode-hook 'visual-fill-column-mode)
+
+
+#+END_SRC
+
+
 * Navigation
 
 ** IDO
