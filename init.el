@@ -177,7 +177,7 @@
 (load "ruby.el")
 
 ;;org mode config
-(org-babel-load-file (expand-file-name "config.org"))
+(org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
 ;; save emacs custumizations to a separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
