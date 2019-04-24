@@ -193,3 +193,20 @@
 (format-time-string "<%Y-%m-%d %a %H:%M:%S>" (seconds-to-time (/ 1507456691120 1000)))
 
 (current-time-zone)
+
+;; typescript
+;; move to separate file
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+(add-hook 'before-save-hook 'tide-format-before-save)
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
