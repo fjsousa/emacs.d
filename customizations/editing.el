@@ -13,7 +13,7 @@
         try-complete-lisp-symbol))
 
 ;; Highlights matching parenthesis
-(show-paren-mode 1)
+(show-paren-mode 1) ;;need to enable this on a per mode basis
 
 ;; Highlight current line
 (global-hl-line-mode 1)
