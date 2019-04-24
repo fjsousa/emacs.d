@@ -13,6 +13,9 @@
 (add-hook 'org-mode-hook 'visual-fill-column-mode)
 (add-hook 'org-mode-hook 'org-show-block-all)
 
+(define-key org-mode-map (kbd "M-S-<RET>") nil); remove old binding
+(define-key org-mode-map (kbd "C-c n") 'org-insert-heading)
+
 (use-package ido-vertical-mode
   :ensure t
   :init
@@ -47,3 +50,5 @@
   (let ((buffer-read-only nil))
     (ansi-color-apply-on-region (point-min) (point-max))))
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
+
+(setq dired-dwim-target t)

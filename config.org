@@ -35,6 +35,13 @@
 
 #+END_SRC
 
+** Key bingings
+
+Create new headings has decent shortcut
+#+BEGIN_SRC emacs-lisp
+  (define-key org-mode-map (kbd "M-S-<RET>") nil); remove old binding
+  (define-key org-mode-map (kbd "C-c n") 'org-insert-heading)
+#+END_SRC
 * Navigation
 
 ** IDO
@@ -100,4 +107,10 @@ Adds helper minibuffer with key completions
     (let ((buffer-read-only nil))
       (ansi-color-apply-on-region (point-min) (point-max))))
   (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
+#+END_SRC
+
+* Dired (some bits)
+
+#+BEGIN_SRC emacs-lisp
+(setq dired-dwim-target t)
 #+END_SRC
