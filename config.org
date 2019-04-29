@@ -37,10 +37,13 @@
 
 ** Key bingings
 
-Create new headings has decent shortcut
+Create insert-heading and insert-todo-heading has decent shortcut
 #+BEGIN_SRC emacs-lisp
-  (define-key org-mode-map (kbd "M-S-<RET>") nil); remove old binding
+  (define-key org-mode-map (kbd "M-<RET>") nil); remove old binding
   (define-key org-mode-map (kbd "C-c n") 'org-insert-heading)
+
+  (define-key org-mode-map (kbd "M-S-<RET>") nil); remove old binding
+  (define-key org-mode-map (kbd "C-c c") 'org-insert-todo-heading); c for checkbox
 #+END_SRC
 * Navigation
 
