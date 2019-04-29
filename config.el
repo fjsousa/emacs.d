@@ -13,8 +13,11 @@
 (add-hook 'org-mode-hook 'visual-fill-column-mode)
 (add-hook 'org-mode-hook 'org-show-block-all)
 
-(define-key org-mode-map (kbd "M-S-<RET>") nil); remove old binding
+(define-key org-mode-map (kbd "M-<RET>") nil); remove old binding
 (define-key org-mode-map (kbd "C-c n") 'org-insert-heading)
+
+(define-key org-mode-map (kbd "M-S-<RET>") nil); remove old binding
+(define-key org-mode-map (kbd "C-c c") 'org-insert-todo-heading); c for checkbox
 
 (use-package ido-vertical-mode
   :ensure t
@@ -52,3 +55,60 @@
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 
 (setq dired-dwim-target t)
+
+;; multiple cursors
+(require 'multiple-cursors)
+(global-set-key (kbd "C-c C-c") 'mc/edit-lines)
+(global-set-key (kbd "C-.") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-,") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-c >") 'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-c C-/") 'mc/unmark-next-like-this)
+
+(defun fs/eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (prin1 (eval (read (current-kill 0)))
+             (current-buffer))
+    (error (message "Invalid expression")
+           (insert (current-kill 0)))))
+
+(global-set-key (kbd "C-x C-y") 'eval-and-replace)
+
+(defun fs/load-config-org ()
+  (interactive)
+  (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+
+(add-to-list 'exec-path "/usr/local/bin/")
+(setq ispell-program-name "aspell")
+;;(setq ispell-personal-dictionary "C:/path/to/your/.ispell")
+(require 'ispell)
+
+;; disabling as the popup timer should be enough
+;;(define-key flyspell-mode-map (kbd "C-;") #'flyspell-popup-correct)
+
+(use-package flyspell-popup
+  :ensure t
+  :config
+  (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode))
+
+(dolist (mode '(;emacs-lisp-mode-hook
+                ;inferior-lisp-mode-hook
+                clojure-mode-hook
+                ;python-mode-hook
+                ;js-mode-hook
+                ;R-mode-hook
+                ))
+  (add-hook mode
+            '(lambda ()
+               (flyspell-prog-mode))))
+
+(setq langtool-language-tool-jar "/usr/local/Cellar/languagetool/4.5/libexec/languagetool-commandline.jar")
+(require 'langtool)
+(setq langtool-mother-tongue "en-GB"
+      langtool-disabled-rules '("WHITESPACE_RULE"
+                                "EN_UNPAIRED_BRACKETS"
+                                "COMMA_PARENTHESIS_WHITESPACE"
+                                "EN_QUOTES"))
