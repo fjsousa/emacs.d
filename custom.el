@@ -13,9 +13,10 @@
  '(cljr-hotload-dependencies t)
  '(cljr-ignore-analyzer-errors t)
  '(coffee-tab-width 2)
+ '(flyspell-popup-correct-delay 0.4)
  '(package-selected-packages
    (quote
-    (ido-vertical-mode org-bullets which-key use-package tide typescript-mode find-file-in-project json-navigator robe enh-ruby-mode feature-mode robe-mode enhanced-ruby-mode logview buffer-move yaml-mode command-log-mode restclient stylus-mode lua-mode jade-mode jade company multiple-cursors list-packages-ext direx tagedit smex)))
+    (langtool flyspell-popup flycheck flymake ido-vertical-mode org-bullets which-key use-package tide typescript-mode find-file-in-project json-navigator robe enh-ruby-mode feature-mode robe-mode enhanced-ruby-mode logview buffer-move yaml-mode command-log-mode restclient stylus-mode lua-mode jade-mode jade company multiple-cursors list-packages-ext direx tagedit smex)))
  '(show-paren-mode t)
  '(show-paren-style (quote parenthesis))
  '(winner-mode t))

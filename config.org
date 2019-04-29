@@ -114,3 +114,97 @@ Adds helper minibuffer with key completions
 #+BEGIN_SRC emacs-lisp
 (setq dired-dwim-target t)
 #+END_SRC
+* Multiple cursors
+
+#+BEGIN_SRC emacs-lisp
+  ;; multiple cursors
+  (require 'multiple-cursors)
+  (global-set-key (kbd "C-c C-c") 'mc/edit-lines)
+  (global-set-key (kbd "C-.") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-,") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)
+  (global-set-key (kbd "C-c >") 'mc/skip-to-next-like-this)
+  (global-set-key (kbd "C-c C-/") 'mc/unmark-next-like-this)
+
+#+END_SRC
+
+* defuns
+
+eval and replace elisp ripped from magnars. Has keybindings so it can be used in multiple cursor.
+#+BEGIN_SRC emacs-lisp
+  (defun fs/eval-and-replace ()
+    "Replace the preceding sexp with its value."
+    (interactive)
+    (backward-kill-sexp)
+    (condition-case nil
+        (prin1 (eval (read (current-kill 0)))
+               (current-buffer))
+      (error (message "Invalid expression")
+             (insert (current-kill 0)))))
+
+  (global-set-key (kbd "C-x C-y") 'eval-and-replace)
+#+END_SRC
+
+Loads config.org without having to navigating to init.el and manually evaluating the org-babel-load-file block.
+
+#+BEGIN_SRC emacs-lisp
+  (defun fs/load-config-org ()
+    (interactive)
+    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+#+END_SRC
+
+* Spelling and Grammar 
+
+Resources: 
+https://joelkuiper.eu/spellcheck_emacs
+
+Several on the fly spell checkers:
+[[https://www.flycheck.org/en/latest/user/quickstart.html][FlyCheck]] - Modern one that depends on external tools
+FlyMake - comes with Emacs - throws an error when starting
+FlySpell - comes with Emacs - only one I got to work. Also, doesn't highlight errors in SRC blocks in org mode.
+
+Using [[https://github.com/xuchunyang/flyspell-popup][FlySpell-popup]]. Configure using customise-variable -> FlySpell-popup-correct-delay.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'exec-path "/usr/local/bin/")
+  (setq ispell-program-name "aspell")
+  ;;(setq ispell-personal-dictionary "C:/path/to/your/.ispell")
+  (require 'ispell)
+
+  ;; disabling as the popup timer should be enough
+  ;;(define-key flyspell-mode-map (kbd "C-;") #'flyspell-popup-correct)
+
+  (use-package flyspell-popup
+    :ensure t
+    :config
+    (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode))
+#+END_SRC
+
+FlySpell mode enables spell checking in comments.
+#+BEGIN_SRC emacs-lisp
+  (dolist (mode '(;emacs-lisp-mode-hook
+                  ;inferior-lisp-mode-hook
+                  clojure-mode-hook
+                  ;python-mode-hook
+                  ;js-mode-hook
+                  ;R-mode-hook
+                  ))
+    (add-hook mode
+              '(lambda ()
+                 (flyspell-prog-mode))))
+#+END_SRC
+
+Using [[https://www.languagetool.org/#more][language tool]] so that I don't look like an ignorant.
+
+#+BEGIN_SRC emacs-lisp
+  (setq langtool-language-tool-jar "/usr/local/Cellar/languagetool/4.5/libexec/languagetool-commandline.jar")
+  (require 'langtool)
+  (setq langtool-mother-tongue "en-GB"
+        langtool-disabled-rules '("WHITESPACE_RULE"
+                                  "EN_UNPAIRED_BRACKETS"
+                                  "COMMA_PARENTHESIS_WHITESPACE"
+                                  "EN_QUOTES"))
+#+END_SRC
+
+
+
