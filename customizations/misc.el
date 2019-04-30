@@ -18,11 +18,5 @@
 ;; Allow hash to be entered
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 
-;;spell checker
-(add-to-list 'exec-path "/usr/local/bin/")
-(setq ispell-program-name "aspell")
-;;(setq ispell-personal-dictionary "C:/path/to/your/.ispell")
-(require 'ispell)
-
 ;; magit
 (global-set-key (kbd "C-x g") 'magit-status)

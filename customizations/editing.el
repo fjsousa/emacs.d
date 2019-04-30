@@ -13,7 +13,7 @@
         try-complete-lisp-symbol))
 
 ;; Highlights matching parenthesis
-(show-paren-mode 1)
+(show-paren-mode 1) ;;need to enable this on a per mode basis
 
 ;; Highlight current line
 (global-hl-line-mode 1)
@@ -72,9 +72,3 @@
 ;;(setq electric-indent-mode nil)
 
 (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
-
-;; multiple cursors
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C-.") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-,") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)

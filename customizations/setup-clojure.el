@@ -15,9 +15,6 @@
 ;; adds trailing white space
 (add-hook 'clojure-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
-;;error check in clojure
-(add-hook 'clojure-mode-hook 'flyspell-prog-mode)
-
 ;; syntax hilighting for midje
 (add-hook 'clojure-mode-hook
           (lambda ()
