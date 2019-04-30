@@ -166,6 +166,10 @@ Several on the fly spell checkers:
 FlyMake - comes with Emacs - throws an error when starting
 FlySpell - comes with Emacs - only one I got to work. Also, doesn't highlight errors in SRC blocks in org mode.
 
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook #'flyspell-mode)
+#+END_SRC
+
 Using [[https://github.com/xuchunyang/flyspell-popup][FlySpell-popup]]. Configure using customise-variable -> FlySpell-popup-correct-delay.
 
 #+BEGIN_SRC emacs-lisp
@@ -184,6 +188,7 @@ Using [[https://github.com/xuchunyang/flyspell-popup][FlySpell-popup]]. Configur
 #+END_SRC
 
 FlySpell mode enables spell checking in comments.
+
 #+BEGIN_SRC emacs-lisp
   (dolist (mode '(;emacs-lisp-mode-hook
                   ;inferior-lisp-mode-hook

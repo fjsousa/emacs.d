@@ -81,6 +81,8 @@
   (interactive)
   (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 
+(add-hook 'org-mode-hook #'flyspell-mode)
+
 (add-to-list 'exec-path "/usr/local/bin/")
 (setq ispell-program-name "aspell")
 ;;(setq ispell-personal-dictionary "C:/path/to/your/.ispell")
