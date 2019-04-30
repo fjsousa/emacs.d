@@ -1,6 +1,6 @@
 * Org mode config
 
-** Configure look 
+** Configure look
 
 *** Org bullets
 
@@ -26,7 +26,7 @@
 
 #+BEGIN_SRC emacs-lisp
   (defun org-line-wrap ()
-              (set-fill-column 100))
+  (set-fill-column 100))
   (add-hook 'org-mode-hook 'org-line-wrap)
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-fill-column-mode)
@@ -191,9 +191,9 @@ Loads config.org without having to navigating to init.el and manually evaluating
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 #+END_SRC
 
-* Spelling and Grammar 
+* Spelling and Grammar
 
-Resources: 
+Resources:
 https://joelkuiper.eu/spellcheck_emacs
 
 Several on the fly spell checkers:
