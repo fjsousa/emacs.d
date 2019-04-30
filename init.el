@@ -171,9 +171,6 @@
 (load "setup-js.el")
 (load "javascript.el")
 
-;;markdown
-(load "markdown.el")
-
 (load "ruby.el")
 
 ;;org mode config

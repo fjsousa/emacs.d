@@ -12,7 +12,8 @@
 (setq inhibit-startup-message t)
 
 ;; dired listing options
-(setq insert-directory-program "/usr/local/bin/gls")
+(if (eq system-type 'darwin)
+    (setq insert-directory-program "/usr/local/bin/gls"))
 (setq dired-listing-switches "-aBhl --group-directories-first")
 
 ;; Allow hash to be entered

@@ -6,6 +6,8 @@
 (set-face-attribute  'org-level-1 nil :height 190)
 (set-face-attribute  'org-level-2 nil :height 160)
 
+(add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace t)))
+
 (defun org-line-wrap ()
             (set-fill-column 100))
 (add-hook 'org-mode-hook 'org-line-wrap)

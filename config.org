@@ -22,6 +22,11 @@
 
 #+END_SRC
 
+*** trailing white characters
+    #+BEGIN_SRC emacs-lisp
+      (add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace t)))
+
+    #+END_SRC
 ** Hooks
 
 #+BEGIN_SRC emacs-lisp
