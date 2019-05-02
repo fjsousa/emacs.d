@@ -206,11 +206,12 @@ Several on the fly spell checkers:
 - FlyMake: comes with Emacs - throws an error when starting
 - FlySpell: comes with Emacs - only one I got to work. Also, doesn't highlight errors in SRC blocks in org mode.
 
-** flyspell and flyspell pop up
+** FlySpell and FlySpell pop up
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'org-mode-hook #'flyspell-mode)
 #+END_SRC
+
 
 Using [[https://github.com/xuchunyang/flyspell-popup][FlySpell-popup]]. Configure using customise-variable -> FlySpell-popup-correct-delay.
 
@@ -227,6 +228,12 @@ Using [[https://github.com/xuchunyang/flyspell-popup][FlySpell-popup]]. Configur
     :ensure t
     :config
     (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode))
+#+END_SRC
+
+FlySpell flyspell-auto-correct-word binding conflicts with multiple cursor mode.
+
+#+BEGIN_SRC emacs-lisp
+  (define-key flyspell-mode-map (kbd "C-.") nil)
 #+END_SRC
 
 ** flyspell prog mode
@@ -246,7 +253,7 @@ FlySpell mode enables spell checking in comments.
                  (flyspell-prog-mode))))
 #+END_SRC
 
-** Language tool 
+** Language tool
 
 Using [[https://www.languagetool.org/#more][language tool]] so that I don't look like an ignorant.
 
@@ -259,6 +266,3 @@ Using [[https://www.languagetool.org/#more][language tool]] so that I don't look
                                   ;;"COMMA_PARENTHESIS_WHITESPACE"
                                   "EN_QUOTES"))
 #+END_SRC
-
-
-

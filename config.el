@@ -9,7 +9,7 @@
 (add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
 (defun org-line-wrap ()
-            (set-fill-column 100))
+(set-fill-column 100))
 (add-hook 'org-mode-hook 'org-line-wrap)
 (add-hook 'org-mode-hook 'visual-line-mode)
 (add-hook 'org-mode-hook 'visual-fill-column-mode)
@@ -29,6 +29,7 @@
 
 ;wrap lines acording to fill-column
 (add-hook 'markdown-mode-hook 'visual-fill-column-mode)
+
 (define-key org-mode-map (kbd "M-<RET>") nil); remove old binding
 (define-key org-mode-map (kbd "C-c n") 'org-insert-heading)
 
@@ -112,6 +113,8 @@
   :config
   (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode))
 
+(define-key flyspell-mode-map (kbd "C-.") nil)
+
 (dolist (mode '(;emacs-lisp-mode-hook
                 ;inferior-lisp-mode-hook
                 clojure-mode-hook
@@ -128,5 +131,5 @@
 (setq langtool-mother-tongue "en-GB"
       langtool-disabled-rules '("WHITESPACE_RULE"
                                 "EN_UNPAIRED_BRACKETS"
-                                "COMMA_PARENTHESIS_WHITESPACE"
+                                ;;"COMMA_PARENTHESIS_WHITESPACE"
                                 "EN_QUOTES"))
