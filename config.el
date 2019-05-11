@@ -1,3 +1,47 @@
+(menu-bar-mode 1)
+
+(global-linum-mode)
+
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'load-path "~/.emacs.d/themes")
+(load-theme 'tomorrow-night-bright t)
+
+;; increase font size for better readability
+(set-face-attribute 'default nil :height 140)
+
+(setq ;; makes killing/yanking interact with the clipboard
+      x-select-enable-clipboard t
+
+      ;; I'm actually not sure what this does but it's recommended?
+      x-select-enable-primary t
+
+      ;; Save clipboard strings into kill ring before replacing them.
+      ;; When one selects something in another program to paste it into Emacs,
+      ;; but kills something in Emacs before actually pasting it,
+      ;; this selection is gone unless this variable is non-nil
+      save-interprogram-paste-before-kill t
+
+      ;; Shows all options when running apropos. For more info,
+      ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Apropos.html
+      apropos-do-all t
+
+      ;; Mouse yank commands yank at point instead of at click.
+      mouse-yank-at-point t)
+
+(blink-cursor-mode 0)
+
+(setq-default frame-title-format "%b (%f)")
+
+;  (global-set-key (kbd "s-t") '(lambda () (interactive)))
+
+(setq ring-bell-function 'ignore)
+
 (use-package org-bullets
   :ensure t
   :config
@@ -14,6 +58,15 @@
 (add-hook 'org-mode-hook 'visual-line-mode)
 (add-hook 'org-mode-hook 'visual-fill-column-mode)
 (add-hook 'org-mode-hook 'org-show-block-all)
+
+(require 'color)
+(set-face-attribute 'org-block nil :background
+                    (color-darken-name
+                     (face-attribute 'default :background) 3))
+
+(setq org-src-block-faces '(("emacs-lisp" (:background "#E5FFB8"))
+                            ("python" (:background "#E5FFB8"))
+                            ("javascript" (:background "#E5FFB8"))))
 
 (autoload 'gfm-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 
@@ -126,10 +179,15 @@
             '(lambda ()
                (flyspell-prog-mode))))
 
-(setq langtool-language-tool-jar "/usr/local/Cellar/languagetool/4.5/libexec/languagetool-commandline.jar")
-(require 'langtool)
-(setq langtool-mother-tongue "en-GB"
-      langtool-disabled-rules '("WHITESPACE_RULE"
-                                "EN_UNPAIRED_BRACKETS"
-                                ;;"COMMA_PARENTHESIS_WHITESPACE"
-                                "EN_QUOTES"))
+(if (eq system-type 'darwin)
+    (setq langtool-language-tool-jar "/usr/local/Cellar/languagetool/4.5/libexec/languagetool-commandline.jar")
+  (setq langtool-language-tool-jar "/home/fsousa/src/languagetool/languagetool-commandline.jar"))
+
+(use-package langtool
+  :ensure t
+  :config
+  (setq langtool-mother-tongue "en-GB"
+        langtool-disabled-rules '("WHITESPACE_RULE"
+                                  "EN_UNPAIRED_BRACKETS"
+                                  ;;"COMMA_PARENTHESIS_WHITESPACE"
+                                  "EN_QUOTES")))
