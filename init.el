@@ -165,7 +165,6 @@
 ;; Langauage-specific
 (load "setup-clojure.el")
 (load "setup-js.el")
-(load "javascript.el")
 
 (load "ruby.el")
 
