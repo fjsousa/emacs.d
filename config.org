@@ -85,6 +85,11 @@
 
 * Org mode config
 
+** Table of contents
+
+#+BEGIN_SRC emacs-lisp
+  (require 'org-make-toc)
+#+END_SRC
 ** Configure look
 
 *** Org bullets
@@ -456,7 +461,7 @@ Auto complete uses tern (node package installed globally).
   (define-key tern-mode-keymap (kbd "M-.") nil)
   (define-key tern-mode-keymap (kbd "M-,") nil)
 #+END_SRC
-** COMMENT Indium: REPL and buffer evaluator
+** Indium: REPL and buffer evaluator
 
 #+BEGIN_SRC emacs-lisp
   (require 'indium)

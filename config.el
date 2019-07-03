@@ -42,6 +42,8 @@
 
 (setq ring-bell-function 'ignore)
 
+(require 'org-make-toc)
+
 (use-package org-bullets
   :ensure t
   :config
@@ -64,9 +66,10 @@
                     (color-darken-name
                      (face-attribute 'default :background) 3))
 
-(setq org-src-block-faces '(("emacs-lisp" (:background "#E5FFB8"))
-                            ("python" (:background "#E5FFB8"))
-                            ("javascript" (:background "#E5FFB8"))))
+(setq org-src-block-faces '(("emacs-lisp" (:background "#E3E3E3"))
+                            ("python" (:background "#E3E3E3"))
+                            ("javascript" (:background "#E3E3E3"))
+                            ("json" (:background "#ffffff"))))
 
 (autoload 'gfm-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 
@@ -132,7 +135,7 @@
 (global-set-key (kbd "C-.") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-,") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)
-(global-set-key (kbd "C-c >") 'mc/skip-to-next-like-this)
+(global-set-key (kbd "C->") 'mc/skip-to-next-like-this)
 (global-set-key (kbd "C-c C-/") 'mc/unmark-next-like-this)
 
 (defun fs/eval-and-replace ()
@@ -150,6 +153,10 @@
 (defun fs/load-config-org ()
   (interactive)
   (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+
+(defun fs/delete-tern-process ()
+  (interactive)
+  (delete-process "Tern"))
 
 (add-hook 'org-mode-hook #'flyspell-mode)
 
@@ -191,3 +198,71 @@
                                   "EN_UNPAIRED_BRACKETS"
                                   ;;"COMMA_PARENTHESIS_WHITESPACE"
                                   "EN_QUOTES")))
+
+;; riped off from
+;; https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html
+(require 'js2-mode)
+(require 'js2-refactor)
+(require 'xref-js2)
+
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+;; Better imenu
+(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+
+
+;; highlight trailing white spaces. Any non nil value is fine
+(add-hook 'js2-mode-hook (lambda () (setq show-trailing-whitespace "true")))
+
+(add-hook 'js2-mode-hook #'js2-refactor-mode)
+(js2r-add-keybindings-with-prefix "C-c C-r")
+(define-key js2-mode-map (kbd "C-k") #'js2r-kill)
+
+;; js-mode (which js2 is based on) binds "M-." which conflicts with xref, so
+;; unbind it.
+(define-key js-mode-map (kbd "M-.") nil)
+;;(define-key esc-map "." #'xref-find-definitions)
+
+(add-hook 'js2-mode-hook (lambda ()
+                           (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
+
+;; redefining the ignored dirs list to exclude "lib" as it was causing
+;; issues with some of the repos
+(setq xref-js2-ignored-dirs '("bower_components" "node_modules" "build"))
+
+;; so that you can run mocha tests.
+;; emacs complains that your're setting variables in an unsafe way so you have to
+;; do safe-local-variable-values
+;; (add-hook 'js2-mode-hook
+;;           (lambda ()
+;;             (setq safe-local-variable-values
+;;                   (quote
+;;                    ((mocha-reporter . "spec")
+;;                     (mocha-project-test-directory . "test/unit")
+;;                     (mocha-options . " -b -R spec --timeout 100000")
+;;                     (mocha-environment-variables . "NODE_ENV=test")
+;;                     (mocha-command . "node_modules/.bin/mocha")
+;;                     (mocha-which-node . "/Users/fsousa/.nvm/versions/node/v10.14.2/bin/node"))))))
+
+;; (setq safe-local-variable-values
+;;                   (quote
+;;                    ((mocha-reporter . "spec")
+;;                     (mocha-project-test-directory . "test/unit")
+;;                     (mocha-options . " -b -R spec --timeout 100000")
+;;                     (mocha-environment-variables . "NODE_ENV=test")
+;;                     (mocha-command . "node_modules/.bin/mocha")
+;;                     (mocha-which-node . "/Users/fsousa/.nvm/versions/node/v10.14.2/bin/node"))))
+
+(require 'company)
+(require 'company-tern)
+
+(add-to-list 'company-backends 'company-tern)
+(add-hook 'js2-mode-hook (lambda ()
+                           (tern-mode)
+                           (company-mode)))
+
+(define-key tern-mode-keymap (kbd "M-.") nil)
+(define-key tern-mode-keymap (kbd "M-,") nil)
+
+(require 'indium)
+(add-hook 'js2-mode-hook #'indium-interaction-mode)
