@@ -210,6 +210,8 @@
 ;; Better imenu
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 
+;;spell check in comments and
+(add-hook 'js2-mode-hook #'flyspell-prog-mode)
 
 ;; highlight trailing white spaces. Any non nil value is fine
 (add-hook 'js2-mode-hook (lambda () (setq show-trailing-whitespace "true")))
@@ -253,16 +255,14 @@
 ;;                     (mocha-command . "node_modules/.bin/mocha")
 ;;                     (mocha-which-node . "/Users/fsousa/.nvm/versions/node/v10.14.2/bin/node"))))
 
-(require 'company)
-(require 'company-tern)
+;; (require 'company)
+;; (require 'company-tern)
 
-(add-to-list 'company-backends 'company-tern)
-(add-hook 'js2-mode-hook (lambda ()
-                           (tern-mode)
-                           (company-mode)))
+;; (add-to-list 'company-backends 'company-tern)
+;; (add-hook 'js2-mode-hook (lambda () (tern-mode) (company-mode)))
 
-(define-key tern-mode-keymap (kbd "M-.") nil)
-(define-key tern-mode-keymap (kbd "M-,") nil)
+;; (define-key tern-mode-keymap (kbd "M-.") nil)
+;; (define-key tern-mode-keymap (kbd "M-,") nil)
 
 (require 'indium)
 (add-hook 'js2-mode-hook #'indium-interaction-mode)
