@@ -88,7 +88,8 @@
 ** Table of contents
 
 #+BEGIN_SRC emacs-lisp
-  (require 'org-make-toc)
+  (use-package org-make-toc
+  :ensure t)
 #+END_SRC
 ** Configure look
 
@@ -387,6 +388,7 @@ Stuff working:
 - [X] highlighting: js2-mode
 - [ ] autocomplete and company mode: tern
 - [X] REPL, debugger, evaluator: indium
+- [X] parents balancing with: smartparens
 
 #+BEGIN_SRC emacs-lisp
   ;; riped off from
@@ -401,7 +403,7 @@ Stuff working:
   (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 
   ;;spell check in comments and
-  (add-hook 'js2-mode-hook #'flyspell-prog-mode)
+  ;; (add-hook 'js2-mode-hook #'flyspell-prog-mode)
 
   ;; highlight trailing white spaces. Any non nil value is fine
   (add-hook 'js2-mode-hook (lambda () (setq show-trailing-whitespace "true")))
@@ -470,3 +472,25 @@ There's also a function defined in the defuns to reload tern ~fs/delete-tern-pro
   (require 'indium)
   (add-hook 'js2-mode-hook #'indium-interaction-mode)
 #+END_SRC
+** smartparens
+
+https://github.com/Fuco1/smartparens/
+
+Default behaviour when you open a quote or parens is to highlight the whole thing with a really poor choice of colour. Variables ~sp-highlight...~ control that behaviour: https://github.com/Fuco1/smartparens/wiki/User-interface
+ #+BEGIN_SRC emacs-lisp
+   (use-package smartparens
+     :ensure t
+     :diminish smartparens-mode
+     :commands (smartparens-mode
+                smartparens-strict-mode)
+     :config
+     (progn
+       (require 'smartparens-config)
+       (add-hook 'js2-mode-hook #'smartparens-mode)))
+
+   (setq sp-highlight-pair-overlay nil)
+   (setq sp-highlight-wrap-overlay t)
+   (setq sp-highlight-wrap-tag-overlay t)
+ #+END_SRC
+
+#  LocalWords:  smartparens

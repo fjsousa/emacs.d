@@ -42,7 +42,8 @@
 
 (setq ring-bell-function 'ignore)
 
-(require 'org-make-toc)
+(use-package org-make-toc
+:ensure t)
 
 (use-package org-bullets
   :ensure t
@@ -211,7 +212,7 @@
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 
 ;;spell check in comments and
-(add-hook 'js2-mode-hook #'flyspell-prog-mode)
+;; (add-hook 'js2-mode-hook #'flyspell-prog-mode)
 
 ;; highlight trailing white spaces. Any non nil value is fine
 (add-hook 'js2-mode-hook (lambda () (setq show-trailing-whitespace "true")))
@@ -266,3 +267,17 @@
 
 (require 'indium)
 (add-hook 'js2-mode-hook #'indium-interaction-mode)
+
+(use-package smartparens
+  :ensure t
+  :diminish smartparens-mode
+  :commands (smartparens-mode
+             smartparens-strict-mode)
+  :config
+  (progn
+    (require 'smartparens-config)
+    (add-hook 'js2-mode-hook #'smartparens-mode)))
+
+(setq sp-highlight-pair-overlay nil)
+(setq sp-highlight-wrap-overlay t)
+(setq sp-highlight-wrap-tag-overlay t)
