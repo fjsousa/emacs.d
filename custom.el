@@ -17,7 +17,7 @@
  '(js2-strict-missing-semi-warning nil)
  '(package-selected-packages
    (quote
-    (smartparens org-make-toc dash dockerfile-mode ac-js2 company-tern langtool flyspell-popup flycheck flymake ido-vertical-mode org-bullets which-key use-package tide typescript-mode find-file-in-project json-navigator robe enh-ruby-mode feature-mode robe-mode enhanced-ruby-mode logview buffer-move yaml-mode command-log-mode restclient stylus-mode lua-mode jade-mode jade company multiple-cursors list-packages-ext direx tagedit smex)))
+    (origami smartparens org-make-toc dash dockerfile-mode ac-js2 company-tern langtool flyspell-popup flycheck flymake ido-vertical-mode org-bullets which-key use-package tide typescript-mode find-file-in-project json-navigator robe enh-ruby-mode feature-mode robe-mode enhanced-ruby-mode logview buffer-move yaml-mode command-log-mode restclient stylus-mode lua-mode jade-mode jade company multiple-cursors list-packages-ext direx tagedit smex)))
  '(show-paren-mode t)
  '(show-paren-style (quote parenthesis))
  '(winner-mode t))

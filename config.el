@@ -139,6 +139,19 @@
 (global-set-key (kbd "C->") 'mc/skip-to-next-like-this)
 (global-set-key (kbd "C-c C-/") 'mc/unmark-next-like-this)
 
+(defun fs/unhex-region (start end)
+  "de-urlencode the region between START and END in current buffer."
+  (interactive "r")
+  (save-excursion
+    (let ((text (delete-and-extract-region start end)))
+      (insert (decode-coding-string (url-unhex-string text) 'utf-8)))))
+
+;; http://localhost:1212/well-search?terms=%22%22&limit=100&offset=100&rules=%5B%7B%3Aattribute%20%22basin%22%2C%20%3Avalue%20%22PERMIAN%20BASIN%22%2C%20%3Apredicate%20%22%3D%22%7D%5D&legend%3F=true&drilling-info%3F=true&name-only%3F=false
+
+;;returns:
+
+;;http://localhost:1212/well-search?terms=""&limit=100&offset=100&rules=[{:attribute "basin", :value "PERMIAN BASIN", :predicate "="}]&legend?=true&drilling-info?=true&name-only?=false
+
 (defun fs/eval-and-replace ()
   "Replace the preceding sexp with its value."
   (interactive)
