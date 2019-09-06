@@ -293,6 +293,21 @@ Adds helper minibuffer with key completions
 
 ** Colors in compilation buffer
 
+** =Beacon= Never lose your cursor again
+#+BEGIN_SRC emacs-lisp
+(use-package beacon
+ :ensure t
+ :config
+ (progn
+   (beacon-mode 1)
+   (setq beacon-size 10)
+   (setq beacon-color "#ca6768")
+   (setq beacon-blink-duration 0.2)
+   (setq beacon-blink-when-window-scrolls t)
+   (setq beacon-blink-when-window-changes t)
+   (setq beacon-blink-when-point-moves-horizontally 20)
+   (setq beacon-blink-when-point-moves-vertically 10)))
+#+END_SRC
 #+BEGIN_SRC emacs-lisp
   (require 'ansi-color)
   (defun my/ansi-colorize-buffer ()
