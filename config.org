@@ -337,7 +337,68 @@ Adds helper minibuffer with key completions
 
 * defuns
 
-  decode url
+** file path in clipboard
+
+indent sql util function
+
+#+BEGIN_SRC emacs-lisp
+  (defun fs/sql-indent-string ()
+    "Indents the string under the cursor as SQL."
+    (interactive)
+    (save-excursion
+      (er/mark-inside-quotes)
+      (let* ((text (buffer-substring-no-properties (region-beginning) (region-end)))
+             (pos (region-beginning))
+             (column (progn (goto-char pos) (current-column)))
+             (formatted-text (with-temp-buffer
+                               (insert text)
+                               (delete-trailing-whitespace)
+                               (sql-indent-buffer)
+                               (replace-string "\n" (concat "\n" (make-string column (string-to-char " "))) nil (point-min) (point-max))
+                               (buffer-string))))
+        (delete-region (region-beginning) (region-end))
+        (goto-char pos)
+        (insert formatted-text))))
+
+  (defun fs/sql-indent-region ()
+    "Indents the region"
+    (interactive)
+    (save-excursion
+      (let* ((beginning (region-beginning))
+             (end (region-end))
+             (text (buffer-substring-no-properties beginning end))
+             (pos (region-beginning))
+             (column (progn (goto-char pos) (current-column)))
+             (formatted-text (with-temp-buffer
+                               (insert text)
+                               (delete-trailing-whitespace)
+                               (sql-indent-buffer)
+                               (replace-string "\n" (concat "\n" (make-string column (string-to-char " "))) nil (point-min) (point-max))
+                               (buffer-string)
+                               )))
+        (delete-region beginning end)
+        (goto-char pos)
+        (insert formatted-text))))
+
+#+END_SRC
+
+file name on clipboard
+
+#+BEGIN_SRC emacs-lisp
+  (defun fs/put-file-name-on-clipboard ()
+    "Put the current file name on the clipboard"
+    (interactive)
+    (let ((filename (if (equal major-mode 'dired-mode)
+                        default-directory
+                      (buffer-file-name))))
+      (when filename
+        (with-temp-buffer
+          (insert filename)
+          (clipboard-kill-region (point-min) (point-max)))
+        (message filename))))
+#+END_SRC
+
+decode url
 
 #+BEGIN_SRC emacs-lisp
   (defun fs/unhex-region (start end)
@@ -355,6 +416,7 @@ Adds helper minibuffer with key completions
 #+END_SRC
 
 eval and replace elisp ripped from magnars. Has keybindings so it can be used in multiple cursor.
+
 #+BEGIN_SRC emacs-lisp
   (defun fs/eval-and-replace ()
     "Replace the preceding sexp with its value."
@@ -383,7 +445,6 @@ Sometimes when you have just added .tern-project file or edited the file but Ter
   (defun fs/delete-tern-process ()
     (interactive)
     (delete-process "Tern"))
-
 #+END_SRC
 * Spelling and Grammar
 
@@ -574,4 +635,16 @@ Default behaviour when you open a quote or parens is to highlight the whole thin
    (setq sp-highlight-wrap-tag-overlay t)
  #+END_SRC
 
+* SQL
+
+#+BEGIN_SRC emacs-lisp
+;;(add-hook 'sql-mode-hook (lambda () (load-library "sql-indent"))) doesn't seem to work
+(eval-after-load "sql"
+  '(load-library "sql-indent"))
+#+END_SRC
+
+* todo
+- [ ] clojurescript mode enabled on clj files by default (breaks cider)
+
 #  LocalWords:  smartparens
+

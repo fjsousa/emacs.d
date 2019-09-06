@@ -122,6 +122,19 @@
   :config
   (which-key-mode))
 
+(use-package beacon
+ :ensure t
+ :config
+ (progn
+   (beacon-mode 1)
+   (setq beacon-size 10)
+   (setq beacon-color "#ca6768")
+   (setq beacon-blink-duration 0.2)
+   (setq beacon-blink-when-window-scrolls t)
+   (setq beacon-blink-when-window-changes t)
+   (setq beacon-blink-when-point-moves-horizontally 20)
+   (setq beacon-blink-when-point-moves-vertically 10)))
+
 (require 'ansi-color)
 (defun my/ansi-colorize-buffer ()
   (let ((buffer-read-only nil))
@@ -138,6 +151,56 @@
 (global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)
 (global-set-key (kbd "C->") 'mc/skip-to-next-like-this)
 (global-set-key (kbd "C-c C-/") 'mc/unmark-next-like-this)
+
+(defun fs/sql-indent-string ()
+  "Indents the string under the cursor as SQL."
+  (interactive)
+  (save-excursion
+    (er/mark-inside-quotes)
+    (let* ((text (buffer-substring-no-properties (region-beginning) (region-end)))
+           (pos (region-beginning))
+           (column (progn (goto-char pos) (current-column)))
+           (formatted-text (with-temp-buffer
+                             (insert text)
+                             (delete-trailing-whitespace)
+                             (sql-indent-buffer)
+                             (replace-string "\n" (concat "\n" (make-string column (string-to-char " "))) nil (point-min) (point-max))
+                             (buffer-string))))
+      (delete-region (region-beginning) (region-end))
+      (goto-char pos)
+      (insert formatted-text))))
+
+(defun fs/sql-indent-region ()
+  "Indents the region"
+  (interactive)
+  (save-excursion
+    (let* ((beginning (region-beginning))
+           (end (region-end))
+           (text (buffer-substring-no-properties beginning end))
+           (pos (region-beginning))
+           (column (progn (goto-char pos) (current-column)))
+           (formatted-text (with-temp-buffer
+                             (insert text)
+                             (delete-trailing-whitespace)
+                             (sql-indent-buffer)
+                             (replace-string "\n" (concat "\n" (make-string column (string-to-char " "))) nil (point-min) (point-max))
+                             (buffer-string)
+                             )))
+      (delete-region beginning end)
+      (goto-char pos)
+      (insert formatted-text))))
+
+(defun fs/put-file-name-on-clipboard ()
+  "Put the current file name on the clipboard"
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (with-temp-buffer
+        (insert filename)
+        (clipboard-kill-region (point-min) (point-max)))
+      (message filename))))
 
 (defun fs/unhex-region (start end)
   "de-urlencode the region between START and END in current buffer."
@@ -294,3 +357,7 @@
 (setq sp-highlight-pair-overlay nil)
 (setq sp-highlight-wrap-overlay t)
 (setq sp-highlight-wrap-tag-overlay t)
+
+;;(add-hook 'sql-mode-hook (lambda () (load-library "sql-indent"))) doesn't seem to work
+(eval-after-load "sql"
+  '(load-library "sql-indent"))
