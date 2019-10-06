@@ -254,7 +254,7 @@
 
 (dolist (mode '(;emacs-lisp-mode-hook
                 ;inferior-lisp-mode-hook
-                clojure-mode-hook
+                ;clojure-mode-hook
                 ;python-mode-hook
                 ;js-mode-hook
                 ;R-mode-hook
