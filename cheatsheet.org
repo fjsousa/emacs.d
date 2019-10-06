@@ -1,0 +1,303 @@
+[[(https://www.masteringemacs.org/)][Mastering emacs shortcuts and important stuff]]. Under Frequent revision
+
+* Basics
+
+| key       | Command                    |
+|-----------+----------------------------|
+| C-g       | Quit all the things        |
+| C-x C-f   | File Open                  |
+| C-x C-s   | File Save                  |
+| C-x k     | Kill Buffer                |
+| C-x <-/-> | Previous/Next Buffer       |
+| C-x C-b   | List all buffers - ibuffer |
+| C-x b     | Open/new buffer            |
+
+* Terminals
+
+-  M-x shell: Dumb terminal buffer
+-  M-x term: proper ansi terminal emulator. C-c C-j line mode (to use it as a normal emacs buffer). C-c C-k char mode (normal terminal mode)
+-  M-x eshell: elisp emulator
+
+* Misc
+
+| key                | Command                                                  |
+|--------------------+----------------------------------------------------------|
+| C-number something | Repeat                                                   |
+| C-v/PgDown         | Scroll down                                              |
+| M-v/PgUp           | Scroll up                                                |
+| C-M-v              | Scroll down other window                                 |
+| C-M-- C-M-v        | Scroll up the other window                               |<<-
+| C-u M-\            | run shell command on selection(eg `python -m json.tool`) |
+| C-x C-+ (-)        | increase buffer font size                                |
+| M-up/down arrow    | move line up or down                                     |
+
+* Movement
+
+| key               | Command                                                          |
+|-------------------+------------------------------------------------------------------|
+| C-a               | Move to the beggining of the line                                |
+| M-m               | Move to first non white space in line                            |
+| C-e               | Move to end of line                                              |
+| M-f               | Move forward one word                                            |
+| M-b               | Move backwards one word                                          |
+| C-f               | Move forward one character                                       |
+| C-b               | Move backwards one character                                     |
+| C-p               | Move to previous line                                            |
+| C-n               | Move to next line                                                |
+| M-</> (C-u C-SPC) | Move to begining/end of buffer                                   |
+| C-SPC             | Switches between setting the mark                                |
+| C-x C-x           | Exchanges the point and the mark and reactivates the last region |
+| M-g g             | Go to Line                                                       |
+| M-i               | imenu (List functions in buffer)                                 |
+| C-r               | Scrolls buffer around line (cool for quick look ups)             |
+| M-@               | mark word                                                        |
+| C-x C-\           | goto-last-change                                                 |
+| C-x C-SPC         | move to where cursor was (useful if you made a mistake)          |
+
+* HELM
+
+| key            | Command                  |
+|----------------+--------------------------|
+| C-x c          | prefix                   |
+| C-x c C-c g    | google completion        |
+| helm-for-files | helm search file feature |
+
+* Paredit
+
+| key       | Command                               |
+|-----------+---------------------------------------|
+| M-(       | Wrap                                  |
+| C-right   | Forward slurp                         |
+| C-M-left  | Backward slurp                        |
+| C-left    | Forward barf                          |
+| C-M-right | Backward barf                         |
+| C-M-k     | Kills the balanced exp                |
+| C-M-f/b   | Move between sexp                     |
+| C-M-n/p   | Move forward to the next/pevious list |
+| C-M-d/u   | Move down/up into a list              |
+| C-SPC     | Select sexp                           |
+
+* Search and replace
+
+| key         | Command                                                             |
+|-------------+---------------------------------------------------------------------|
+| C-s/C-r     | Regex search in buffer. C-s/C-r again to cycle (C-x C-x to go back) |
+| C-w         | Adds word at point to search string                                 |
+| C-M-y/w     | Adds/removes char at point                                          |
+| M-s w       | Toggles word mode                                                   |
+| M-x occur   | Isearch like nice feature                                           |
+| (M-g) M-n/p | Cycle occurrences                                                    |
+| e           | switch to occur edit mode                                           |
+| C-c C-c     | Exists edit mode and applies changes                                |
+|             | M-x multi-occur-in-matching-buffers multi occur                     |
+| C-M-%       | query regexp search and replace (works from isearch)                |
+| M-%         | query search and replace (works from isearch)                       |
+| y . , ! u   | confirm/replace and exit/replace and stay/all/undo                  |
+
+* Selection / kill Ring
+
+| key       | Command                          |
+|-----------+----------------------------------|
+| *C-spc*   | Create selection                 |
+| backspace | Delete selected region           |
+| C-w       | Kill region                      |
+| M-w       | Copy Region - add to Ring        |
+| M-d       | Deletes word - adds to Kill Ring |
+| C-y       | Yanks killed text                |
+| M-y       | Cycles next item on Kill Ring    |
+| C-k       | Kill Line from point             |
+| C-S-BKS   | Kill line                        |
+| C-cy      | Yank menu                        |
+| C-M-k     | Kill s-expression                |
+| C-M-w     | Apperd new kill to an old kill   |
+
+* Commands M-x
+
+| key                        | Command                                                        |
+|----------------------------+----------------------------------------------------------------|
+| package-list-packages      | Handling Packages                                              |
+| package-refresh-contents   |                                                                |
+| package-install            |                                                                |
+| replace-string             | replaces string in buffer or selected region                   |
+| cider-jack-in              | fires cider repl                                               |
+| upcase-initials-region     | Capitalizes region                                             |
+| count-words                | Counts lines, words, and characters in buffer                  |
+| count-matches              |                                                                |
+| delete-duplicate-lines     |                                                                |
+| flush(keep)-lines          | Flushes or deletes lines in a buffer (usefull for logs)        |
+| delete-trailing-whitespace | Deletes all trailing white space                               |
+| sort-line                  |                                                                |
+| align-regex                | aligns region using regex in the minibuffer                    |
+| C-u M-c align-regex.       | complex align command, aligns multiple columns. bit brain fuck |
+
+* Help
+
+| key               | Command                                                 |
+|-------------------+---------------------------------------------------------|
+| C-h s             | Syntax table                                            |
+| C-h k bindind     | get help for keybinding                                 |
+| C-h f             | get help for function                                   |
+| `prefix` C-h      | get help for any key prefix                             |
+| C-h a             | apropos command (list commands that match a pattern) £  |
+| M-x info or C-h i | info manual                                             |
+| M-x info-appropos | Search info manual for a string                         |
+| C-h d             | Search doc strings of elisp code                        |
+| C-h m             | Finds mode command                                      |
+
+£ Also check  M-x apropos-variable
+
+* Windows
+
+| key          | Command                                                 |
+|--------------+---------------------------------------------------------|
+| C-x o        | Switch to another window                                |
+| C-x 1        | Delete all other windows, leaving only the current one. |
+| C-x 2        | Split frame above and below                             |
+| C-x 3        | Split horizontal                                        |
+| C-x 0        | Delete current window                                   |
+| C-c left/rig | Undo/redo window state (needs winner-mode on)           |
+| S-arrows     | Move around frames                                      |
+
+* Repl/Cider
+
+| key         | Command                                                       |
+|-------------+---------------------------------------------------------------|
+| C-c M-j     | cider jack in                                                 |
+| C-h m       | Help in cider                                                 |
+| C-x C-e     | Evaluate in repl                                              |
+| C-c M-n     | Set namespace in repl                                         |
+| C-c C-k     | Compile current buffer in the repl session                    |
+| C-up/down   | repl history                                                  |
+| C-c C-d C-d | Docs in the repl, q to quit                                   |
+| M-./M-,     | Show source code in the repl,  return to repl                 |
+| C-c C-d C-a | find arbitrary search across function names and docs          |
+| C-c M-p     | Load the form preceding point in the REPL buffer.             |
+| C-c C-b     | Interrupt repl evaluation                                     |
+| C-c C-o     | clean last repl output                                        |
+| C-c M-n n   | Select namespace                                              |
+| C-c C-u     | Kill input                                                    |
+| C-p/n       | navigate downwards/upwards (RET to past exp in input)         |
+| M-p/n       | after `cider-repl-next-matching-input`                        |
+| C-M-r       | cider restart                                                 |
+| C-c u       | cider user ns in repl                                         |
+| C-c C-t C-t | runs test                                                     |
+| C-c C-t C-n | runs all tests in namespace                                   |
+| C-c C-u     | undefine symbols if you delete a test from the test namespace |
+
+* Editing
+
+| key       | Command                                                                   |
+|-----------+---------------------------------------------------------------------------|
+| C-M-q     | Reindents sexp                                                            |
+| C-M-\     | Indents region using major mode indent command                            |
+| C-x TAB   | Hard indent                                                               |
+| C-/       | Undo                                                                      |
+| C-j       | New Line and Indent (now RET)                                             |
+| M-/       | DAbbrev (configured as Hippie Expand) - expands word at the pointto cycle |
+| C-M-/     | DAbbrev - cycles through possible expansions of the text before point     |
+| M-\       | Delete all spaces and tabs around point                                   |
+| C-d       | Deletes the caracter at point                                             |
+| M-d       | Kill word                                                                 |
+| C-M-k     | kill s-expression                                                         |
+| C-t       | transpose characters                                                      |
+| M-t       | transpose words (ignores symbols)                                         |
+| C-M-t     | transpose s-expressions                                                   |
+| C-x C-t   | transpose lines                                                           |
+| M-q       | Refill command (commands and stuff)                                       |
+| C-x C-;   | comments current line                                                     |
+| M-j       | indent new line in comment                                                |
+| C-x C-u/l | Upper(lower)cases the region                                              |
+| M-c       | Capitalizes next word, (M-- inverts)                                      |
+| M-u/l     | Upper(lower)cases next word, (M-- inverts)                                |
+| C-o       | Inserts a blank line after point                                          |
+| C-x C-o   | Deletes all blank lines after the point                                   |
+| M-ˆ       | Joins the line the point is on with the one above                         |
+| C-x C-t   | Transposes lines                                                          |
+| C-t       | Transposes char                                                           |
+| M-q       | Refils Paragraph/comments (C-x f sets fill width)                         |
+| M-z       | kills up to a given character                                             |
+
+* Dired
+
+| Key   | Command                                       |
+|-------+-----------------------------------------------|
+| C-x d | Prompts for dir                               |
+| C-d   | lists dir when for instance in open file mode |
+| i     | appends sub-dir to buffer                     |
+| q     | returns to parent dir                         |
+| o     | visits file in another buffer                 |
+| C-o   | opens file in another buffer                  |
+| v     | opens file in same buffer in view mode        |
+
+* Projectile
+
+| Key     | Command              |
+|---------+----------------------|
+| C-c-p f | projectile-find-file |
+
+* Bookmarks
+
+| key     | Command           |
+|---------+-------------------|
+| C-x r m | Set a bookmark    |
+| r l     | List bookmarks    |
+| r b     | Jump to bookmarks |
+
+* Registers
+
+| key     | Command                    |
+|---------+----------------------------|
+| C-x r s | Store region in registry   |
+| C-x r j | jump  to register          |
+| C-x r i | insert content of register |
+
+* Grep
+
+| key       | Command                                 |
+|-----------+-----------------------------------------|
+| M-x rgrep | recursive grep with a bunch of defaults |
+| M-g M-n   | Next occurence                          |
+| M-g M-p   | Previous occurrence                      |
+
+* Debug
+
+| key       | Command           |
+|-----------+-------------------|
+| C-u C-M-x | evaluate function |
+
+* Multiple cursors
+
+| key                           | Command                                      |
+|-------------------------------+----------------------------------------------|
+| C-S-c C-S-c                   | Cursors in region                            |
+| C-,                           | mark-previous-like-this                      |
+| C-.                           | mark-next-like-this                          |
+| C-c C-,                       | mark-all-like-this                           |
+| C-x r y                       | pastes multiple cursor (rectangle kill ring) |
+| set-rectangular-region-anchor | Sublime way of selecting multiple lines      |
+
+* spell checking
+
+| key                    | Command                                    |
+|------------------------+--------------------------------------------|
+| M-$                    | spell check word                           |
+| M-x flyspell-mode      | minor mode that highlights spelling errors |
+| M-x flyspell-prog-mode | spell checks comments and doc string       |
+| M-x ispell-buffer      | Runs spell check on buffer                 |
+| M-x ispell-region      |                                            |
+|                        |                                            |
+
+- more useful stuff on how to use flyspell minor mode on Mastering Emacs
+
+* Elisp
+
+-  `M-x ielm` elisp repl
+-  `C-x C-e` eval expression
+-  `M-C-x` eval and reasigns new definition to var or function. just evaling it doesn't reasign it.
+
+* Notes
+
+Buffer variables: doing a setq only sets the variable for the current buffer: ex:
+- show-trailing-whitspace
+- auto-complete-mode
+- describe-personal-keybindings (shows keybindgs defined in emacs config)
