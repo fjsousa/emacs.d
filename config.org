@@ -131,7 +131,11 @@
   (setq ring-bell-function 'ignore)
 #+END_SRC
 
+* Shell
 
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'sh-mode-hook 'flycheck-mode)
+#+END_SRC
 * Org mode config
 
 ** Table of contents
@@ -316,6 +320,16 @@ Adds helper minibuffer with key completions
   (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 #+END_SRC
 
+** Move buffers around
+
+#+BEGIN_SRC emacs-lisp
+  (require 'buffer-move)
+
+  (global-set-key (kbd "<C-s-up>")     'buf-move-up)
+  (global-set-key (kbd "<C-s-down>")   'buf-move-down)
+  (global-set-key (kbd "<C-s-left>")   'buf-move-left)
+  (global-set-key (kbd "<C-s-right>")  'buf-move-right)
+#+END_SRC
 * Dired (some bits)
 
 #+BEGIN_SRC emacs-lisp
@@ -339,7 +353,7 @@ Adds helper minibuffer with key completions
 
 ** file path in clipboard
 
-indent sql util function
+*** indent sql util function
 
 #+BEGIN_SRC emacs-lisp
   (defun fs/sql-indent-string ()
@@ -382,7 +396,7 @@ indent sql util function
 
 #+END_SRC
 
-file name on clipboard
+*** file name on clipboard
 
 #+BEGIN_SRC emacs-lisp
   (defun fs/put-file-name-on-clipboard ()
@@ -398,7 +412,7 @@ file name on clipboard
         (message filename))))
 #+END_SRC
 
-decode url
+*** decode url
 
 #+BEGIN_SRC emacs-lisp
   (defun fs/unhex-region (start end)
@@ -415,7 +429,7 @@ decode url
   ;;http://localhost:1212/well-search?terms=""&limit=100&offset=100&rules=[{:attribute "basin", :value "PERMIAN BASIN", :predicate "="}]&legend?=true&drilling-info?=true&name-only?=false
 #+END_SRC
 
-eval and replace elisp ripped from magnars. Has keybindings so it can be used in multiple cursor.
+*** eval and replace elisp ripped from magnars. Has keybindings so it can be used in multiple cursor.
 
 #+BEGIN_SRC emacs-lisp
   (defun fs/eval-and-replace ()
@@ -431,20 +445,38 @@ eval and replace elisp ripped from magnars. Has keybindings so it can be used in
   (global-set-key (kbd "C-x C-y") 'eval-and-replace)
 #+END_SRC
 
-Loads config.org without having to navigating to init.el and manually evaluating the org-babel-load-file block.
+*** Loads config.org without having to navigating to init.el and manually evaluating the org-babel-load-file block.
 
 #+BEGIN_SRC emacs-lisp
-  (defun fs/load-config-org ()
+  (defun fs/eval-config-org ()
     (interactive)
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 #+END_SRC
 
-Sometimes when you have just added .tern-project file or edited the file but Tern does not auto reload, you need to manually kill Tern server. This little piece of code does the trick
+*** Sometimes when you have just added .tern-project file or edited the file but Tern does not auto reload, you need to manually kill Tern server. This little piece of code does the trick
 
 #+BEGIN_SRC emacs-lisp
   (defun fs/delete-tern-process ()
     (interactive)
     (delete-process "Tern"))
+#+END_SRC
+
+*** open frequent files
+
+#+BEGIN_SRC emacs-lisp
+  (defun fs/open-config-org ()
+    (interactive)
+    (find-file "~/.emacs.d/config.org"))
+
+  (defun fs/open-todo ()
+    (interactive)
+    (find-file "/home/fsousa/SpiderOak Hive/writeups/notes/todo.org"))
+
+  (defun fs/open-legend-org ()
+    (interactive)
+    (find-file "/home/fsousa/SpiderOak Hive/writeups/notes/legend.org"))
+
+
 #+END_SRC
 * Spelling and Grammar
 
@@ -643,8 +675,8 @@ Default behaviour when you open a quote or parens is to highlight the whole thin
   '(load-library "sql-indent"))
 #+END_SRC
 
-* todo
+* to do
 - [ ] clojurescript mode enabled on clj files by default (breaks cider)
 
-#  LocalWords:  smartparens
+#  LocalWords:  smartparens ctrl
 

@@ -42,6 +42,10 @@
 
 (setq ring-bell-function 'ignore)
 
+
+
+(add-hook 'sh-mode-hook 'flycheck-mode)
+
 (use-package org-make-toc
 :ensure t)
 
@@ -141,6 +145,13 @@
     (ansi-color-apply-on-region (point-min) (point-max))))
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 
+(require 'buffer-move)
+
+(global-set-key (kbd "<C-s-up>")     'buf-move-up)
+(global-set-key (kbd "<C-s-down>")   'buf-move-down)
+(global-set-key (kbd "<C-s-left>")   'buf-move-left)
+(global-set-key (kbd "<C-s-right>")  'buf-move-right)
+
 (setq dired-dwim-target t)
 
 ;; multiple cursors
@@ -227,13 +238,25 @@
 
 (global-set-key (kbd "C-x C-y") 'eval-and-replace)
 
-(defun fs/load-config-org ()
+(defun fs/eval-config-org ()
   (interactive)
   (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 
 (defun fs/delete-tern-process ()
   (interactive)
   (delete-process "Tern"))
+
+(defun fs/open-config-org ()
+  (interactive)
+  (find-file "~/.emacs.d/config.org"))
+
+(defun fs/open-todo ()
+  (interactive)
+  (find-file "/home/fsousa/SpiderOak Hive/writeups/notes/todo.org"))
+
+(defun fs/open-legend-org ()
+  (interactive)
+  (find-file "/home/fsousa/SpiderOak Hive/writeups/notes/legend.org"))
 
 (add-hook 'org-mode-hook #'flyspell-mode)
 
