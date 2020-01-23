@@ -349,9 +349,7 @@ Adds helper minibuffer with key completions
 
 #+END_SRC
 
-* defuns
-
-** file path in clipboard
+* Custom defuns
 
 *** indent sql util function
 
@@ -427,6 +425,13 @@ Adds helper minibuffer with key completions
   ;;returns:
 
   ;;http://localhost:1212/well-search?terms=""&limit=100&offset=100&rules=[{:attribute "basin", :value "PERMIAN BASIN", :predicate "="}]&legend?=true&drilling-info?=true&name-only?=false
+
+  (defun fs/hexify-region (start end)
+    "de-urlencode the region between START and END in current buffer."
+    (interactive "r")
+    (save-excursion
+      (let ((text (delete-and-extract-region start end)))
+        (insert (decode-coding-string (url-hexify-string text) 'utf-8)))))
 #+END_SRC
 
 *** eval and replace elisp ripped from magnars. Has keybindings so it can be used in multiple cursor.
@@ -474,7 +479,7 @@ Adds helper minibuffer with key completions
 
   (defun fs/open-legend-org ()
     (interactive)
-    (find-file "/home/fsousa/SpiderOak Hive/writeups/notes/legend.org"))
+    (find-file "/home/fsousa/src/legend-docs/legend.org"))
 
 
 #+END_SRC
@@ -680,3 +685,15 @@ Default behaviour when you open a quote or parens is to highlight the whole thin
 
 #  LocalWords:  smartparens ctrl
 
+* Python
+
+Use python 3
+#+BEGIN_SRC emacs-lisp
+(setq python-shell-interpreter "python3")
+#+END_SRC
+* cider config
+
+#+BEGIN_SRC emacs-lisp
+;;(setq cider-lein-parameters "with-profile debug,dev repl :headless")
+;;(setq cider-lein-parameters "with-profile +debug repl :headless")
+#+END_SRC

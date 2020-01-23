@@ -13,7 +13,8 @@
 (load-theme 'tomorrow-night-bright t)
 
 ;; increase font size for better readability
-(set-face-attribute 'default nil :height 140)
+;;(set-face-attribute 'default nil :height 100 :weight 'bold)
+(set-face-attribute 'default nil :height 130 :weight 'bold)
 
 (setq ;; makes killing/yanking interact with the clipboard
       x-select-enable-clipboard t
@@ -41,8 +42,6 @@
 ;  (global-set-key (kbd "s-t") '(lambda () (interactive)))
 
 (setq ring-bell-function 'ignore)
-
-
 
 (add-hook 'sh-mode-hook 'flycheck-mode)
 
@@ -226,6 +225,13 @@
 
 ;;http://localhost:1212/well-search?terms=""&limit=100&offset=100&rules=[{:attribute "basin", :value "PERMIAN BASIN", :predicate "="}]&legend?=true&drilling-info?=true&name-only?=false
 
+(defun fs/hexify-region (start end)
+  "de-urlencode the region between START and END in current buffer."
+  (interactive "r")
+  (save-excursion
+    (let ((text (delete-and-extract-region start end)))
+      (insert (decode-coding-string (url-hexify-string text) 'utf-8)))))
+
 (defun fs/eval-and-replace ()
   "Replace the preceding sexp with its value."
   (interactive)
@@ -256,7 +262,7 @@
 
 (defun fs/open-legend-org ()
   (interactive)
-  (find-file "/home/fsousa/SpiderOak Hive/writeups/notes/legend.org"))
+  (find-file "/home/fsousa/src/legend-docs/legend.org"))
 
 (add-hook 'org-mode-hook #'flyspell-mode)
 
@@ -384,3 +390,8 @@
 ;;(add-hook 'sql-mode-hook (lambda () (load-library "sql-indent"))) doesn't seem to work
 (eval-after-load "sql"
   '(load-library "sql-indent"))
+
+(setq python-shell-interpreter "python3")
+
+;;(setq cider-lein-parameters "with-profile debug,dev repl :headless")
+;;(setq cider-lein-parameters "with-profile +debug repl :headless")
