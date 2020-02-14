@@ -276,6 +276,8 @@
 | C-x r y                       | pastes multiple cursor (rectangle kill ring) |
 | set-rectangular-region-anchor | Sublime way of selecting multiple lines      |
 
+check the rest under the key bindings of multiple cursors in config.org ~fs/open-config-org~
+
 * spell checking
 
 | key                    | Command                                    |

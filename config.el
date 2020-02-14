@@ -161,6 +161,8 @@
 (global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)
 (global-set-key (kbd "C->") 'mc/skip-to-next-like-this)
 (global-set-key (kbd "C-c C-/") 'mc/unmark-next-like-this)
+;;"C-v" mc/cycle-forward
+;;"M-v" mc/cycle-backward
 
 (defun fs/sql-indent-string ()
   "Indents the string under the cursor as SQL."
@@ -255,6 +257,10 @@
 (defun fs/open-config-org ()
   (interactive)
   (find-file "~/.emacs.d/config.org"))
+
+  (defun fs/open-cheatsheet ()
+  (interactive)
+  (find-file "~/.emacs.d/cheatsheet.org"))
 
 (defun fs/open-todo ()
   (interactive)

@@ -346,10 +346,12 @@ Adds helper minibuffer with key completions
   (global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)
   (global-set-key (kbd "C->") 'mc/skip-to-next-like-this)
   (global-set-key (kbd "C-c C-/") 'mc/unmark-next-like-this)
+  ;;"C-v" mc/cycle-forward
+  ;;"M-v" mc/cycle-backward
 
 #+END_SRC
 
-* Custom defuns
+* Custom defines
 
 *** indent sql util function
 
@@ -472,6 +474,10 @@ Adds helper minibuffer with key completions
   (defun fs/open-config-org ()
     (interactive)
     (find-file "~/.emacs.d/config.org"))
+
+    (defun fs/open-cheatsheet ()
+    (interactive)
+    (find-file "~/.emacs.d/cheatsheet.org"))
 
   (defun fs/open-todo ()
     (interactive)
@@ -682,6 +688,9 @@ Default behaviour when you open a quote or parens is to highlight the whole thin
 
 * to do
 - [ ] clojurescript mode enabled on clj files by default (breaks cider)
+- [ ] when you select a symbol, highlight all usages of that symbol
+Clojure:
+- [ ] double clicking on the same word multiple times should increase the region 
 
 #  LocalWords:  smartparens ctrl
 
