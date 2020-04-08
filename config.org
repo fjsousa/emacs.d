@@ -352,7 +352,21 @@ Adds helper minibuffer with key completions
 #+END_SRC
 
 * Custom defines
-
+*** Paste peer error in new buffer
+#+BEGIN_SRC emacs-lisp
+(defun fs/peer-clean-error ()
+  "Paste peer error in new buffer"
+  (interactive)
+  (let (($buf (generate-new-buffer "peer-error")))
+    (switch-to-buffer $buf)
+    ;;(funcall initial-major-mode)
+    ;;(setq buffer-offer-save t)
+    (yank)
+    (goto-char (point-min))
+    (while (search-forward "\\n" nil t)
+      (replace-match "\n"))
+    $buf))
+#+END_SRC
 *** indent sql util function
 
 #+BEGIN_SRC emacs-lisp

@@ -164,6 +164,19 @@
 ;;"C-v" mc/cycle-forward
 ;;"M-v" mc/cycle-backward
 
+(defun fs/peer-clean-error ()
+  "Paste peer error in new buffer"
+  (interactive)
+  (let (($buf (generate-new-buffer "peer-error")))
+    (switch-to-buffer $buf)
+    ;;(funcall initial-major-mode)
+    ;;(setq buffer-offer-save t)
+    (yank)
+    (goto-char (point-min))
+    (while (search-forward "\\n" nil t)
+      (replace-match "\n"))
+    $buf))
+
 (defun fs/sql-indent-string ()
   "Indents the string under the cursor as SQL."
   (interactive)
