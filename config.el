@@ -13,8 +13,8 @@
 (load-theme 'tomorrow-night-bright t)
 
 ;; increase font size for better readability
-;;(set-face-attribute 'default nil :height 100 :weight 'bold)
-(set-face-attribute 'default nil :height 130 :weight 'bold)
+(set-face-attribute 'default nil :height 100 :weight 'bold)
+;;(set-face-attribute 'default nil :height 130 :weight 'bold)
 
 (setq ;; makes killing/yanking interact with the clipboard
       x-select-enable-clipboard t
@@ -53,8 +53,8 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 
-(set-face-attribute  'org-level-1 nil :height 190)
-(set-face-attribute  'org-level-2 nil :height 160)
+;;(set-face-attribute  'org-level-1 nil :height 190)
+;;(set-face-attribute  'org-level-2 nil :height 160)
 
 (add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
@@ -417,6 +417,6 @@
 
 (require 'direx)
 (require 'popwin)
-(push '(direx:direx-mode :position left :width 35 :dedicated t)
+(push '(direx:direx-mode :position left :width 45 :dedicated t)
       popwin:special-display-config)
 (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)

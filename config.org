@@ -84,7 +84,8 @@
 ** Font size
 #+BEGIN_SRC emacs-lisp
   ;; increase font size for better readability
-  (set-face-attribute 'default nil :height 140)
+  (set-face-attribute 'default nil :height 100 :weight 'bold)
+  ;;(set-face-attribute 'default nil :height 130 :weight 'bold)
 #+END_SRC
 
 ** random
@@ -160,8 +161,8 @@
     Keep in mind that there's a global =set-face-attribute= that sets the default font size in UI.
 
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute  'org-level-1 nil :height 190)
-  (set-face-attribute  'org-level-2 nil :height 160)
+  ;;(set-face-attribute  'org-level-1 nil :height 190)
+  ;;(set-face-attribute  'org-level-2 nil :height 160)
 #+END_SRC
 
 *** trailing white characters
@@ -700,11 +701,7 @@ Default behaviour when you open a quote or parens is to highlight the whole thin
   '(load-library "sql-indent"))
 #+END_SRC
 
-* to do
-- [ ] clojurescript mode enabled on clj files by default (breaks cider)
-- [ ] when you select a symbol, highlight all usages of that symbol
-Clojure:
-- [ ] double clicking on the same word multiple times should increase the region 
+
 
 #  LocalWords:  smartparens ctrl
 
@@ -724,8 +721,41 @@ Use python 3
 #+BEGIN_SRC emacs-lisp
 (require 'direx)
 (require 'popwin)
-(push '(direx:direx-mode :position left :width 35 :dedicated t)
+(push '(direx:direx-mode :position left :width 45 :dedicated t)
       popwin:special-display-config)
 (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
 
 #+END_SRC
+
+* Typescript
+;; typescript
+;; move to separate file
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+(add-hook 'before-save-hook 'tide-format-before-save)
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
+* to do
+- [ ] clojurescript mode enabled on clj files by default (breaks cider)
+- [ ] when you select a symbol, highlight all usages of that symbol
+Clojure:
+- [ ] double clicking on the same word multiple times should increase the region 
+- [ ] ace-jump and go back proper flow
+
+** Put these in a function
+;; need to move to some function soon
+(format-time-string "<%Y-%m-%d %a %H:%M:%S>" (seconds-to-time (/ 1507456691120 1000)))
+
+(current-time-zone)

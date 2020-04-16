@@ -77,12 +77,12 @@
 
 ;; key bindings
 ;; these help me out with the way I usually develop web apps
-(defun cider-start-http-server ()
+(defun cider-start-legend ()
   (interactive)
   (cider-load-current-buffer)
   (let ((ns (cider-current-ns)))
     (cider-repl-set-ns ns)
-    (cider-interactive-eval (format "(println '(def server (%s/start))) (println 'server)" ns))
+    (cider-interactive-eval (format "(println '(def server (%s/start)(figwheel-sidecar.repl-api/start-figwheel!))) (println 'server)" ns))
     (cider-interactive-eval (format "(def server (%s/start)) (println server)" ns))))
 
 
@@ -90,9 +90,9 @@
   (interactive)
   (cider-interactive-eval (format "(user/reset)")))
 
-(defun cider-user-ns ()
+(defun cider-repl-ns ()
   (interactive)
-  (cider-repl-set-ns "user"))
+  (cider-repl-set-ns "legend.repl"))
 
 (eval-after-load 'cider
   '(progn
@@ -123,7 +123,7 @@
 ;; Sayid
 ;;
 ;; loads key bindings for clojure major mode
-(eval-after-load 'clojure-mode '(sayid-setup-package))
+;;(eval-after-load 'clojure-mode '(sayid-setup-package))
 
 ;;cljr need to use package on this
 (require 'clj-refactor)
