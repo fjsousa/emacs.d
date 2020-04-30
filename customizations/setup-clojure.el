@@ -77,53 +77,21 @@
 
 ;; key bindings
 ;; these help me out with the way I usually develop web apps
-(defun cider-start-legend ()
+(defun fs/cider-server-restart ()
   (interactive)
-  (cider-load-current-buffer)
-  (let ((ns (cider-current-ns)))
-    (cider-repl-set-ns ns)
-    (cider-interactive-eval (format "(println '(def server (%s/start)(figwheel-sidecar.repl-api/start-figwheel!))) (println 'server)" ns))
-    (cider-interactive-eval (format "(def server (%s/start)) (println server)" ns))))
-
-
-(defun cider-refresh ()
-  (interactive)
-  (cider-interactive-eval (format "(user/reset)")))
-
-(defun cider-repl-ns ()
-  (interactive)
-  (cider-repl-set-ns "legend.repl"))
+  (cider-interactive-eval "(legend.repl/restart)"))
 
 (eval-after-load 'cider
   '(progn
-     (define-key clojure-mode-map (kbd "C-c C-v") 'cider-start-http-server)
-     (define-key clojure-mode-map (kbd "C-M-r") 'cider-refresh)
-     (define-key clojure-mode-map (kbd "C-c u") 'cider-user-ns)
-     (define-key cider-mode-map (kbd "C-c u") 'cider-user-ns)))
+     (define-key clojure-mode-map (kbd "C-c C-v") 'fs/server-restart)))
 
-;;auto reload namespaces with tools.refresh after a cider buffer gets saved
-
-;; (add-hook 'cider-mode-hook
-;;           '(lambda () (add-hook 'after-save-hook
-;;                                 '(lambda ()
-;;                                    (if (and (boundp 'cider-mode) cider-mode)
-;;                                        (cider-namespace-refresh)
-;;                                      )))))
-
-(defun cider-namespace-refresh ()
+(defun fs/cider-namespace-refresh ()
   (interactive)
   (cider-interactive-eval
-   "(require 'clojure.tools.namespace.repl)
-  (clojure.tools.namespace.repl/refresh)"))
+   "(clojure.tools.namespace.repl/refresh)"))
 
 ;; setting cider output line to 100 char so that it doesn't break the repl
 (setq cider-repl-print-length 100)
-
-;;
-;; Sayid
-;;
-;; loads key bindings for clojure major mode
-;;(eval-after-load 'clojure-mode '(sayid-setup-package))
 
 ;;cljr need to use package on this
 (require 'clj-refactor)
