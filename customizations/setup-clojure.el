@@ -81,6 +81,14 @@
   (interactive)
   (cider-interactive-eval "(legend.repl/restart)"))
 
+(defun fs/cider-switch-to-cljs-repl ()
+  (interactive)
+  (cider-interactive-eval "(figwheel-sidecar.repl-api/cljs-repl \"dev\")"))
+
+(defun fs/cider-quit-cljs-repl ()
+  (interactive)
+  (cider-interactive-eval ":cljs/quit"))
+
 (eval-after-load 'cider
   '(progn
      (define-key clojure-mode-map (kbd "C-c C-v") 'fs/server-restart)))
