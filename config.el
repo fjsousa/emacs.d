@@ -283,6 +283,22 @@
   (interactive)
   (find-file "/home/fsousa/src/legend-docs/legend.org"))
 
+(defun fs/seconds-to-human (timestamp)
+  (format-time-string "<%Y-%m-%d %a %H:%M:%S>" (seconds-to-time timestamp)))
+
+
+(defun fs/timestamp-to-human-date (arg)
+  "converts timestamp in the region, if active; if not, use timestamp at point."
+  (interactive "*p")
+  (let* ((timestamp (buffer-substring (region-beginning) (region-end)))
+         (string-size (length timestamp)))
+    (cond ((= 10 string-size) (print (fs/seconds-to-human (string-to-number timestamp))))
+          ((= 13 string-size) (print (fs/seconds-to-human (/ (string-to-number timestamp) 1000))))
+          ('otherwise (print error)))))
+
+;; select region on a timestamp and M-x fs/timestamp-to-human-date
+;; 1588783092
+
 (add-hook 'org-mode-hook #'flyspell-mode)
 
 (add-to-list 'exec-path "/usr/local/bin/")
