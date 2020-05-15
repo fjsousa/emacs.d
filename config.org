@@ -106,11 +106,13 @@
 
 *** Org bullets
 
+I think this breaks flyspell menu
+
 #+BEGIN_SRC emacs-lisp
-  (use-package org-bullets
-    :ensure t
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+  ;; (use-package org-bullets
+  ;;   :ensure t
+  ;;   :config
+  ;;   (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+END_SRC
 
 *** font size
@@ -122,11 +124,6 @@
   ;;(set-face-attribute  'org-level-2 nil :height 160)
 #+END_SRC
 
-*** trailing white characters
-    #+BEGIN_SRC emacs-lisp
-      (add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace t)))
-
-    #+END_SRC
 ** Hooks
 
 #+BEGIN_SRC emacs-lisp
@@ -136,6 +133,7 @@
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-fill-column-mode)
   (add-hook 'org-mode-hook 'org-show-block-all)
+  (add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace t)))
 #+END_SRC
 
 ** Block background colour
@@ -146,10 +144,10 @@
                           (color-darken-name
                            (face-attribute 'default :background) 3))
 
-      (setq org-src-block-faces '(("emacs-lisp" (:background "#E3E3E3"))
-                                  ("python" (:background "#E3E3E3"))
+      (setq org-src-block-faces '(("emacs-lisp" (:background "#2E2E2E"))
+                                  ("python" (:background "#2E2E2E"))
                                   ("javascript" (:background "#E3E3E3"))
-                                  ("json" (:background "#ffffff"))))
+                                  ("json" (:background "#E3E3E3"))))
 #+END_SRC
 
 * Markdown Editing

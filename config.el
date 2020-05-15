@@ -1,9 +1,3 @@
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
-
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/themes")
 (load-theme 'tomorrow-night-bright t)
@@ -11,25 +5,6 @@
 ;; increase font size for better readability
 (set-face-attribute 'default nil :height 100 :weight 'bold)
 ;;(set-face-attribute 'default nil :height 130 :weight 'bold)
-
-(setq ;; makes killing/yanking interact with the clipboard
-      x-select-enable-clipboard t
-
-      ;; I'm actually not sure what this does but it's recommended?
-      x-select-enable-primary t
-
-      ;; Save clipboard strings into kill ring before replacing them.
-      ;; When one selects something in another program to paste it into Emacs,
-      ;; but kills something in Emacs before actually pasting it,
-      ;; this selection is gone unless this variable is non-nil
-      save-interprogram-paste-before-kill t
-
-      ;; Shows all options when running apropos. For more info,
-      ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Apropos.html
-      apropos-do-all t
-
-      ;; Mouse yank commands yank at point instead of at click.
-      mouse-yank-at-point t)
 
 (setq-default frame-title-format "%b (%f)")
 
@@ -40,15 +15,13 @@
 (use-package org-make-toc
 :ensure t)
 
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+;; (use-package org-bullets
+;;   :ensure t
+;;   :config
+;;   (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 
 ;;(set-face-attribute  'org-level-1 nil :height 190)
 ;;(set-face-attribute  'org-level-2 nil :height 160)
-
-(add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
 (defun org-line-wrap ()
 (set-fill-column 100))
@@ -56,16 +29,17 @@
 (add-hook 'org-mode-hook 'visual-line-mode)
 (add-hook 'org-mode-hook 'visual-fill-column-mode)
 (add-hook 'org-mode-hook 'org-show-block-all)
+(add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
 (require 'color)
 (set-face-attribute 'org-block nil :background
                     (color-darken-name
                      (face-attribute 'default :background) 3))
 
-(setq org-src-block-faces '(("emacs-lisp" (:background "#E3E3E3"))
-                            ("python" (:background "#E3E3E3"))
+(setq org-src-block-faces '(("emacs-lisp" (:background "#2E2E2E"))
+                            ("python" (:background "#2E2E2E"))
                             ("javascript" (:background "#E3E3E3"))
-                            ("json" (:background "#ffffff"))))
+                            ("json" (:background "#E3E3E3"))))
 
 (autoload 'gfm-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 
