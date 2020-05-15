@@ -20,6 +20,7 @@
 ;;org mode config
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
+;;save settings in custom.el
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
    (when (file-exists-p custom-file)
        (load custom-file))

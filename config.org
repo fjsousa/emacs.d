@@ -66,21 +66,6 @@
   -  [[#put-these-in-a-function][Put these in a function]]
 
 * Customise
-** Go straight to scratch buffer on startup
-#+BEGIN_SRC emacs-lisp
-  (setq inhibit-startup-message t)
-#+END_SRC
-** menu bar at the top
-
-#+BEGIN_SRC emacs-lisp
-  (menu-bar-mode 1)
-#+END_SRC
-
-** global line numbers
-#+BEGIN_SRC emacs-lisp
-  (global-linum-mode)
-#+END_SRC
-
 ** menu with copy and past icons
 #+BEGIN_SRC emacs-lisp
 (when (fboundp 'tool-bar-mode)
@@ -132,28 +117,12 @@
 
 #+END_SRC
 
-** cursor blink
-#+BEGIN_SRC emacs-lisp
-  (blink-cursor-mode 0)
-#+END_SRC
-
 ** full path in title bar
 #+BEGIN_SRC emacs-lisp
   (setq-default frame-title-format "%b (%f)")
 #+END_SRC
 
-** don't pop up font menu
-#+BEGIN_SRC emacs-lisp
-  ;  (global-set-key (kbd "s-t") '(lambda () (interactive)))
-#+END_SRC
-
-** no bell
-
-#+BEGIN_SRC emacs-lisp
-  (setq ring-bell-function 'ignore)
-#+END_SRC
-
-* bash
+* Bash Mode
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'sh-mode-hook 'flycheck-mode)
@@ -268,6 +237,13 @@ Create insert-heading and insert-todo-heading has decent shortcut
 
 #+BEGIN_SRC emacs-lisp
   ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
+
+  ;; Fix
+  ;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
+  (defvar ido-cur-item nil)
+  (defvar ido-default-item nil)
+  (defvar ido-cur-list nil)
+
   (setq ido-everywhere t)
   (ido-mode 1)
 
@@ -291,12 +267,6 @@ Create insert-heading and insert-todo-heading has decent shortcut
   ;; This enables ido in all contexts where it could be useful, not just
   ;; for selecting buffer and file names
   (ido-ubiquitous-mode 1)
-
-  ;; Fix
-  ;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
-  (defvar ido-cur-item nil)
-  (defvar ido-default-item nil)
-  (defvar ido-cur-list nil)
 #+END_SRC
 
 *** Ido Vertical

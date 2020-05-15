@@ -1,9 +1,3 @@
-(setq inhibit-startup-message t)
-
-(menu-bar-mode 1)
-
-(global-linum-mode)
-
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 
@@ -37,13 +31,7 @@
       ;; Mouse yank commands yank at point instead of at click.
       mouse-yank-at-point t)
 
-(blink-cursor-mode 0)
-
 (setq-default frame-title-format "%b (%f)")
-
-;  (global-set-key (kbd "s-t") '(lambda () (interactive)))
-
-(setq ring-bell-function 'ignore)
 
 (add-hook 'sh-mode-hook 'flycheck-mode)
 (setq-default sh-basic-offset 2)
@@ -100,6 +88,38 @@
 (define-key org-mode-map (kbd "M-S-<RET>") nil); remove old binding
 (define-key org-mode-map (kbd "C-c c") 'org-insert-todo-heading); c for checkbox
 
+;; http://www.emacswiki.org/emacs/InteractivelyDoThings
+
+;; Fix
+;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
+(defvar ido-cur-item nil)
+(defvar ido-default-item nil)
+(defvar ido-cur-list nil)
+
+(setq ido-everywhere t)
+(ido-mode 1)
+
+;; Don't ask for permission. Other choices are prompt and never.
+(setq ido-create-new-buffer 'always)
+
+;; This allows partial matches, e.g. "tl" will match "Tyrion Lannister"
+(setq ido-enable-flex-matching t)
+
+;; Turn this behavior off because it's annoying
+(setq ido-use-filename-at-point 'guess)
+
+;; Don't try to match file across all "work" directories; only match files
+;; in the current directory displayed in the minibuffer
+(setq ido-auto-merge-work-directories-length -1)
+
+;; Includes buffer names of recently open files, even if they're not
+;; open now
+(setq ido-use-virtual-buffers t)
+
+;; This enables ido in all contexts where it could be useful, not just
+;; for selecting buffer and file names
+(ido-ubiquitous-mode 1)
+
 (use-package ido-vertical-mode
   :ensure t
   :init
@@ -123,6 +143,20 @@
               ("s-p" . 'projectile-command-map))
          (:map projectile-mode-map
               ("C-c p" . 'projectile-command-map))))
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(windmove-default-keybindings)
+
+(global-set-key (kbd "M-i") 'imenu)
+
+(setq recentf-save-file (concat user-emacs-directory ".recentf"))
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 40)
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
 
 (require 'saveplace)
 (setq-default save-place t)
@@ -486,7 +520,8 @@
 (require 'popwin)
 (push '(direx:direx-mode :position left :width 45 :dedicated t)
       popwin:special-display-config)
-(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
+;;(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
+(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
 
 ;; enhanced ruby mode
 
@@ -667,3 +702,12 @@
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
+
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
+;; Lisp-friendly hippie expand
+(setq hippie-expand-try-functions-list
+      '(try-expand-dabbrev
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-complete-lisp-symbol-partially
+        try-complete-lisp-symbol))
