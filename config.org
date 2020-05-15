@@ -1,70 +1,3 @@
-* TOC
-  :PROPERTIES:
-  :TOC: this
-  :END:
--  [[#customise][Customise]]
-  -  [[#menu-bar-at-the-top][menu bar at the top]]
-  -  [[#global-line-numbers][global line numbers]]
-  -  [[#menu-with-copy-and-past-icons][menu with copy and past icons]]
-  -  [[#dont-show-native-os-scroll-bars-for-buffers-because-theyre-redundant][Don't show native OS scroll bars for buffers because they're Redundant]]
-  -  [[#colour-themes][Colour themes]]
-  -  [[#font-size][Font size]]
-  -  [[#random][random]]
-  -  [[#cursor-blink][cursor blink]]
-  -  [[#full-path-in-title-bar][full path in title bar]]
-  -  [[#dont-pop-up-font-menu][don't pop up font menu]]
-  -  [[#no-bell][no bell]]
--  [[#shell][Shell]]
--  [[#org-mode-config][Org mode config]]
-  -  [[#table-of-contents][Table of contents]]
-  -  [[#configure-look][Configure look]]
-    -  [[#org-bullets][Org bullets]]
-    -  [[#font-size][font size]]
-    -  [[#trailing-white-characters][trailing white characters]]
-  -  [[#hooks][Hooks]]
-  -  [[#block-background-colour][Block background colour]]
--  [[#markdown-editing][Markdown Editing]]
-  -  [[#setup-file-extensions][Setup file extensions]]
-  -  [[#preview-style][Preview Style]]
-  -  [[#configures-text-column-width][Configures text column width]]
-  -  [[#key-bindings][Key bindings]]
--  [[#navigation][Navigation]]
-  -  [[#ido][IDO]]
-    -  [[#ido-vertical][Ido Vertical]]
-    -  [[#smex][Smex]]
-  -  [[#projectile][Projectile]]
--  [[#misc][Misc]]
-  -  [[#which-key][which-key]]
-  -  [[#colors-in-compilation-buffer][Colors in compilation buffer]]
-  -  [[#beacon-never-lose-your-cursor-again][Beacon Never lose your cursor again]]
-  -  [[#move-buffers-around][Move buffers around]]
--  [[#dired-some-bits][Dired (some bits)]]
--  [[#multiple-cursors][Multiple cursors]]
--  [[#custom-defines][Custom defines]]
-    -  [[#paste-peer-error-in-new-buffer][Paste peer error in new buffer]]
-    -  [[#indent-sql-util-function][indent sql util function]]
-    -  [[#file-name-on-clipboard][file name on clipboard]]
-    -  [[#decode-url][decode url]]
-    -  [[#eval-and-replace-elisp-ripped-from-magnars-has-keybindings-so-it-can-be-used-in-multiple-cursor][eval and replace elisp ripped from magnars. Has keybindings so it can be used in multiple cursor.]]
-    -  [[#loads-configorg-without-having-to-navigating-to-initel-and-manually-evaluating-the-org-babel-load-file-block][Loads config.org without having to navigating to init.el and manually evaluating the org-babel-load-file block.]]
-    -  [[#sometimes-when-you-have-just-added-tern-project-file-or-edited-the-file-but-tern-does-not-auto-reload-you-need-to-manually-kill-tern-server-this-little-piece-of-code-does-the-trick][Sometimes when you have just added .tern-project file or edited the file but Tern does not auto reload, you need to manually kill Tern server. This little piece of code does the trick]]
-    -  [[#open-frequent-files][open frequent files]]
--  [[#spelling-and-grammar][Spelling and Grammar]]
-  -  [[#flyspell-and-flyspell-pop-up][FlySpell and FlySpell pop up]]
-  -  [[#flyspell-prog-mode][flyspell prog mode]]
-  -  [[#language-tool][Language tool]]
--  [[#javascript][JavaScript]]
-  -  [[#auto-complete][auto complete]]
-  -  [[#indium-repl-and-buffer-evaluator][Indium: REPL and buffer evaluator]]
-  -  [[#smartparens][smartparens]]
--  [[#sql][SQL]]
--  [[#python][Python]]
--  [[#cider-config][cider config]]
--  [[#direx][direx]]
--  [[#typescript][Typescript]]
--  [[#to-do][to do]]
-  -  [[#put-these-in-a-function][Put these in a function]]
-
 * Customise
 ** Colour themes
    Read http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/ for a great explanation of Emacs colour themes. https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html for a more technical explanation.
@@ -96,12 +29,6 @@
 #+END_SRC
 * Org mode config
 
-** Table of contents
-
-#+BEGIN_SRC emacs-lisp
-  (use-package org-make-toc
-  :ensure t)
-#+END_SRC
 ** Configure look
 
 *** Org bullets

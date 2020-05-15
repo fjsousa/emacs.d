@@ -12,9 +12,6 @@
 (setq-default sh-basic-offset 2)
 (setq-default sh-indentation 2)
 
-(use-package org-make-toc
-:ensure t)
-
 ;; (use-package org-bullets
 ;;   :ensure t
 ;;   :config
