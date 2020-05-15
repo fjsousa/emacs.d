@@ -397,11 +397,7 @@ Adds helper minibuffer with key completions
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-x g") 'magit-status)
 #+END_SRC
-* Dired (some bits)
-
-#+BEGIN_SRC emacs-lisp
-(setq dired-dwim-target t)
-#+END_SRC
+* Dired
 
 dired listing options
 
