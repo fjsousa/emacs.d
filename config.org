@@ -139,15 +139,15 @@ I think this breaks flyspell menu
 ** Block background colour
 
 #+BEGIN_SRC emacs-lisp
-      (require 'color)
-      (set-face-attribute 'org-block nil :background
-                          (color-darken-name
-                           (face-attribute 'default :background) 3))
+  (require 'color)
+  (set-face-attribute 'org-block nil :background
+                      (color-darken-name
+                       (face-attribute 'default :background) 3))
 
-      (setq org-src-block-faces '(("emacs-lisp" (:background "#2E2E2E"))
-                                  ("python" (:background "#2E2E2E"))
-                                  ("javascript" (:background "#E3E3E3"))
-                                  ("json" (:background "#E3E3E3"))))
+  (setq org-src-block-faces '(("emacs-lisp" (:background "#2E2E2E"))
+                              ("python" (:background "#2E2E2E"))
+                              ("javascript" (:background "#E3E3E3"))
+                              ("json" (:background "#E3E3E3"))))
 #+END_SRC
 
 * Markdown Editing
@@ -194,7 +194,7 @@ Create insert-heading and insert-todo-heading has decent shortcut
   (define-key org-mode-map (kbd "C-c c") 'org-insert-todo-heading); c for checkbox
 #+END_SRC
 
-* Navigation
+* Navigation/Editing
 
 ** IDO
 
@@ -272,7 +272,7 @@ http://www.emacswiki.org/emacs/Smex
                 ("C-c p" . 'projectile-command-map))))
 #+END_SRC
 
-* Misc
+
 ** Shows a list of buffers
 
 #+BEGIN_SRC emacs-lisp
@@ -317,6 +317,11 @@ When you visit a file, point goes to the last place where it was when you previo
 (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
 #+END_SRC
 
+** yank menu
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
+#+END_SRC
 ** Changes all yes/no questions to y/n type
 #+BEGIN_SRC emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
@@ -366,6 +371,18 @@ Adds helper minibuffer with key completions
   (global-set-key (kbd "<C-s-left>")   'buf-move-left)
   (global-set-key (kbd "<C-s-right>")  'buf-move-right)
 #+END_SRC
+
+** Allow hash to be entered
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+#+END_SRC
+
+** No need for ~ files when editing
+#+BEGIN_SRC emacs-lisp
+(setq create-lockfiles nil)
+#+END_SRC
+* Misc
 ** Shell integration
 #+BEGIN_SRC emacs-lisp
   ;; Sets up exec-path-from shell
@@ -379,17 +396,6 @@ Adds helper minibuffer with key completions
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-x g") 'magit-status)
-#+END_SRC
-
-** Allow hash to be entered
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
-#+END_SRC
-
-** No need for ~ files when editing
-#+BEGIN_SRC emacs-lisp
-(setq create-lockfiles nil)
 #+END_SRC
 * Dired (some bits)
 
