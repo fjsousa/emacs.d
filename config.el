@@ -676,19 +676,3 @@
 
 ;;(setq cider-lein-parameters "with-profile debug,dev repl :headless")
 ;;(setq cider-lein-parameters "with-profile +debug repl :headless")
-
-;; Interactive search key bindings. By default, C-s runs
-;; isearch-forward, so this swaps the bindings.
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
-
-(global-set-key [remap dabbrev-expand] 'hippie-expand)
-;; Lisp-friendly hippie expand
-(setq hippie-expand-try-functions-list
-      '(try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
