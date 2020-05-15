@@ -146,6 +146,8 @@
 
 £ Also check  M-x apropos-variable
 
+M-x describe-personal-keybindings to see all such keybindings you've set throughout your .emacs file.
+
 * Windows
 
 | key          | Command                                                 |

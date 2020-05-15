@@ -409,17 +409,18 @@ dired listing options
 * Multiple cursors
 
 #+BEGIN_SRC emacs-lisp
-  ;; multiple cursors
-  (require 'multiple-cursors)
-  (global-set-key (kbd "C-c C-c") 'mc/edit-lines)
-  (global-set-key (kbd "C-.") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-,") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)
-  (global-set-key (kbd "C->") 'mc/skip-to-next-like-this)
-  (global-set-key (kbd "C-c C-/") 'mc/unmark-next-like-this)
+  ;;https://github.com/jwiegley/use-package#key-binding
+  (use-package multiple-cursors
+    :ensure t
+    ;;:config (... 1)
+    :bind (("C-c C-c" . mc/edit-lines)
+           ("C-." . mc/mark-next-like-this)
+           ("C-," . mc/mark-previous-like-this)
+           ("C-c C-," . mc/mark-all-like-this)
+           ("C->" . mc/skip-to-next-like-this)
+           ("C-c C-/" . 'mc/unmark-next-like-this)))
   ;;"C-v" mc/cycle-forward
   ;;"M-v" mc/cycle-backward
-
 #+END_SRC
 
 * Custom defines

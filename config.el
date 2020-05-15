@@ -139,6 +139,8 @@
 
 (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
 
+(global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (use-package which-key
@@ -172,6 +174,10 @@
 (global-set-key (kbd "<C-s-left>")   'buf-move-left)
 (global-set-key (kbd "<C-s-right>")  'buf-move-right)
 
+(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+
+(setq create-lockfiles nil)
+
 ;; Sets up exec-path-from shell
 ;; https://github.com/purcell/exec-path-from-shell
 (when (memq window-system '(mac ns x))
@@ -179,24 +185,20 @@
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
-(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
-
-(setq create-lockfiles nil)
-
-(setq dired-dwim-target t)
-
 (if (eq system-type 'darwin)
   (setq insert-directory-program "/usr/local/bin/gls"))
 (setq dired-listing-switches "-aBhl --group-directories-first")
 
-;; multiple cursors
-(require 'multiple-cursors)
-(global-set-key (kbd "C-c C-c") 'mc/edit-lines)
-(global-set-key (kbd "C-.") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-,") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)
-(global-set-key (kbd "C->") 'mc/skip-to-next-like-this)
-(global-set-key (kbd "C-c C-/") 'mc/unmark-next-like-this)
+;;https://github.com/jwiegley/use-package#key-binding
+(use-package multiple-cursors
+  :ensure t
+  ;;:config (... 1)
+  :bind (("C-c C-c" . mc/edit-lines)
+         ("C-." . mc/mark-next-like-this)
+         ("C-," . mc/mark-previous-like-this)
+         ("C-c C-," . mc/mark-all-like-this)
+         ("C->" . mc/skip-to-next-like-this)
+         ("C-c C-/" . 'mc/unmark-next-like-this)))
 ;;"C-v" mc/cycle-forward
 ;;"M-v" mc/cycle-backward
 
