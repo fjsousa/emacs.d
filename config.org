@@ -449,7 +449,9 @@ dired listing options
         (insert (decode-coding-string (url-hexify-string text) 'utf-8)))))
 #+END_SRC
 
-*** eval and replace elisp ripped from magnars. Has keybindings so it can be used in multiple cursor.
+*** eval and replace elisp
+
+ripped from magnars. Has keybindings so it can be used in multiple cursor.
 
 #+BEGIN_SRC emacs-lisp
   (defun fs/eval-and-replace ()
@@ -465,7 +467,9 @@ dired listing options
   (global-set-key (kbd "C-x C-y") 'eval-and-replace)
 #+END_SRC
 
-*** Loads config.org without having to navigating to init.el and manually evaluating the org-babel-load-file block.
+*** Loads config.org
+
+without having to navigating to init.el and manually evaluating the org-babel-load-file block.
 
 #+BEGIN_SRC emacs-lisp
   (defun fs/eval-config-org ()
@@ -473,7 +477,9 @@ dired listing options
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 #+END_SRC
 
-*** Sometimes when you have just added .tern-project file or edited the file but Tern does not auto reload, you need to manually kill Tern server. This little piece of code does the trick
+*** kill tern process
+
+Sometimes when you have just added .tern-project file or edited the file but Tern does not auto reload, you need to manually kill Tern server. This little piece of code does the trick
 
 #+BEGIN_SRC emacs-lisp
   (defun fs/delete-tern-process ()
@@ -560,23 +566,6 @@ FlySpell flyspell-auto-correct-word binding conflicts with multiple cursor mode.
 
 #+BEGIN_SRC emacs-lisp
   (define-key flyspell-mode-map (kbd "C-.") nil)
-#+END_SRC
-
-** flyspell prog mode
-
-FlySpell mode enables spell checking in comments.
-
-#+BEGIN_SRC emacs-lisp
-  (dolist (mode '(;emacs-lisp-mode-hook
-                  ;inferior-lisp-mode-hook
-                  ;clojure-mode-hook
-                  ;python-mode-hook
-                  ;js-mode-hook
-                  ;R-mode-hook
-                  ))
-    (add-hook mode
-              '(lambda ()
-                 (flyspell-prog-mode))))
 #+END_SRC
 
 ** Language tool
@@ -752,12 +741,7 @@ Use python 3
 #+BEGIN_SRC emacs-lisp
 (setq python-shell-interpreter "python3")
 #+END_SRC
-* cider config
 
-#+BEGIN_SRC emacs-lisp
-;;(setq cider-lein-parameters "with-profile debug,dev repl :headless")
-;;(setq cider-lein-parameters "with-profile +debug repl :headless")
-#+END_SRC
 * direx
 #+BEGIN_SRC emacs-lisp
 (require 'direx)
@@ -770,24 +754,26 @@ Use python 3
 #+END_SRC
 
 * Typescript
-;; typescript
-;; move to separate file
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
+#+BEGIN_SRC emacs-lisp
+  ;; typescript
+  ;; move to separate file
+  ;; (defun setup-tide-mode ()
+  ;;   (interactive)
+  ;;   (tide-setup)
+  ;;   (flycheck-mode +1)
+  ;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  ;;   (eldoc-mode +1)
+  ;;   (tide-hl-identifier-mode +1)
+  ;;   ;; company is an optional dependency. You have to
+  ;;   ;; install it separately via package-install
+  ;;   ;; `M-x package-install [ret] company`
+  ;;   (company-mode +1))
 
-(add-hook 'before-save-hook 'tide-format-before-save)
-(add-hook 'typescript-mode-hook #'setup-tide-mode)
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
+  ;; (add-hook 'before-save-hook 'tide-format-before-save)
+  ;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
+  ;; (put 'downcase-region 'disabled nil)
+  ;; (put 'upcase-region 'disabled nil)
+#+END_SRC
 
 * Ruby
 #+BEGIN_SRC emacs-lisp
@@ -968,9 +954,14 @@ Use python 3
   (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 
   (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-
 #+END_SRC
 
+** cider config
+
+#+BEGIN_SRC emacs-lisp
+;;(setq cider-lein-parameters "with-profile debug,dev repl :headless")
+;;(setq cider-lein-parameters "with-profile +debug repl :headless")
+#+END_SRC
 * to do
 - [ ] clojurescript mode enabled on clj files by default (breaks cider)
 - [ ] when you select a symbol, highlight all usages of that symbol

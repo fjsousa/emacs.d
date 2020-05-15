@@ -351,17 +351,6 @@
 
 (define-key flyspell-mode-map (kbd "C-.") nil)
 
-(dolist (mode '(;emacs-lisp-mode-hook
-                ;inferior-lisp-mode-hook
-                ;clojure-mode-hook
-                ;python-mode-hook
-                ;js-mode-hook
-                ;R-mode-hook
-                ))
-  (add-hook mode
-            '(lambda ()
-               (flyspell-prog-mode))))
-
 (if (eq system-type 'darwin)
     (setq langtool-language-tool-jar "/usr/local/Cellar/languagetool/4.5/libexec/languagetool-commandline.jar")
   (setq langtool-language-tool-jar "/home/fsousa/src/languagetool/languagetool-commandline.jar"))
@@ -486,15 +475,31 @@
 
 (setq python-shell-interpreter "python3")
 
-;;(setq cider-lein-parameters "with-profile debug,dev repl :headless")
-;;(setq cider-lein-parameters "with-profile +debug repl :headless")
-
 (require 'direx)
 (require 'popwin)
 (push '(direx:direx-mode :position left :width 45 :dedicated t)
       popwin:special-display-config)
 ;;(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
 (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
+
+;; typescript
+;; move to separate file
+;; (defun setup-tide-mode ()
+;;   (interactive)
+;;   (tide-setup)
+;;   (flycheck-mode +1)
+;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+;;   (eldoc-mode +1)
+;;   (tide-hl-identifier-mode +1)
+;;   ;; company is an optional dependency. You have to
+;;   ;; install it separately via package-install
+;;   ;; `M-x package-install [ret] company`
+;;   (company-mode +1))
+
+;; (add-hook 'before-save-hook 'tide-format-before-save)
+;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
+;; (put 'downcase-region 'disabled nil)
+;; (put 'upcase-region 'disabled nil)
 
 ;; enhanced ruby mode
 
@@ -668,6 +673,9 @@
 (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+
+;;(setq cider-lein-parameters "with-profile debug,dev repl :headless")
+;;(setq cider-lein-parameters "with-profile +debug repl :headless")
 
 ;; Interactive search key bindings. By default, C-s runs
 ;; isearch-forward, so this swaps the bindings.
