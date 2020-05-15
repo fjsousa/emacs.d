@@ -1,5 +1,0 @@
-(:name finalize
-       :description "Lisp object finalization."
-       :type github
-       :pkgname "skeeto/elisp-finalize"
-       :depends (cl-lib))

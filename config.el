@@ -1,3 +1,5 @@
+(setq inhibit-startup-message t)
+
 (menu-bar-mode 1)
 
 (global-linum-mode)
@@ -44,6 +46,8 @@
 (setq ring-bell-function 'ignore)
 
 (add-hook 'sh-mode-hook 'flycheck-mode)
+(setq-default sh-basic-offset 2)
+(setq-default sh-indentation 2)
 
 (use-package org-make-toc
 :ensure t)
@@ -120,6 +124,15 @@
          (:map projectile-mode-map
               ("C-c p" . 'projectile-command-map))))
 
+(require 'saveplace)
+(setq-default save-place t)
+;; keep track of saved places in ~/.emacs.d/places
+(setq save-place-file (concat user-emacs-directory "places"))
+
+(global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
 (use-package which-key
   :ensure t
   :config
@@ -151,7 +164,22 @@
 (global-set-key (kbd "<C-s-left>")   'buf-move-left)
 (global-set-key (kbd "<C-s-right>")  'buf-move-right)
 
+;; Sets up exec-path-from shell
+;; https://github.com/purcell/exec-path-from-shell
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
+(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+
+(setq create-lockfiles nil)
+
 (setq dired-dwim-target t)
+
+(if (eq system-type 'darwin)
+  (setq insert-directory-program "/usr/local/bin/gls"))
+(setq dired-listing-switches "-aBhl --group-directories-first")
 
 ;; multiple cursors
 (require 'multiple-cursors)
@@ -340,6 +368,29 @@
                                   ;;"COMMA_PARENTHESIS_WHITESPACE"
                                   "EN_QUOTES")))
 
+;; javascript / html
+(add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
+(add-hook 'js-mode-hook 'subword-mode)
+(add-hook 'html-mode-hook 'subword-mode)
+(setq js-indent-level 2)
+(eval-after-load "sgml-mode"
+  '(progn
+     (require 'tagedit)
+     (tagedit-add-paredit-like-keybindings)
+     (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
+
+
+;; coffeescript
+(add-to-list 'auto-mode-alist '("\\.coffee.erb$" . coffee-mode))
+(add-hook 'coffee-mode-hook 'subword-mode)
+(add-hook 'coffee-mode-hook 'highlight-indentation-current-column-mode)
+(add-hook 'coffee-mode-hook
+          (defun coffee-mode-newline-and-indent ()
+            (define-key coffee-mode-map "\C-j" 'coffee-newline-and-indent)
+            (setq coffee-cleanup-whitespace nil)))
+(custom-set-variables
+ '(coffee-tab-width 2))
+
 ;; riped off from
 ;; https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html
 (require 'js2-mode)
@@ -436,3 +487,183 @@
 (push '(direx:direx-mode :position left :width 45 :dedicated t)
       popwin:special-display-config)
 (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
+
+;; enhanced ruby mode
+
+;;add enhanced mode to ruby files only
+(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+
+;;add enhanced mode to all ruby related files
+(add-to-list 'auto-mode-alist
+             '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
+
+;;feature-mode
+(setq feature-step-search-path "spec/**/step_definitions/*.rb")
+(setq feature-root-marker-file-name "Gemfile.lock")
+
+
+;; notes
+;; - jump to definition with robe mode fails to lunch a repl because of some pry cock up
+;; Sorry, you can't use Pry without Readline or a compatible library.
+;; Possible solutions:
+;;  * Rebuild Ruby with Readline support using `--with-readline`
+;;  * Use the rb-readline gem, which is a pure-Ruby port of Readline
+;;  * Use the pry-coolline gem, a pure-ruby alternative to Readline
+;;
+;; last two didn't work, had to reinstall ruby 2.4:
+;; https://stackoverflow.com/questions/19897045/how-to-compile-ruby-with-readline-support
+
+
+;; robe mode
+
+(add-hook 'enh-ruby-mode-hook 'robe-mode)
+;; autocomplete for robe
+;;(add-hook 'enh-ruby-mode-hook 'ac-robe-setup)
+;;company mode for robe
+;;(eval-after-load 'company '(push 'company-robe company-backends))
+
+
+;; trailing white space
+(add-hook 'enh-ruby-mode-hook (lambda () (setq show-trailing-whitespace t)))
+
+;; Automatically load paredit when editing a lisp file
+;; More at http://www.emacswiki.org/emacs/ParEdit
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+
+;; eldoc-mode shows documentation in the minibuffer when writing code
+;; http://www.emacswiki.org/emacs/ElDoc
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+
+;; trailing whitespaces
+(add-hook 'emacs-list-mode-hook (lambda () (setq show-trailing-whitespace "true")))
+
+;;;;
+;; Clojure
+;;;;
+
+;; Enable paredit for Clojure
+(add-hook 'clojure-mode-hook 'enable-paredit-mode)
+
+;; This is useful for working with camel-case tokens, like names of
+;; Java classes (e.g. JavaClassName)
+(add-hook 'clojure-mode-hook 'subword-mode)
+
+;; A little more syntax highlighting
+(require 'clojure-mode-extra-font-locking)
+
+;; adds trailing white space
+(add-hook 'clojure-mode-hook (lambda () (setq show-trailing-whitespace t)))
+
+;; syntax hilighting for midje
+(add-hook 'clojure-mode-hook
+          (lambda ()
+            (setq inferior-lisp-program "lein repl")
+            (font-lock-add-keywords
+             nil
+             '(("(\\(facts?\\)"
+                (1 font-lock-keyword-face))
+               ("(\\(background?\\)"
+                (1 font-lock-keyword-face))))
+            (define-clojure-indent (fact 1))
+            (define-clojure-indent (facts 1))
+            (define-clojure-indent
+              (context 1)
+              (describe 1)
+              (it 1)
+              (with-redefs 1)
+              (with 1)
+              (around 1)
+              (before 1)
+              (fdef 1)
+              (try 1))))
+
+;;;;
+;; Cider
+;;;;
+
+;; provides minibuffer documentation for the code you're typing into the repl
+(add-hook 'cider-mode-hook 'eldoc-mode)
+
+;; go right to the REPL buffer when it's finished connecting
+(setq cider-repl-pop-to-buffer-on-connect t)
+
+;; When there's a cider error, show its buffer and switch to it
+(setq cider-show-error-buffer t)
+(setq cider-auto-select-error-buffer t)
+
+;; Where to store the cider history.
+(setq cider-repl-history-file "~/.emacs.d/cider-history")
+
+;; Wrap when navigating history.
+(setq cider-repl-wrap-history t)
+
+;; enable paredit in your REPL
+(add-hook 'cider-repl-mode-hook 'paredit-mode)
+
+;;autocomplete hooks
+(add-hook 'cider-repl-mode-hook #'company-mode)
+(add-hook 'cider-mode-hook #'company-mode)
+
+;; To make TAB complete, without losing the ability to manually indent, you can add this:
+(add-hook 'clojure-mode (lambda ()
+                          (local-set-key (kbd "TAB") #'company-indent-or-complete-common)))
+
+;; Use clojure mode for other extensions
+(add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
+(add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
+(add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojurescript-mode))
+(add-to-list 'auto-mode-alist '("lein-env" . clojure-mode))
+
+;; key bindings
+;; these help me out with the way I usually develop web apps
+(defun fs/cider-server-restart ()
+  (interactive)
+  (cider-interactive-eval "(legend.repl/restart)"))
+
+(defun fs/cider-switch-to-cljs-repl ()
+  (interactive)
+  (cider-interactive-eval "(figwheel-sidecar.repl-api/cljs-repl \"dev\")"))
+
+(defun fs/cider-quit-cljs-repl ()
+  (interactive)
+  (cider-interactive-eval ":cljs/quit"))
+
+(eval-after-load 'cider
+  '(progn
+     (define-key clojure-mode-map (kbd "C-c C-v") 'fs/server-restart)))
+
+(defun fs/cider-namespace-refresh ()
+  (interactive)
+  (cider-interactive-eval
+   "(clojure.tools.namespace.repl/refresh)"))
+
+;; setting cider output line to 100 char so that it doesn't break the repl
+(setq cider-repl-print-length 100)
+
+;;cljr need to use package on this
+(require 'clj-refactor)
+
+(defun my-clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import statements
+    ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+    (cljr-add-keybindings-with-prefix "s-c"))
+
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+
+(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+
+;; Interactive search key bindings. By default, C-s runs
+;; isearch-forward, so this swaps the bindings.
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
