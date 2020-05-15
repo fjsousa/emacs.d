@@ -136,8 +136,6 @@
 
 (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
 
-(global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
-
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (use-package which-key

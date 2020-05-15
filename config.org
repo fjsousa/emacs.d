@@ -244,11 +244,6 @@ When you visit a file, point goes to the last place where it was when you previo
 (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
 #+END_SRC
 
-** yank menu
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
-#+END_SRC
 ** Changes all yes/no questions to y/n type
 #+BEGIN_SRC emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
@@ -968,4 +963,3 @@ Use python 3
 Clojure:
 - [ ] double clicking on the same word multiple times should increase the region
 - [ ] ace-jump and go back proper flow
-
