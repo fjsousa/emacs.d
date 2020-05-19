@@ -1,5 +1,7 @@
 * Package manager configuration
 
+Sets up the package manager
+
 #+BEGIN_SRC emacs-lisp
   (require 'package)
 
@@ -18,16 +20,23 @@
   ;; makes them available for download.
   (when (not package-archive-contents)
     (package-refresh-contents))
+#+END_SRC
 
+** use-package
+
+Sintactic sugar to configure packages
+
+#+BEGIN_SRC emacs-lisp
   ;; install use-package if not present
   (dolist (package '(use-package))
-     (unless (package-installed-p package)
-         (package-install package)))
+    (unless (package-installed-p package)
+      (package-install package)))
+
 #+END_SRC
 
 * General Customization
 
-** custom.el
+** custom.el location
 
 Manual custumization goes into custom.el
 
@@ -37,9 +46,204 @@ Manual custumization goes into custom.el
          (load custom-file))
 #+END_SRC
 
-** 
+** defauts
+
+[[https://github.com/technomancy/better-defaults][Curated set of defaults.]]
+
 #+BEGIN_SRC emacs-lisp
   (use-package better-defaults
     :ensure t)
 #+END_SRC
 
+Other defaults
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "M-i") 'imenu)
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+  ;; moves around with shift
+  (windmove-default-keybindings)
+
+  ;; recent files
+  (setq recentf-save-file (concat user-emacs-directory ".recentf"))
+  (require 'recentf)
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 40)
+
+  ;; keep track of saved places in ~/.emacs.d/places
+  (require 'saveplace)
+  (setq-default save-place t)
+  (setq save-place-file (concat user-emacs-directory "places"))
+
+  ;;yank menu
+  (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
+
+  ;; yes/no -> y/n
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  (setq create-lockfiles nil)
+
+#+END_SRC
+
+** theme
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+  (add-to-list 'load-path "~/.emacs.d/themes")
+  (load-theme 'tomorrow-night-bright t)
+#+END_SRC
+
+Font size
+
+#+BEGIN_SRC emacs-lisp
+  (set-face-attribute 'default nil :height 100 :weight 'bold)
+  ;;(set-face-attribute 'default nil :height 130 :weight 'bold)
+#+END_SRC
+
+Full path in title bar
+                        
+#+BEGIN_SRC emacs-lisp
+  (setq-default frame-title-format "%b (%f)")
+#+END_SRC 
+
+* IDO and friends
+
+#+BEGIN_SRC emacs-lisp
+  ;; Fix
+  ;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
+  (defvar ido-cur-item nil)
+  (defvar ido-default-item nil)
+  (defvar ido-cur-list nil)
+
+  (ido-mode 1)
+  (setq ido-everywhere t)
+
+
+  ;; Don't ask for permission. Other choices are prompt and never.
+  (setq ido-create-new-buffer 'always)
+
+  ;; This allows partial matches, e.g. "tl" will match "Tyrion Lannister"
+  (setq ido-enable-flex-matching t)
+
+  ;; Turn this behavior off because it's annoying
+  (setq ido-use-filename-at-point 'guess)
+
+  ;; Don't try to match file across all "work" directories; only match files
+  ;; in the current directory displayed in the minibuffer
+  (setq ido-auto-merge-work-directories-length -1)
+
+  ;; Includes buffer names of recently open files, even if they're not
+  ;; open now
+  (setq ido-use-virtual-buffers t)
+
+  ;; This enables ido in all contexts where it could be useful, not just
+  ;; for selecting buffer and file names
+  (use-package ido-ubiquitous
+    :ensure t
+    :config
+    (ido-ubiquitous-mode 1))
+#+END_SRC
+
+Ido vertical
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ido-vertical-mode
+    :ensure t
+    :init
+    (progn
+      (ido-vertical-mode 1)
+      (setq ido-vertical-define-keys 'C-n-and-C-p-only)))
+
+
+#+END_SRC
+
+Smex - better M-x without using helm
+
+#+BEGIN_SRC emacs-lisp
+  (use-package smex
+    :ensure t
+    :init (smex-initialize)
+    :bind ("M-x" . smex)
+    :config (setq smex-save-file (concat user-emacs-directory ".smex-items")))
+#+END_SRC
+
+Helper minibuffer with key completions
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :config
+    (which-key-mode))
+#+END_SRC
+
+Dired listing options
+
+#+BEGIN_SRC emacs-lisp
+  (if (eq system-type 'darwin)
+    (setq insert-directory-program "/usr/local/bin/gls"))
+  (setq dired-listing-switches "-aBhl --group-directories-first")
+#+END_SRC
+
+* Helm
+
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+
+[[https://github.com/thierryvolpiatto/emacs-tv-config/blob/master/init-helm.el][Helm init from the maintainer]]
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :ensure t
+    :config
+    (helm-mode 0) ;;helm is not enabled everywhere
+    :bind ("C-h a" . helm-apropos))
+#+END_SRC
+
+Describes mappings with helm
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-descbinds
+    :ensure t
+    :init (helm-descbinds-mode)
+    :bind ("C-h b" . helm-descbinds))
+#+END_SRC
+* Projectile
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-mode 1)
+    :bind ((:map projectile-mode-map
+                ("s-p" . 'projectile-command-map))
+           (:map projectile-mode-map
+                ("C-c p" . 'projectile-command-map))))
+#+END_SRC
+
+
+todo
+- fuzzy match for your helm function
+- 
+* Beacon
+#+BEGIN_SRC emacs-lisp
+  (use-package beacon
+   :ensure t
+   :config
+   (progn
+     (beacon-mode 1)
+     (setq beacon-size 10)
+     (setq beacon-color "#ca6768")
+     (setq beacon-blink-duration 0.2)
+     (setq beacon-blink-when-window-scrolls t)
+     (setq beacon-blink-when-window-changes t)
+     (setq beacon-blink-when-point-moves-horizontally 20)
+     (setq beacon-blink-when-point-moves-vertically 10)))
+#+END_SRC
+* Magit
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :bind ("C-x g" . magit-status))
+#+END_SRC

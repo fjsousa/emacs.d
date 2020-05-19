@@ -1,12 +1,5 @@
 [[(https://www.masteringemacs.org/)][Mastering emacs shortcuts and important stuff]]. Under Frequent revision
 
-* Tools for self discovery
-
-- C Mouse-1 brings up a buffer menu
-- Shift Mouse-1: menu to change font in the same buffer
-- Shift Mouse-2: mode menu
-- top menus also contain all functionalities for each mode
-
 * Basics
 
 | key       | Command                    |
@@ -139,6 +132,8 @@
 
 * Help
 
+  =Vanila emacs=
+
 | key               | Command                                                 |
 |-------------------+---------------------------------------------------------|
 | C-h s             | Syntax table                                            |
@@ -154,6 +149,18 @@
 £ Also check  M-x apropos-variable
 
 M-x describe-personal-keybindings to see all such keybindings you've set throughout your .emacs file.
+
+=Tools for self discovery=
+
+- C-h b maps to helm-descbinds
+- C-h a helm-apropos
+
+- C Mouse-1 brings up a buffer menu
+- Shift Mouse-1: menu to change font in the same buffer
+- Shift Mouse-2: mode menu
+- top menus also contain all functionalities for each mode
+
+
 
 * Windows
 
