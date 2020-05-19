@@ -59,13 +59,12 @@
 
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
-  :config
+  :config (color-theme-sanityinc-tomorrow-night))
+
   ;;(load-theme color-theme-sanityinc-tomorrow-day t)
-  (color-theme-sanityinc-tomorrow-night)
   ;;(load-theme color-theme-sanityinc-tomorrow-blue t)
   ;;(load-theme color-theme-sanityinc-tomorrow-bright t)
   ;;(load-theme color-theme-sanityinc-tomorrow-eighties t)
-  )
 
 (set-face-attribute 'default nil :height 100 :weight 'bold)
 ;;(set-face-attribute 'default nil :height 130 :weight 'bold)
@@ -127,8 +126,6 @@
 (if (eq system-type 'darwin)
   (setq insert-directory-program "/usr/local/bin/gls"))
 (setq dired-listing-switches "-aBhl --group-directories-first")
-
-
 
 (use-package helm
   :ensure t
@@ -322,3 +319,25 @@
 
 (use-package git-link
   :ensure t)
+
+(use-package cider
+  :ensure t
+  :init
+  (progn
+    (add-hook 'cider-mode-hook #'eldoc-mode)
+    (setq cider-repl-pop-to-buffer-on-connect t)
+    (setq cider-show-error-buffer t)
+    (setq cider-auto-select-error-buffer t)
+    (setq cider-repl-history-file "~/.emacs.d/cider-history")
+    (setq cider-repl-wrap-history t)
+    (setq cider-repl-print-length 100)))
+
+(use-package clj-refactor
+  :ensure t)
+
+(add-hook 'org-shiftup-final-hook 'windmove-up)
+(add-hook 'org-shiftleft-final-hook 'windmove-left)
+(add-hook 'org-shiftdown-final-hook 'windmove-down)
+(add-hook 'org-shiftright-final-hook 'windmove-right)
+
+(setq org-support-shift-select 'always)

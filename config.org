@@ -48,7 +48,7 @@ Manual custumization goes into custom.el
          (load custom-file))
 #+END_SRC
 
-** defauts
+** defaults
 
 [[https://github.com/technomancy/better-defaults][Curated set of defaults.]]
 
@@ -228,7 +228,21 @@ Describes mappings with helm
                 ("C-c p" . 'projectile-command-map))))
 #+END_SRC
 
-* Beacon
+* Cursors
+
+Ace-jump
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ace-jump-mode
+    :ensure t
+    :bind
+    (("C-x C-." . ace-jump-mode)
+     ("C-x SPC" . ace-jump-mode-pop-mark)))
+
+#+END_SRC
+
+Beacon
+
 #+BEGIN_SRC emacs-lisp
   (use-package beacon
    :ensure t
@@ -461,5 +475,36 @@ without having to navigating to init.el and manually evaluating the org-babel-lo
     :ensure t)
 #+END_SRC
 
+* Clojure
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cider
+    :ensure t
+    :init
+    (progn
+      (add-hook 'cider-mode-hook #'eldoc-mode)
+      (setq cider-repl-pop-to-buffer-on-connect t)
+      (setq cider-show-error-buffer t)
+      (setq cider-auto-select-error-buffer t)
+      (setq cider-repl-history-file "~/.emacs.d/cider-history")
+      (setq cider-repl-wrap-history t)
+      (setq cider-repl-print-length 100)))
+
+  (use-package clj-refactor
+    :ensure t)
+#+END_SRC
+* Org Mode
+
+Supports shift + arrow everywhere
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-shiftup-final-hook 'windmove-up)
+  (add-hook 'org-shiftleft-final-hook 'windmove-left)
+  (add-hook 'org-shiftdown-final-hook 'windmove-down)
+  (add-hook 'org-shiftright-final-hook 'windmove-right)
+
+  (setq org-support-shift-select 'always)
+
+#+END_SRC
 * todo
 - fuzzy match for your helm function

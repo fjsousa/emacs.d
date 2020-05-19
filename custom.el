@@ -8,9 +8,10 @@
  '(ansi-color-names-vector
    (vector "#2d2d2d" "#f2777a" "#99cc99" "#ffcc66" "#6699cc" "#cc99cc" "#66cccc" "#cccccc"))
  '(beacon-color "#f2777a")
+ '(blink-cursor-mode nil)
  '(company-quickhelp-color-background "#4F4F4F")
  '(company-quickhelp-color-foreground "#DCDCCC")
- '(custom-enabled-themes (quote (sanityinc-tomorrow-bright)))
+ '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
  '(custom-safe-themes
    (quote
     ("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
@@ -23,8 +24,9 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (zenburn-theme zenburn-thme color-theme-sanityinc-tomorrow git-link multiple-cursors magit beacon which-key projectile smex ido-vertical-mode ido-ubiquitous helm helm-descbinds discover-my-major better-defaults use-package)))
+    (ace-jump-mode clj-refactor paredit cider show-trailing-whitespace zenburn-theme zenburn-thme color-theme-sanityinc-tomorrow git-link multiple-cursors magit beacon which-key projectile smex ido-vertical-mode ido-ubiquitous helm helm-descbinds discover-my-major better-defaults use-package)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
+ '(ring-bell-function (quote ignore))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -47,6 +49,9 @@
      (340 . "#ffcc66")
      (360 . "#99cc99"))))
  '(vc-annotate-very-old-color nil)
+ '(visible-bell nil)
+ '(visible-cursor nil)
+ '(void-text-area-pointer nil)
  '(window-divider-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
