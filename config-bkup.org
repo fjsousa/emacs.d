@@ -959,9 +959,3 @@ Use python 3
 ;;(setq cider-lein-parameters "with-profile debug,dev repl :headless")
 ;;(setq cider-lein-parameters "with-profile +debug repl :headless")
 #+END_SRC
-* to do
-- [ ] clojurescript mode enabled on clj files by default (breaks cider)
-- [ ] when you select a symbol, highlight all usages of that symbol
-Clojure:
-- [ ] double clicking on the same word multiple times should increase the region
-- [ ] ace-jump and go back proper flow

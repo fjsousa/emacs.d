@@ -221,10 +221,6 @@ Describes mappings with helm
                 ("C-c p" . 'projectile-command-map))))
 #+END_SRC
 
-
-todo
-- fuzzy match for your helm function
-- 
 * Beacon
 #+BEGIN_SRC emacs-lisp
   (use-package beacon
@@ -247,3 +243,210 @@ todo
     :ensure t
     :bind ("C-x g" . magit-status))
 #+END_SRC
+
+* Multiple cursors
+
+#+BEGIN_SRC emacs-lisp
+  ;; C-h b or helm-descbinds to list these and others
+  (use-package multiple-cursors
+    :ensure t
+    :bind (("C-c C-c" . mc/edit-lines)
+           ("C-." . mc/mark-next-like-this)
+           ("C-," . mc/mark-previous-like-this)
+           ("C-c C-," . mc/mark-all-like-this)
+           ("C->" . mc/skip-to-next-like-this)
+           ("C-c C-/" . 'mc/unmark-next-like-this)))
+  ;;"C-v" mc/cycle-forward
+  ;;"M-v" mc/cycle-backward
+#+END_SRC
+
+* Custom defines
+
+** Paste peer error in new buffer
+
+#+BEGIN_SRC emacs-lisp
+(defun fs/peer-clean-error ()
+  "Paste peer error in new buffer"
+  (interactive)
+  (let (($buf (generate-new-buffer "peer-error")))
+    (switch-to-buffer $buf)
+    ;;(funcall initial-major-mode)
+    ;;(setq buffer-offer-save t)
+    (yank)
+    (goto-char (point-min))
+    (while (search-forward "\\n" nil t)
+      (replace-match "\n"))
+    $buf))
+#+END_SRC
+
+** indent sql util function
+
+#+BEGIN_SRC emacs-lisp
+  (defun fs/sql-indent-string ()
+    "Indents the string under the cursor as SQL."
+    (interactive)
+    (save-excursion
+      (er/mark-inside-quotes)
+      (let* ((text (buffer-substring-no-properties (region-beginning) (region-end)))
+             (pos (region-beginning))
+             (column (progn (goto-char pos) (current-column)))
+             (formatted-text (with-temp-buffer
+                               (insert text)
+                               (delete-trailing-whitespace)
+                               (sql-indent-buffer)
+                               (replace-string "\n" (concat "\n" (make-string column (string-to-char " "))) nil (point-min) (point-max))
+                               (buffer-string))))
+        (delete-region (region-beginning) (region-end))
+        (goto-char pos)
+        (insert formatted-text))))
+
+  (defun fs/sql-indent-region ()
+    "Indents the region"
+    (interactive)
+    (save-excursion
+      (let* ((beginning (region-beginning))
+             (end (region-end))
+             (text (buffer-substring-no-properties beginning end))
+             (pos (region-beginning))
+             (column (progn (goto-char pos) (current-column)))
+             (formatted-text (with-temp-buffer
+                               (insert text)
+                               (delete-trailing-whitespace)
+                               (sql-indent-buffer)
+                               (replace-string "\n" (concat "\n" (make-string column (string-to-char " "))) nil (point-min) (point-max))
+                               (buffer-string)
+                               )))
+        (delete-region beginning end)
+        (goto-char pos)
+        (insert formatted-text))))
+
+#+END_SRC
+
+** file name on clipboard
+
+#+BEGIN_SRC emacs-lisp
+  (defun fs/put-file-name-on-clipboard ()
+    "Put the current file name on the clipboard"
+    (interactive)
+    (let ((filename (if (equal major-mode 'dired-mode)
+                        default-directory
+                      (buffer-file-name))))
+      (when filename
+        (with-temp-buffer
+          (insert filename)
+          (clipboard-kill-region (point-min) (point-max)))
+        (message filename))))
+#+END_SRC
+
+** decode url
+
+#+BEGIN_SRC emacs-lisp
+  (defun fs/unhex-region (start end)
+    "de-urlencode the region between START and END in current buffer."
+    (interactive "r")
+    (save-excursion
+      (let ((text (delete-and-extract-region start end)))
+        (insert (decode-coding-string (url-unhex-string text) 'utf-8)))))
+
+  ;; http://localhost:1212/well-search?terms=%22%22&limit=100&offset=100&rules=%5B%7B%3Aattribute%20%22basin%22%2C%20%3Avalue%20%22PERMIAN%20BASIN%22%2C%20%3Apredicate%20%22%3D%22%7D%5D&legend%3F=true&drilling-info%3F=true&name-only%3F=false
+
+  ;;returns:
+
+  ;;http://localhost:1212/well-search?terms=""&limit=100&offset=100&rules=[{:attribute "basin", :value "PERMIAN BASIN", :predicate "="}]&legend?=true&drilling-info?=true&name-only?=false
+
+  (defun fs/hexify-region (start end)
+    "de-urlencode the region between START and END in current buffer."
+    (interactive "r")
+    (save-excursion
+      (let ((text (delete-and-extract-region start end)))
+        (insert (decode-coding-string (url-hexify-string text) 'utf-8)))))
+#+END_SRC
+
+** eval and replace elisp
+
+ripped from magnars. Has keybindings so it can be used in multiple cursor.
+
+#+BEGIN_SRC emacs-lisp
+  (defun fs/eval-and-replace ()
+    "Replace the preceding sexp with its value."
+    (interactive)
+    (backward-kill-sexp)
+    (condition-case nil
+        (prin1 (eval (read (current-kill 0)))
+               (current-buffer))
+      (error (message "Invalid expression")
+             (insert (current-kill 0)))))
+
+  (global-set-key (kbd "C-x C-y") 'eval-and-replace)
+#+END_SRC
+
+** Loads config.org
+
+without having to navigating to init.el and manually evaluating the org-babel-load-file block.
+
+#+BEGIN_SRC emacs-lisp
+  (defun fs/eval-config-org ()
+    (interactive)
+    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+#+END_SRC
+
+** open frequent files
+
+#+BEGIN_SRC emacs-lisp
+  (defun fs/open-config-org ()
+    (interactive)
+    (find-file "~/.emacs.d/config.org"))
+
+    (defun fs/open-cheatsheet ()
+    (interactive)
+    (find-file "~/.emacs.d/cheatsheet.org"))
+
+  (defun fs/open-todo ()
+    (interactive)
+    (find-file "/home/fsousa/SpiderOak Hive/writeups/notes/todo.org"))
+
+  (defun fs/open-legend-org ()
+    (interactive)
+    (find-file "/home/fsousa/src/legend-docs/legend.org"))
+
+
+#+END_SRC
+
+** timestamp operations
+#+BEGIN_SRC emacs-lisp
+  (defun fs/seconds-to-human (timestamp)
+    (format-time-string "<%Y-%m-%d %a %H:%M:%S>" (seconds-to-time timestamp)))
+
+
+  (defun fs/timestamp-to-human-date (arg)
+    "converts timestamp in the region, if active; if not, use timestamp at point."
+    (interactive "*p")
+    (let* ((timestamp (buffer-substring (region-beginning) (region-end)))
+           (string-size (length timestamp)))
+      (cond ((= 10 string-size) (print (fs/seconds-to-human (string-to-number timestamp))))
+            ((= 13 string-size) (print (fs/seconds-to-human (/ (string-to-number timestamp) 1000))))
+            ('otherwise (print error)))))
+
+  ;; select region on a timestamp and M-x fs/timestamp-to-human-date
+  ;; 1588783092
+
+#+END_SRC
+
+* Paredit
+
+#+BEGIN_SRC emacs-lisp
+  (use-package paredit
+    :ensure t
+    :config
+    (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+    ;; enable in the *scratch* buffer
+    (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
+    (add-hook 'ielm-mode-hook #'paredit-mode)
+    (add-hook 'lisp-mode-hook #'paredit-mode)
+    (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
+
+#+END_SRC
+
+* todo
+- fuzzy match for your helm function
+- 

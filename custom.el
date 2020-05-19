@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (magit beacon which-key projectile smex ido-vertical-mode ido-ubiquitous helm helm-descbinds discover-my-major better-defaults use-package))))
+    (multiple-cursors magit beacon which-key projectile smex ido-vertical-mode ido-ubiquitous helm helm-descbinds discover-my-major better-defaults use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
