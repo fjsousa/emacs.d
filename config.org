@@ -61,7 +61,6 @@ Other defaults
 
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "M-i") 'imenu)
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
 
   ;; moves around with shift
   (windmove-default-keybindings)

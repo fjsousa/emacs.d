@@ -29,7 +29,6 @@
   :ensure t)
 
 (global-set-key (kbd "M-i") 'imenu)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; moves around with shift
 (windmove-default-keybindings)
@@ -323,14 +322,13 @@
 
 (use-package cider
   :ensure t
-  :init
-  (progn
-    (setq cider-repl-pop-to-buffer-on-connect t)
-    (setq cider-show-error-buffer t)
-    (setq cider-auto-select-error-buffer t)
-    (setq cider-repl-history-file "~/.emacs.d/cider-history")
-    (setq cider-repl-wrap-history t)
-    (setq cider-repl-print-length 100)))
+  :config
+  (setq cider-repl-pop-to-buffer-on-connect t)
+  (setq cider-show-error-buffer t)
+  (setq cider-auto-select-error-buffer t)
+  (setq cider-repl-history-file "~/.emacs.d/cider-history")
+  (setq cider-repl-wrap-history t)
+  (setq cider-repl-print-length 100))
 
 (use-package clj-refactor
   :ensure t)
@@ -340,4 +338,4 @@
          (org-shiftleft-final . windmove-left)
          (org-shiftdown-final . windmove-down)
          (org-shiftright-final . windmove-right))
-  :init (setq org-support-shift-select 'always))
+  :config (setq org-support-shift-select 'always))
