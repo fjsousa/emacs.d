@@ -94,13 +94,12 @@ Other defaults
 
   (use-package color-theme-sanityinc-tomorrow
     :ensure t
-    :config
+    :config (color-theme-sanityinc-tomorrow-night))
+
     ;;(load-theme color-theme-sanityinc-tomorrow-day t)
-    (color-theme-sanityinc-tomorrow-night)
     ;;(load-theme color-theme-sanityinc-tomorrow-blue t)
     ;;(load-theme color-theme-sanityinc-tomorrow-bright t)
     ;;(load-theme color-theme-sanityinc-tomorrow-eighties t)
-    )
 #+END_SRC
 
 Font size
