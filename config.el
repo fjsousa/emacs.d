@@ -53,9 +53,19 @@
 
 (setq create-lockfiles nil)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes")
-(load-theme 'tomorrow-night-bright t)
+;; (use-package zenburn-theme
+ ;;  :ensure t
+ ;;  :config (load-theme 'zenburn t))
+
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t
+  :config
+  ;;(load-theme color-theme-sanityinc-tomorrow-day t)
+  (color-theme-sanityinc-tomorrow-night)
+  ;;(load-theme color-theme-sanityinc-tomorrow-blue t)
+  ;;(load-theme color-theme-sanityinc-tomorrow-bright t)
+  ;;(load-theme color-theme-sanityinc-tomorrow-eighties t)
+  )
 
 (set-face-attribute 'default nil :height 100 :weight 'bold)
 ;;(set-face-attribute 'default nil :height 130 :weight 'bold)
@@ -309,3 +319,6 @@
   (add-hook 'ielm-mode-hook #'paredit-mode)
   (add-hook 'lisp-mode-hook #'paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
+
+(use-package git-link
+  :ensure t)
