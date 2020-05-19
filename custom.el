@@ -24,7 +24,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (ace-jump-mode clj-refactor paredit cider show-trailing-whitespace zenburn-theme zenburn-thme color-theme-sanityinc-tomorrow git-link multiple-cursors magit beacon which-key projectile smex ido-vertical-mode ido-ubiquitous helm helm-descbinds discover-my-major better-defaults use-package)))
+    (paredit-mode ace-jump-mode clj-refactor paredit cider show-trailing-whitespace zenburn-theme zenburn-thme color-theme-sanityinc-tomorrow git-link multiple-cursors magit beacon which-key projectile smex ido-vertical-mode ido-ubiquitous helm helm-descbinds discover-my-major better-defaults use-package)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(ring-bell-function (quote ignore))
  '(vc-annotate-background nil)

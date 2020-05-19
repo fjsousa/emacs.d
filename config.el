@@ -77,26 +77,15 @@
 (defvar ido-default-item nil)
 (defvar ido-cur-list nil)
 
-(ido-mode 1)
-(setq ido-everywhere t)
-
-
-;; Don't ask for permission. Other choices are prompt and never.
-(setq ido-create-new-buffer 'always)
-
-;; This allows partial matches, e.g. "tl" will match "Tyrion Lannister"
-(setq ido-enable-flex-matching t)
-
-;; Turn this behavior off because it's annoying
-(setq ido-use-filename-at-point 'guess)
-
-;; Don't try to match file across all "work" directories; only match files
-;; in the current directory displayed in the minibuffer
-(setq ido-auto-merge-work-directories-length -1)
-
-;; Includes buffer names of recently open files, even if they're not
-;; open now
-(setq ido-use-virtual-buffers t)
+(use-package ido
+  :config
+  (ido-mode 1)
+  (setq ido-everywhere t)
+  (setq  ido-create-new-buffer 'always)
+  (setq  ido-use-virtual-buffers t)
+  (setq  ido-auto-merge-work-directories-length -1)
+  (setq  ido-use-filename-at-point 'guess)
+  (setq  ido-enable-flex-matching t))
 
 ;; This enables ido in all contexts where it could be useful, not just
 ;; for selecting buffer and file names
@@ -107,10 +96,9 @@
 
 (use-package ido-vertical-mode
   :ensure t
-  :init
-  (progn
-    (ido-vertical-mode 1)
-    (setq ido-vertical-define-keys 'C-n-and-C-p-only)))
+  :config
+  (ido-vertical-mode 1)
+  (setq ido-vertical-define-keys 'C-n-and-C-p-only))
 
 (use-package smex
   :ensure t
@@ -147,6 +135,12 @@
          (:map projectile-mode-map
               ("C-c p" . 'projectile-command-map))))
 
+(use-package ace-jump-mode
+  :ensure t
+  :bind
+  (("C-x C-." . ace-jump-mode)
+   ("C-x SPC" . ace-jump-mode-pop-mark)))
+
 (use-package beacon
  :ensure t
  :config
@@ -160,10 +154,6 @@
    (setq beacon-blink-when-point-moves-horizontally 20)
    (setq beacon-blink-when-point-moves-vertically 10)))
 
-(use-package magit
-  :ensure t
-  :bind ("C-x g" . magit-status))
-
 ;; C-h b or helm-descbinds to list these and others
 (use-package multiple-cursors
   :ensure t
@@ -175,6 +165,10 @@
          ("C-c C-/" . 'mc/unmark-next-like-this)))
 ;;"C-v" mc/cycle-forward
 ;;"M-v" mc/cycle-backward
+
+(use-package magit
+  :ensure t
+  :bind ("C-x g" . magit-status))
 
 (defun fs/peer-clean-error ()
   "Paste peer error in new buffer"
@@ -309,13 +303,20 @@
 
 (use-package paredit
   :ensure t
-  :config
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  ;; enable in the *scratch* buffer
-  (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
-  (add-hook 'ielm-mode-hook #'paredit-mode)
-  (add-hook 'lisp-mode-hook #'paredit-mode)
-  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
+  :hook
+  ((emacs-lisp-mode . paredit-mode)
+   (lisp-interaction-mode . paredit-mode)
+   (ielm-mode . paredit-mode)
+   (lisp-mode . paredit-mode)
+   (eval-expression-minibuffer-setup . paredit-mode)
+   (clojure-mode . paredit-mode)
+   (cider-repl-mode . paredit-mode)))
+
+;;comes with emacs
+(use-package eldoc
+  :hook ((emacs-lisp-mode . eldoc-mode)
+         (lisp-interaction-mode . eldoc-mode)
+         (ielm-mode . eldoc-mode)))
 
 (use-package git-link
   :ensure t)
@@ -324,7 +325,6 @@
   :ensure t
   :init
   (progn
-    (add-hook 'cider-mode-hook #'eldoc-mode)
     (setq cider-repl-pop-to-buffer-on-connect t)
     (setq cider-show-error-buffer t)
     (setq cider-auto-select-error-buffer t)
@@ -335,9 +335,9 @@
 (use-package clj-refactor
   :ensure t)
 
-(add-hook 'org-shiftup-final-hook 'windmove-up)
-(add-hook 'org-shiftleft-final-hook 'windmove-left)
-(add-hook 'org-shiftdown-final-hook 'windmove-down)
-(add-hook 'org-shiftright-final-hook 'windmove-right)
-
-(setq org-support-shift-select 'always)
+(use-package org
+  :hook ((org-shiftup-final . windmove-up)
+         (org-shiftleft-final . windmove-left)
+         (org-shiftdown-final . windmove-down)
+         (org-shiftright-final . windmove-right))
+  :init (setq org-support-shift-select 'always))
