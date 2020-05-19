@@ -1,3 +1,5 @@
+=Low entropy emacs configuration.=
+
 * Package manager configuration
 
 Sets up the package manager
@@ -194,10 +196,6 @@ Dired listing options
 #+END_SRC
 
 * Helm
-
-#+BEGIN_SRC emacs-lisp
-
-#+END_SRC
 
 [[https://github.com/thierryvolpiatto/emacs-tv-config/blob/master/init-helm.el][Helm init from the maintainer]]
 
