@@ -477,8 +477,27 @@ Documentation in minibuffer
 * Clojure
 
 #+BEGIN_SRC emacs-lisp
+  (defun fs/cider-server-restart ()
+    (interactive)
+    (cider-interactive-eval "(legend.repl/restart)"))
+
+  (defun fs/cider-switch-to-cljs-repl ()
+    (interactive)
+    (cider-interactive-eval "(figwheel-sidecar.repl-api/cljs-repl \"dev\")"))
+
+  (defun fs/cider-quit-cljs-repl ()
+    (interactive)
+    (cider-interactive-eval ":cljs/quit"))
+
+  (defun fs/cider-namespace-refresh ()
+    (interactive)
+    (cider-interactive-eval
+     "(clojure.tools.namespace.repl/refresh)"))
+
   (use-package cider
     :ensure t
+    :bind (:map clojure-mode-map
+                ("C-c C-v" . fs/cider-server-restart))
     :config
     (setq cider-repl-pop-to-buffer-on-connect t)
     (setq cider-show-error-buffer t)
