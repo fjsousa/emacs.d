@@ -447,6 +447,12 @@ without having to navigating to init.el and manually evaluating the org-babel-lo
 
 #+END_SRC
 
+* git link
+
+#+BEGIN_SRC emacs-lisp
+  (use-package git-link
+    :ensure t)
+#+END_SRC
+
 * todo
 - fuzzy match for your helm function
-- 
