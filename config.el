@@ -116,14 +116,18 @@
 
 (use-package helm
   :ensure t
+  :bind ("C-h a" . helm-apropos)
   :config
   (helm-mode 0) ;;helm is not enabled everywhere
-  :bind ("C-h a" . helm-apropos))
+  (setq helm-apropos-fuzzy-match t))
 
 (use-package helm-descbinds
   :ensure t
-  :init (helm-descbinds-mode)
+  :init (helm-descbinds-mode 1)
   :bind ("C-h b" . helm-descbinds))
+
+(use-package helm-info
+  :bind ("C-h i" . helm-info-emacs))
 
 (use-package projectile
   :ensure t
@@ -358,3 +362,12 @@
          (org-shiftdown-final . windmove-down)
          (org-shiftright-final . windmove-right))
   :config (setq org-support-shift-select 'always))
+
+;; display text in a column and wraps text around
+(use-package visual-fill-column
+  :hook (org-mode . (lambda () (progn
+                                 ;; visual fill column mode works along side visual line mode
+                                 ;; so we have to enable both
+                                 (visual-line-mode)
+                                 (visual-fill-column-mode)
+                                 (setq visual-fill-column-width 100)))))

@@ -189,9 +189,12 @@ Dired listing options
 #+BEGIN_SRC emacs-lisp
   (use-package helm
     :ensure t
+    :bind ("C-h a" . helm-apropos)
     :config
     (helm-mode 0) ;;helm is not enabled everywhere
-    :bind ("C-h a" . helm-apropos))
+    (setq helm-apropos-fuzzy-match t))
+
+
 #+END_SRC
 
 Describes mappings with helm
@@ -199,8 +202,15 @@ Describes mappings with helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm-descbinds
     :ensure t
-    :init (helm-descbinds-mode)
+    :init (helm-descbinds-mode 1)
     :bind ("C-h b" . helm-descbinds))
+#+END_SRC
+
+Better help
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-info
+    :bind ("C-h i" . helm-info-emacs))
 #+END_SRC
 * Projectile
 
@@ -511,8 +521,6 @@ Documentation in minibuffer
 #+END_SRC
 * Org Mode
 
-Supports shift + arrow everywhere
-
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :hook ((org-shiftup-final . windmove-up)
@@ -521,6 +529,14 @@ Supports shift + arrow everywhere
            (org-shiftright-final . windmove-right))
     :config (setq org-support-shift-select 'always))
 
+  ;; display text in a column and wraps text around
+  (use-package visual-fill-column
+    :hook (org-mode . (lambda () (progn
+                                   ;; visual fill column mode works along side visual line mode
+                                   ;; so we have to enable both
+                                   (visual-line-mode)
+                                   (visual-fill-column-mode)
+                                   (setq visual-fill-column-width 100)))))
 #+END_SRC
 * todo
-- fuzzy match for your helm function
+
