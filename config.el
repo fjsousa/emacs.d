@@ -114,12 +114,38 @@
   (setq insert-directory-program "/usr/local/bin/gls"))
 (setq dired-listing-switches "-aBhl --group-directories-first")
 
-(use-package helm
+(defun my-god-mode-update-cursor ()
+  (setq cursor-type (if (or god-local-mode buffer-read-only)
+                        'bar
+                      'box)))
+
+(use-package god-mode
   :ensure t
-  :bind ("C-h a" . helm-apropos)
-  :config
-  (helm-mode 0) ;;helm is not enabled everywhere
-  (setq helm-apropos-fuzzy-match t))
+  ;;:config (god-mode)
+  :bind (("<escape>" . god-local-mode)
+         ("C-x C-1" . delete-other-windows)
+         ("C-x C-2" . split-window-below)
+         ("C-x C-3" . split-window-right)
+         ("C-x C-0" . delete-window)
+         :map god-local-mode-map
+         ("z" . repeat)
+         ("i" . god-local-mode))
+  :hook ((god-mode-enabled . my-god-mode-update-cursor)
+         (god-mode-disabled . my-god-mode-update-cursor)))
+
+(use-package rg
+:ensure t
+  :config (rg-enable-default-bindings))
+
+(use-package helm
+    :ensure t
+    :bind ("C-h a" . helm-apropos)
+    :config
+    (helm-mode 0) ;;helm is not enabled everywhere
+    ;; comenting this out because you can just hit space
+    ;; you don't need fuzzy match
+    ;;(setq helm-apropos-fuzzy-match t)
+)
 
 (use-package helm-descbinds
   :ensure t
@@ -324,6 +350,12 @@
 (use-package git-link
   :ensure t)
 
+(use-package clojure-mode
+  :hook (clojure-mode . display-line-numbers-mode))
+
+(use-package clojurescript-mode
+  :hook (clojurescript-mode . display-line-numbers-mode))
+
 (defun fs/cider-server-restart ()
   (interactive)
   (cider-interactive-eval "(legend.repl/restart)"))
@@ -354,6 +386,7 @@
   (setq cider-repl-print-length 100))
 
 (use-package clj-refactor
+  :defer t
   :ensure t)
 
 (use-package org

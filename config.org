@@ -118,6 +118,8 @@ Full path in title bar
 
 * IDO and friends
 
+** ido
+
 #+BEGIN_SRC emacs-lisp
   ;; Fix
   ;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
@@ -143,7 +145,7 @@ Full path in title bar
     (ido-ubiquitous-mode 1))
 #+END_SRC
 
-Ido vertical
+** Ido vertical
 
 #+BEGIN_SRC emacs-lisp
   (use-package ido-vertical-mode
@@ -155,7 +157,9 @@ Ido vertical
 
 #+END_SRC
 
-Smex - better M-x without using helm
+** Smex
+
+better M-x without using helm
 
 #+BEGIN_SRC emacs-lisp
   (use-package smex
@@ -164,6 +168,8 @@ Smex - better M-x without using helm
     :bind ("M-x" . smex)
     :config (setq smex-save-file (concat user-emacs-directory ".smex-items")))
 #+END_SRC
+
+** which key
 
 Helper minibuffer with key completions
 
@@ -174,12 +180,47 @@ Helper minibuffer with key completions
     (which-key-mode))
 #+END_SRC
 
-Dired listing options
+** Dired listing options
 
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'darwin)
     (setq insert-directory-program "/usr/local/bin/gls"))
   (setq dired-listing-switches "-aBhl --group-directories-first")
+#+END_SRC
+
+** rg 
+** god mode
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-god-mode-update-cursor ()
+    (setq cursor-type (if (or god-local-mode buffer-read-only)
+                          'bar
+                        'box)))
+
+  (use-package god-mode
+    :ensure t
+    ;;:config (god-mode)
+    :bind (("<escape>" . god-mode-all)
+           ("C-x C-1" . delete-other-windows)
+           ("C-x C-2" . split-window-below)
+           ("C-x C-3" . split-window-right)
+           ("C-x C-0" . delete-window)
+           :map god-local-mode-map
+           ("." . repeat)
+           ("i" . god-local-mode))
+    :hook ((god-mode-enabled . my-god-mode-update-cursor)
+           (god-mode-disabled . my-god-mode-update-cursor)))
+
+  ;;god-exempt-major-modes
+  ;;god-exempt-predicates
+
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rg
+  :ensure t
+    :config (rg-enable-default-bindings))
 #+END_SRC
 
 * Helm
@@ -192,7 +233,10 @@ Dired listing options
     :bind ("C-h a" . helm-apropos)
     :config
     (helm-mode 0) ;;helm is not enabled everywhere
-    (setq helm-apropos-fuzzy-match t))
+    ;; comenting this out because you can just hit space
+    ;; you don't need fuzzy match
+    ;;(setq helm-apropos-fuzzy-match t)
+)
 
 
 #+END_SRC
@@ -487,22 +531,28 @@ Documentation in minibuffer
 * Clojure
 
 #+BEGIN_SRC emacs-lisp
-  (defun fs/cider-server-restart ()
-    (interactive)
-    (cider-interactive-eval "(legend.repl/restart)"))
+  (use-package clojure-mode
+    :hook (clojure-mode . display-line-numbers-mode))
 
-  (defun fs/cider-switch-to-cljs-repl ()
-    (interactive)
-    (cider-interactive-eval "(figwheel-sidecar.repl-api/cljs-repl \"dev\")"))
+  (use-package clojurescript-mode
+    :hook (clojurescript-mode . display-line-numbers-mode))
+#+END_SRC
 
-  (defun fs/cider-quit-cljs-repl ()
+** cider
+#+BEGIN_SRC emacs-lisp
+  (defun fs/legend-server-start ()
     (interactive)
-    (cider-interactive-eval ":cljs/quit"))
+    (cider-jack-in '())
+    (cider-interactive-eval "(legend.repl/start)")
+    (message "server running"))
 
-  (defun fs/cider-namespace-refresh ()
+    (defun fs/legend-server-refresh ()
     (interactive)
-    (cider-interactive-eval
-     "(clojure.tools.namespace.repl/refresh)"))
+    (cider-interactive-eval "(clojure.tools.namespace.repl/refresh)"))
+
+    (defun fs/legend-server-refresh-restart ()
+    (interactive)
+    (cider-interactive-eval  "(legend.repl/reset)"))
 
   (use-package cider
     :ensure t
@@ -515,8 +565,13 @@ Documentation in minibuffer
     (setq cider-repl-history-file "~/.emacs.d/cider-history")
     (setq cider-repl-wrap-history t)
     (setq cider-repl-print-length 100))
+#+END_SRC
 
+** cljr refactor
+
+#+BEGIN_SRC emacs-lisp
   (use-package clj-refactor
+    :defer t
     :ensure t)
 #+END_SRC
 * Org Mode
