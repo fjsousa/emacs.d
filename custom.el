@@ -29,7 +29,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (counsel swiper ivy ivy-mode neotree god-mode rg esup visual-fill-column paredit-mode ace-jump-mode clj-refactor paredit cider show-trailing-whitespace zenburn-theme zenburn-thme color-theme-sanityinc-tomorrow git-link multiple-cursors magit beacon which-key projectile smex ido-vertical-mode ido-ubiquitous helm helm-descbinds discover-my-major better-defaults use-package)))
+    (ivy-hydra counsel swiper ivy kivy-mode ivy-mode company-mode neotree deadgrep god-mode rg esup visual-fill-column paredit-mode ace-jump-mode clj-refactor paredit cider show-trailing-whitespace zenburn-theme zenburn-thme color-theme-sanityinc-tomorrow git-link multiple-cursors magit beacon which-key projectile smex ido-vertical-mode ido-ubiquitous helm helm-descbinds discover-my-major better-defaults use-package)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(ring-bell-function (quote ignore))
  '(vc-annotate-background nil)

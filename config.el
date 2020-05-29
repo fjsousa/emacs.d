@@ -73,7 +73,8 @@
   :ensure t
   :config (progn (ivy-mode 1)
            (setq ivy-use-virtual-buffers t)
-           (setq enable-recursive-minibuffers t))
+           (setq enable-recursive-minibuffers t)
+           (setq ivy-count-format "(%d/%d) "))
   :bind (("C-c C-r" . ivy-resume)
          ("<f6>" . ivy-resume)))
 
@@ -94,6 +95,9 @@
          ("C-c C-m" . counsel-mark-ring)
          :map minibuffer-local-map
          ("C-r" . counsel-minibuffer-history)))
+
+(use-package ivy-hydra
+  :ensure t)
 
 ;; Fix
 ;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
@@ -370,7 +374,7 @@
   (cider-interactive-eval "(legend.user/start)")
   (message "server running"))
 
-  (defun fs/legend-server-refresh ()
+(defun fs/legend-server-refresh ()
   (interactive)
   (cider-interactive-eval "(legend.user/refresh)")
   (message "refresh ok"))
