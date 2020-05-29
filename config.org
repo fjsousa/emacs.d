@@ -76,9 +76,6 @@ Other defaults
   (setq-default save-place t)
   (setq save-place-file (concat user-emacs-directory "places"))
 
-  ;;yank menu
-  (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
-
   ;; yes/no -> y/n
   (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -116,10 +113,42 @@ Full path in title bar
   (setq-default frame-title-format "%b (%f)")
 #+END_SRC 
 
-* IDO and friends
+* Editor/Navigation
 
+** ivy, swipper, counsel
+
+#+BEGIN_SRC emacs-lisp
+  ;; NOTE: you don't need fuzzy matchig, just hit space
+
+  (use-package ivy
+    :ensure t
+    :config (progn (ivy-mode 1)
+             (setq ivy-use-virtual-buffers t)
+             (setq enable-recursive-minibuffers t))
+    :bind (("C-c C-r" . ivy-resume)
+           ("<f6>" . ivy-resume)))
+
+  (use-package swiper
+    :ensure t
+    :config (setq search-default-mode #'char-fold-to-regexp)
+    :bind ( "\C-s" . swiper))
+
+  (use-package counsel
+    :ensure t
+    :bind (("M-x" . counsel-M-x)
+           ("C-x C-f" . counsel-find-file)
+           ("C-h a" . counsel-apropos)
+           ("C-h b" . counsel-descbinding)
+           ("C-h i" . counsel-info-lookup-symbol)
+           ("M-i" . counsel-imenu)
+           ("C-c C-y" . counsel-yank-pop)
+           ("C-c C-m" . counsel-mark-ring)
+           :map minibuffer-local-map
+           ("C-r" . counsel-minibuffer-history)))
+#+END_SRC
 ** ido
 
+todo: this can go because it's replace by ivy
 #+BEGIN_SRC emacs-lisp
   ;; Fix
   ;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
@@ -145,17 +174,6 @@ Full path in title bar
     (ido-ubiquitous-mode 1))
 #+END_SRC
 
-** Ido vertical
-
-#+BEGIN_SRC emacs-lisp
-  (use-package ido-vertical-mode
-    :ensure t
-    :config
-    (ido-vertical-mode 1)
-    (setq ido-vertical-define-keys 'C-n-and-C-p-only))
-
-
-#+END_SRC
 
 ** Smex
 
@@ -188,7 +206,6 @@ Helper minibuffer with key completions
   (setq dired-listing-switches "-aBhl --group-directories-first")
 #+END_SRC
 
-** rg 
 ** god mode
 
 #+BEGIN_SRC emacs-lisp
@@ -217,46 +234,14 @@ Helper minibuffer with key completions
 
 #+END_SRC
 
+** rg
 #+BEGIN_SRC emacs-lisp
   (use-package rg
   :ensure t
-    :config (rg-enable-default-bindings))
+  :config (rg-enable-default-bindings))
 #+END_SRC
 
-* Helm
-
-[[https://github.com/thierryvolpiatto/emacs-tv-config/blob/master/init-helm.el][Helm init from the maintainer]]
-
-#+BEGIN_SRC emacs-lisp
-  (use-package helm
-    :ensure t
-    :bind ("C-h a" . helm-apropos)
-    :config
-    (helm-mode 0) ;;helm is not enabled everywhere
-    ;; comenting this out because you can just hit space
-    ;; you don't need fuzzy match
-    ;;(setq helm-apropos-fuzzy-match t)
-)
-
-
-#+END_SRC
-
-Describes mappings with helm
-
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-descbinds
-    :ensure t
-    :init (helm-descbinds-mode 1)
-    :bind ("C-h b" . helm-descbinds))
-#+END_SRC
-
-Better help
-
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-info
-    :bind ("C-h i" . helm-info-emacs))
-#+END_SRC
-* Projectile
+** Projectile
 
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
@@ -269,7 +254,8 @@ Better help
                 ("C-c p" . 'projectile-command-map))))
 #+END_SRC
 
-* Cursors
+** Cursors
+
 
 Ace-jump
 
@@ -315,6 +301,12 @@ Multiple cursors
   ;;"M-v" mc/cycle-backward
 #+END_SRC
 
+** nerd-tree
+#+BEGIN_SRC emacs-lisp
+  (use-package neotree
+    :ensure t
+    :bind ("<f8>" . neotree-toggle))
+#+END_SRC
 * Magit
 
 #+BEGIN_SRC emacs-lisp
@@ -530,6 +522,8 @@ Documentation in minibuffer
 
 * Clojure
 
+** clojure mode
+   
 #+BEGIN_SRC emacs-lisp
   (use-package clojure-mode
     :hook (clojure-mode . display-line-numbers-mode))
@@ -542,22 +536,24 @@ Documentation in minibuffer
 #+BEGIN_SRC emacs-lisp
   (defun fs/legend-server-start ()
     (interactive)
-    (cider-jack-in '())
-    (cider-interactive-eval "(legend.repl/start)")
+    ;;(cider-jack-in '())
+    (cider-interactive-eval "(legend.user/start)")
     (message "server running"))
 
-    (defun fs/legend-server-refresh ()
+  (defun fs/legend-server-refresh ()
     (interactive)
-    (cider-interactive-eval "(clojure.tools.namespace.repl/refresh)"))
+    (cider-interactive-eval "(legend.user/refresh)")
+    (message "refresh ok"))
 
-    (defun fs/legend-server-refresh-restart ()
-    (interactive)
-    (cider-interactive-eval  "(legend.repl/reset)"))
+  (defun fs/legend-server-restart ()
+      (interactive)
+      (cider-interactive-eval  "(legend.user/reset)")
+      (message "refresh and server restart ok"))
 
   (use-package cider
     :ensure t
     :bind (:map clojure-mode-map
-                ("C-c C-v" . fs/cider-server-restart))
+                ("C-c C-v" . fs/legend-server-restart))
     :config
     (setq cider-repl-pop-to-buffer-on-connect t)
     (setq cider-show-error-buffer t)
@@ -565,6 +561,23 @@ Documentation in minibuffer
     (setq cider-repl-history-file "~/.emacs.d/cider-history")
     (setq cider-repl-wrap-history t)
     (setq cider-repl-print-length 100))
+
+  ;; TODO: put these in a single form
+  (add-to-list 'safe-local-variable-values
+               '(cider-default-cljs-repl . shadow))
+
+  (add-to-list 'safe-local-variable-values
+               '(cider-shadow-default-options . "app-with-login"))
+
+  (add-to-list 'safe-local-variable-values
+               '(cider-custom-cljs-repl-init-form . "(legend.shadow-repl/cljs-repl)"))
+
+  (add-to-list 'safe-local-variable-values
+               '(cider-lein-parameters . "with-profile dev,user repl :headless"))
+
+
+
+
 #+END_SRC
 
 ** cljr refactor
@@ -574,6 +587,7 @@ Documentation in minibuffer
     :defer t
     :ensure t)
 #+END_SRC
+
 * Org Mode
 
 #+BEGIN_SRC emacs-lisp

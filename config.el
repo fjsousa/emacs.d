@@ -44,9 +44,6 @@
 (setq-default save-place t)
 (setq save-place-file (concat user-emacs-directory "places"))
 
-;;yank menu
-(global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
-
 ;; yes/no -> y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -69,6 +66,34 @@
 ;;(set-face-attribute 'default nil :height 130 :weight 'bold)
 
 (setq-default frame-title-format "%b (%f)")
+
+;; NOTE: you don't need fuzzy matchig, just hit space
+
+(use-package ivy
+  :ensure t
+  :config (progn (ivy-mode 1)
+           (setq ivy-use-virtual-buffers t)
+           (setq enable-recursive-minibuffers t))
+  :bind (("C-c C-r" . ivy-resume)
+         ("<f6>" . ivy-resume)))
+
+(use-package swiper
+  :ensure t
+  :config (setq search-default-mode #'char-fold-to-regexp)
+  :bind ( "\C-s" . swiper))
+
+(use-package counsel
+  :ensure t
+  :bind (("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-h a" . counsel-apropos)
+         ("C-h b" . counsel-descbinding)
+         ("C-h i" . counsel-info-lookup-symbol)
+         ("M-i" . counsel-imenu)
+         ("C-c C-y" . counsel-yank-pop)
+         ("C-c C-m" . counsel-mark-ring)
+         :map minibuffer-local-map
+         ("C-r" . counsel-minibuffer-history)))
 
 ;; Fix
 ;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
@@ -93,12 +118,6 @@
   :config
   (ido-ubiquitous-mode 1))
 
-(use-package ido-vertical-mode
-  :ensure t
-  :config
-  (ido-vertical-mode 1)
-  (setq ido-vertical-define-keys 'C-n-and-C-p-only))
-
 (use-package smex
   :ensure t
   :init (smex-initialize)
@@ -122,38 +141,23 @@
 (use-package god-mode
   :ensure t
   ;;:config (god-mode)
-  :bind (("<escape>" . god-local-mode)
+  :bind (("<escape>" . god-mode-all)
          ("C-x C-1" . delete-other-windows)
          ("C-x C-2" . split-window-below)
          ("C-x C-3" . split-window-right)
          ("C-x C-0" . delete-window)
          :map god-local-mode-map
-         ("z" . repeat)
+         ("." . repeat)
          ("i" . god-local-mode))
   :hook ((god-mode-enabled . my-god-mode-update-cursor)
          (god-mode-disabled . my-god-mode-update-cursor)))
 
+;;god-exempt-major-modes
+;;god-exempt-predicates
+
 (use-package rg
 :ensure t
-  :config (rg-enable-default-bindings))
-
-(use-package helm
-    :ensure t
-    :bind ("C-h a" . helm-apropos)
-    :config
-    (helm-mode 0) ;;helm is not enabled everywhere
-    ;; comenting this out because you can just hit space
-    ;; you don't need fuzzy match
-    ;;(setq helm-apropos-fuzzy-match t)
-)
-
-(use-package helm-descbinds
-  :ensure t
-  :init (helm-descbinds-mode 1)
-  :bind ("C-h b" . helm-descbinds))
-
-(use-package helm-info
-  :bind ("C-h i" . helm-info-emacs))
+:config (rg-enable-default-bindings))
 
 (use-package projectile
   :ensure t
@@ -194,6 +198,10 @@
          ("C-c C-/" . 'mc/unmark-next-like-this)))
 ;;"C-v" mc/cycle-forward
 ;;"M-v" mc/cycle-backward
+
+(use-package neotree
+  :ensure t
+  :bind ("<f8>" . neotree-toggle))
 
 (use-package magit
   :ensure t
@@ -356,27 +364,26 @@
 (use-package clojurescript-mode
   :hook (clojurescript-mode . display-line-numbers-mode))
 
-(defun fs/cider-server-restart ()
+(defun fs/legend-server-start ()
   (interactive)
-  (cider-interactive-eval "(legend.repl/restart)"))
+  ;;(cider-jack-in '())
+  (cider-interactive-eval "(legend.user/start)")
+  (message "server running"))
 
-(defun fs/cider-switch-to-cljs-repl ()
+  (defun fs/legend-server-refresh ()
   (interactive)
-  (cider-interactive-eval "(figwheel-sidecar.repl-api/cljs-repl \"dev\")"))
+  (cider-interactive-eval "(legend.user/refresh)")
+  (message "refresh ok"))
 
-(defun fs/cider-quit-cljs-repl ()
-  (interactive)
-  (cider-interactive-eval ":cljs/quit"))
-
-(defun fs/cider-namespace-refresh ()
-  (interactive)
-  (cider-interactive-eval
-   "(clojure.tools.namespace.repl/refresh)"))
+(defun fs/legend-server-restart ()
+    (interactive)
+    (cider-interactive-eval  "(legend.user/reset)")
+    (message "refresh and server restart ok"))
 
 (use-package cider
   :ensure t
   :bind (:map clojure-mode-map
-              ("C-c C-v" . fs/cider-server-restart))
+              ("C-c C-v" . fs/legend-server-restart))
   :config
   (setq cider-repl-pop-to-buffer-on-connect t)
   (setq cider-show-error-buffer t)
@@ -384,6 +391,19 @@
   (setq cider-repl-history-file "~/.emacs.d/cider-history")
   (setq cider-repl-wrap-history t)
   (setq cider-repl-print-length 100))
+
+;; TODO: put these in a single form
+(add-to-list 'safe-local-variable-values
+             '(cider-default-cljs-repl . shadow))
+
+(add-to-list 'safe-local-variable-values
+             '(cider-shadow-default-options . "app-with-login"))
+
+(add-to-list 'safe-local-variable-values
+             '(cider-custom-cljs-repl-init-form . "(legend.shadow-repl/cljs-repl)"))
+
+(add-to-list 'safe-local-variable-values
+             '(cider-lein-parameters . "with-profile dev,user repl :headless"))
 
 (use-package clj-refactor
   :defer t
