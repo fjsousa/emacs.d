@@ -25,7 +25,7 @@ Sets up the package manager
 #+END_SRC
 
 ** use-package
-
+   
 Sintactic sugar to configure packages
 
 #+BEGIN_SRC emacs-lisp
@@ -114,7 +114,13 @@ Full path in title bar
 #+END_SRC 
 
 * Editor/Navigation
+** expand
 
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t
+    :bind (("C-=" . er/expand-region)))
+#+END_SRC
 ** ivy, swipper, counsel
 
 #+BEGIN_SRC emacs-lisp
@@ -153,30 +159,30 @@ Full path in title bar
 ** ido
 
 todo: this can go because it's replace by ivy
-#+BEGIN_SRC emacs-lisp
-  ;; Fix
-  ;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
-  (defvar ido-cur-item nil)
-  (defvar ido-default-item nil)
-  (defvar ido-cur-list nil)
+# #+BEGIN_SRC emacs-lisp
+#   ;; Fix
+#   ;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
+#   (defvar ido-cur-item nil)
+#   (defvar ido-default-item nil)
+#   (defvar ido-cur-list nil)
 
-  (use-package ido
-    :config
-    (ido-mode 1)
-    (setq ido-everywhere t)
-    (setq  ido-create-new-buffer 'always)
-    (setq  ido-use-virtual-buffers t)
-    (setq  ido-auto-merge-work-directories-length -1)
-    (setq  ido-use-filename-at-point 'guess)
-    (setq  ido-enable-flex-matching t))
+#   (use-package ido
+#     :config
+#     (ido-mode 1)
+#     (setq ido-everywhere t)
+#     (setq  ido-create-new-buffer 'always)
+#     (setq  ido-use-virtual-buffers t)
+#     (setq  ido-auto-merge-work-directories-length -1)
+#     (setq  ido-use-filename-at-point 'guess)
+#     (setq  ido-enable-flex-matching t))
 
-  ;; This enables ido in all contexts where it could be useful, not just
-  ;; for selecting buffer and file names
-  (use-package ido-ubiquitous
-    :ensure t
-    :config
-    (ido-ubiquitous-mode 1))
-#+END_SRC
+#   ;; This enables ido in all contexts where it could be useful, not just
+#   ;; for selecting buffer and file names
+#   (use-package ido-ubiquitous
+#     :ensure t
+#     :config
+#     (ido-ubiquitous-mode 1))
+# #+END_SRC
 
 
 ** Smex
@@ -611,5 +617,5 @@ Documentation in minibuffer
                                    (visual-fill-column-mode)
                                    (setq visual-fill-column-width 100)))))
 #+END_SRC
-* todo
+
 

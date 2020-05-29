@@ -99,29 +99,6 @@
 (use-package ivy-hydra
   :ensure t)
 
-;; Fix
-;; Warning (bytecomp): reference to free variable \‘ido-cur-item\’
-(defvar ido-cur-item nil)
-(defvar ido-default-item nil)
-(defvar ido-cur-list nil)
-
-(use-package ido
-  :config
-  (ido-mode 1)
-  (setq ido-everywhere t)
-  (setq  ido-create-new-buffer 'always)
-  (setq  ido-use-virtual-buffers t)
-  (setq  ido-auto-merge-work-directories-length -1)
-  (setq  ido-use-filename-at-point 'guess)
-  (setq  ido-enable-flex-matching t))
-
-;; This enables ido in all contexts where it could be useful, not just
-;; for selecting buffer and file names
-(use-package ido-ubiquitous
-  :ensure t
-  :config
-  (ido-ubiquitous-mode 1))
-
 (use-package smex
   :ensure t
   :init (smex-initialize)
