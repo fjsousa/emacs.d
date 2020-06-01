@@ -209,6 +209,14 @@
   (setq whitespace-line-column 80)
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
+(use-package idle-highlight-mode
+  :ensure t
+  :config (setq idle-highlight-idle-time 0.01)
+  :hook ((emacs-lisp-mode . idle-highlight-mode)
+         (clojure-mode . idle-highlight-mode)
+         (clojurescript-mode . idle-highlight-mode)
+         (cider-repl-mode . idle-highlight-mode)))
+
 (defun fs/peer-clean-error ()
   "Paste peer error in new buffer"
   (interactive)

@@ -350,9 +350,6 @@ Multiple cursors
 #+END_SRC
 ** highlight same symbol
 #+BEGIN_SRC emacs-lisp
-  (use-package highlight-symbol
-    :ensure t)
-
   (use-package idle-highlight-mode
     :ensure t
     :config (setq idle-highlight-idle-time 0.01)
