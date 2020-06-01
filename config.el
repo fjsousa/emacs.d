@@ -67,6 +67,10 @@
 
 (setq-default frame-title-format "%b (%f)")
 
+(use-package expand-region
+  :ensure t
+  :bind (("C-=" . er/expand-region)))
+
 ;; NOTE: you don't need fuzzy matchig, just hit space
 
 (use-package ivy
@@ -85,6 +89,7 @@
 
 (use-package counsel
   :ensure t
+
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-h a" . counsel-apropos)
@@ -99,11 +104,19 @@
 (use-package ivy-hydra
   :ensure t)
 
-(use-package smex
+;;; https://github.com/Yevgnen/ivy-rich
+(use-package ivy-rich
   :ensure t
-  :init (smex-initialize)
-  :bind ("M-x" . smex)
-  :config (setq smex-save-file (concat user-emacs-directory ".smex-items")))
+  :after (ivy counsel)
+  :config
+  (setq
+   ivy-rich-path-style 'abbrev
+   ;; whether to parse remote files
+   ivy-rich-parse-remote-buffer t      ; default: t
+   ivy-rich-parse-remote-file-path t   ; default: nil
+   )
+  (ivy-rich-mode 1)
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
 
 (use-package which-key
   :ensure t
@@ -147,7 +160,8 @@
   :bind ((:map projectile-mode-map
               ("s-p" . 'projectile-command-map))
          (:map projectile-mode-map
-              ("C-c p" . 'projectile-command-map))))
+               ("C-c p" . 'projectile-command-map)))
+  :config (setq projectile-completion-system 'ivy))
 
 (use-package ace-jump-mode
   :ensure t
@@ -184,9 +198,16 @@
   :ensure t
   :bind ("<f8>" . neotree-toggle))
 
-(use-package magit
+(use-package whitespace
   :ensure t
-  :bind ("C-x g" . magit-status))
+  :init
+  (dolist (hook '(prog-mode-hook text-mode-hook))
+    (add-hook hook #'whitespace-mode))
+  (add-hook 'before-save-hook #'whitespace-cleanup)
+  :config
+  (setq whitespace-line nil)
+  (setq whitespace-line-column 80)
+  (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
 (defun fs/peer-clean-error ()
   "Paste peer error in new buffer"
@@ -332,9 +353,14 @@
 
 ;;comes with emacs
 (use-package eldoc
-  :hook ((emacs-lisp-mode . eldoc-mode)
-         (lisp-interaction-mode . eldoc-mode)
-         (ielm-mode . eldoc-mode)))
+:ensure t
+:hook ((emacs-lisp-mode . eldoc-mode)
+(lisp-interaction-mode . eldoc-mode)
+(ielm-mode . eldoc-mode)))
+
+(use-package magit
+  :ensure t
+  :bind ("C-x g" . magit-status))
 
 (use-package git-link
   :ensure t)
@@ -390,6 +416,48 @@
   :defer t
   :ensure t)
 
+;; (use-package vterm
+;;     :ensure t)
+
+;; (defun bb/term-toggle-mode ()
+;;   "Toggles term between line mode and char mode"
+;;   (interactive)
+;;   (if (term-in-line-mode)
+;;       (term-char-mode)
+;;     (term-line-mode)))
+
+;; (defun bb/term-paste (&optional string)
+;;   (interactive)
+;;   (process-send-string
+;;    (get-buffer-process (current-buffer))
+;;    (if string string (current-kill 0))))
+
+;; (use-package multi-term
+;;   :straight t
+;;   :config
+;;   (setq multi-term-program "/usr/local/bin/fish")
+;;   (setq term-bind-key-alist
+;;     (list
+;;     (cons "C-c C-c" 'term-interrupt-subjob)
+;;     (cons "C-p"  'term-send-raw)
+;;     (cons "C-n"  'term-send-raw)
+;;     (cons "C-a"  'term-send-raw)
+;;     (cons "C-e"  'term-send-raw)
+;;     (cons "M-b"  'term-send-backward-word)
+;;     (cons "M-f"  'term-send-forward-word)
+;;     (cons "M-d"  'term-send-forward-kill-word)
+;;     (cons "C-k"  'term-send-raw)))
+;;   (add-hook 'term-mode-hook
+;;           (lambda ()
+;;             (setq show-trailing-whitespace nil)
+;;             (define-key term-mode-map (kbd "C-c C-e") 'bb/term-toggle-mode)
+;;             (define-key term-raw-map (kbd "C-c C-e") 'bb/term-toggle-mode)
+;;             (define-key term-raw-map (kbd "C-y") 'bb/term-paste)
+;;             (define-key term-raw-map (kbd "<M-backspace>") 'term-send-backward-kill-word)
+;;             (define-key term-raw-map (kbd "M-[") 'multi-term-prev)
+;;             (define-key term-raw-map (kbd "M-]") 'multi-term-next)
+;;             )))
+
 (use-package org
   :hook ((org-shiftup-final . windmove-up)
          (org-shiftleft-final . windmove-left)
@@ -399,6 +467,7 @@
 
 ;; display text in a column and wraps text around
 (use-package visual-fill-column
+  :ensure t
   :hook (org-mode . (lambda () (progn
                                  ;; visual fill column mode works along side visual line mode
                                  ;; so we have to enable both

@@ -25,7 +25,7 @@ Sets up the package manager
 #+END_SRC
 
 ** use-package
-   
+
 Sintactic sugar to configure packages
 
 #+BEGIN_SRC emacs-lisp
@@ -108,12 +108,12 @@ Font size
 #+END_SRC
 
 Full path in title bar
-                        
+
 #+BEGIN_SRC emacs-lisp
   (setq-default frame-title-format "%b (%f)")
-#+END_SRC 
+#+END_SRC
 
-* Editor/Navigation
+* Edit/Navigate
 ** expand
 
 #+BEGIN_SRC emacs-lisp
@@ -142,6 +142,7 @@ Full path in title bar
 
   (use-package counsel
     :ensure t
+
     :bind (("M-x" . counsel-M-x)
            ("C-x C-f" . counsel-find-file)
            ("C-h a" . counsel-apropos)
@@ -155,6 +156,20 @@ Full path in title bar
 
   (use-package ivy-hydra
     :ensure t)
+
+  ;;; https://github.com/Yevgnen/ivy-rich
+  (use-package ivy-rich
+    :ensure t
+    :after (ivy counsel)
+    :config
+    (setq
+     ivy-rich-path-style 'abbrev
+     ;; whether to parse remote files
+     ivy-rich-parse-remote-buffer t      ; default: t
+     ivy-rich-parse-remote-file-path t   ; default: nil
+     )
+    (ivy-rich-mode 1)
+    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
 #+END_SRC
 ** ido
 
@@ -184,18 +199,17 @@ todo: this can go because it's replace by ivy
 #     (ido-ubiquitous-mode 1))
 # #+END_SRC
 
-
 ** Smex
 
-better M-x without using helm
+# better M-x without using helm
 
-#+BEGIN_SRC emacs-lisp
-  (use-package smex
-    :ensure t
-    :init (smex-initialize)
-    :bind ("M-x" . smex)
-    :config (setq smex-save-file (concat user-emacs-directory ".smex-items")))
-#+END_SRC
+# #+BEGIN_SRC emacs-lisp
+#   (use-package smex
+#     :ensure t
+#     :init (smex-initialize)
+#     :bind ("M-x" . smex)
+#     :config (setq smex-save-file (concat user-emacs-directory ".smex-items")))
+# #+END_SRC
 
 ** which key
 
@@ -253,6 +267,7 @@ Helper minibuffer with key completions
 
 ** Projectile
 
+
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :ensure t
@@ -261,7 +276,8 @@ Helper minibuffer with key completions
     :bind ((:map projectile-mode-map
                 ("s-p" . 'projectile-command-map))
            (:map projectile-mode-map
-                ("C-c p" . 'projectile-command-map))))
+                 ("C-c p" . 'projectile-command-map)))
+    :config (setq projectile-completion-system 'ivy))
 #+END_SRC
 
 ** Cursors
@@ -317,14 +333,34 @@ Multiple cursors
     :ensure t
     :bind ("<f8>" . neotree-toggle))
 #+END_SRC
-* Magit
+
+** whitespace clean up
 
 #+BEGIN_SRC emacs-lisp
-  (use-package magit
+  (use-package whitespace
     :ensure t
-    :bind ("C-x g" . magit-status))
+    :init
+    (dolist (hook '(prog-mode-hook text-mode-hook))
+      (add-hook hook #'whitespace-mode))
+    (add-hook 'before-save-hook #'whitespace-cleanup)
+    :config
+    (setq whitespace-line nil)
+    (setq whitespace-line-column 80)
+    (setq whitespace-style '(face tabs empty trailing lines-tail)))
 #+END_SRC
+** highlight same symbol
+#+BEGIN_SRC emacs-lisp
+  (use-package highlight-symbol
+    :ensure t)
 
+  (use-package idle-highlight-mode
+    :ensure t
+    :config (setq idle-highlight-idle-time 0.01)
+    :hook ((emacs-lisp-mode . idle-highlight-mode)
+           (clojure-mode . idle-highlight-mode)
+           (clojurescript-mode . idle-highlight-mode)
+           (cider-repl-mode . idle-highlight-mode)))
+#+END_SRC
 * Custom defines
 
 ** Paste peer error in new buffer
@@ -497,7 +533,9 @@ without having to navigating to init.el and manually evaluating the org-babel-lo
 
 #+END_SRC
 
-* Paredit
+* Languages
+
+** Paredit
 
 #+BEGIN_SRC emacs-lisp
   (use-package paredit
@@ -512,28 +550,39 @@ without having to navigating to init.el and manually evaluating the org-babel-lo
      (cider-repl-mode . paredit-mode)))
 #+END_SRC
 
-* eldoc
+
+** eldoc
 
 Documentation in minibuffer
 
 #+BEGIN_SRC emacs-lisp
   ;;comes with emacs
   (use-package eldoc
-    :hook ((emacs-lisp-mode . eldoc-mode)
-           (lisp-interaction-mode . eldoc-mode)
-           (ielm-mode . eldoc-mode)))
+  :ensure t
+  :hook ((emacs-lisp-mode . eldoc-mode)
+  (lisp-interaction-mode . eldoc-mode)
+  (ielm-mode . eldoc-mode)))
 #+END_SRC
-* git link
+
+* Tools
+** Magit
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :bind ("C-x g" . magit-status))
+#+END_SRC
+** git link
 
 #+BEGIN_SRC emacs-lisp
   (use-package git-link
     :ensure t)
 #+END_SRC
 
-* Clojure
+** Clojure
 
-** clojure mode
-   
+*** clojure mode
+
 #+BEGIN_SRC emacs-lisp
   (use-package clojure-mode
     :hook (clojure-mode . display-line-numbers-mode))
@@ -542,7 +591,7 @@ Documentation in minibuffer
     :hook (clojurescript-mode . display-line-numbers-mode))
 #+END_SRC
 
-** cider
+*** cider
 #+BEGIN_SRC emacs-lisp
   (defun fs/legend-server-start ()
     (interactive)
@@ -590,7 +639,7 @@ Documentation in minibuffer
 
 #+END_SRC
 
-** cljr refactor
+*** cljr refactor
 
 #+BEGIN_SRC emacs-lisp
   (use-package clj-refactor
@@ -598,6 +647,50 @@ Documentation in minibuffer
     :ensure t)
 #+END_SRC
 
+* terminal
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package vterm
+  ;;     :ensure t)
+
+  ;; (defun bb/term-toggle-mode ()
+  ;;   "Toggles term between line mode and char mode"
+  ;;   (interactive)
+  ;;   (if (term-in-line-mode)
+  ;;       (term-char-mode)
+  ;;     (term-line-mode)))
+
+  ;; (defun bb/term-paste (&optional string)
+  ;;   (interactive)
+  ;;   (process-send-string
+  ;;    (get-buffer-process (current-buffer))
+  ;;    (if string string (current-kill 0))))
+
+  ;; (use-package multi-term
+  ;;   :straight t
+  ;;   :config
+  ;;   (setq multi-term-program "/usr/local/bin/fish")
+  ;;   (setq term-bind-key-alist
+  ;;     (list
+  ;;     (cons "C-c C-c" 'term-interrupt-subjob)
+  ;;     (cons "C-p"  'term-send-raw)
+  ;;     (cons "C-n"  'term-send-raw)
+  ;;     (cons "C-a"  'term-send-raw)
+  ;;     (cons "C-e"  'term-send-raw)
+  ;;     (cons "M-b"  'term-send-backward-word)
+  ;;     (cons "M-f"  'term-send-forward-word)
+  ;;     (cons "M-d"  'term-send-forward-kill-word)
+  ;;     (cons "C-k"  'term-send-raw)))
+  ;;   (add-hook 'term-mode-hook
+  ;;           (lambda ()
+  ;;             (setq show-trailing-whitespace nil)
+  ;;             (define-key term-mode-map (kbd "C-c C-e") 'bb/term-toggle-mode)
+  ;;             (define-key term-raw-map (kbd "C-c C-e") 'bb/term-toggle-mode)
+  ;;             (define-key term-raw-map (kbd "C-y") 'bb/term-paste)
+  ;;             (define-key term-raw-map (kbd "<M-backspace>") 'term-send-backward-kill-word)
+  ;;             (define-key term-raw-map (kbd "M-[") 'multi-term-prev)
+  ;;             (define-key term-raw-map (kbd "M-]") 'multi-term-next)
+  ;;             )))
+#+END_SRC
 * Org Mode
 
 #+BEGIN_SRC emacs-lisp
@@ -610,6 +703,7 @@ Documentation in minibuffer
 
   ;; display text in a column and wraps text around
   (use-package visual-fill-column
+    :ensure t
     :hook (org-mode . (lambda () (progn
                                    ;; visual fill column mode works along side visual line mode
                                    ;; so we have to enable both
@@ -617,5 +711,3 @@ Documentation in minibuffer
                                    (visual-fill-column-mode)
                                    (setq visual-fill-column-width 100)))))
 #+END_SRC
-
-
