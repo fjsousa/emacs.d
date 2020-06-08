@@ -89,7 +89,6 @@
 
 (use-package counsel
   :ensure t
-
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-h a" . counsel-apropos)
@@ -98,6 +97,7 @@
          ("M-i" . counsel-imenu)
          ("C-c C-y" . counsel-yank-pop)
          ("C-c C-m" . counsel-mark-ring)
+         ("C-c C-s" . counsel-rg)
          :map minibuffer-local-map
          ("C-r" . counsel-minibuffer-history)))
 
