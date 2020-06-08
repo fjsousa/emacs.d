@@ -19,9 +19,11 @@
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(frame-background-mode (quote dark))
  '(helm-mode-fuzzy-match nil)
+ '(highlight-symbol-on-navigation-p t)
  '(inhibit-startup-screen t)
  '(isearch-allow-scroll t)
  '(line-number-mode nil)
+ '(mouse-highlight t)
  '(neo-smart-open t)
  '(neo-window-position (quote left))
  '(nrepl-message-colors
@@ -29,7 +31,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (idle-highlight-mode visual-fill-column clj-refactor cider git-link magit paredit neotree multiple-cursors beacon ace-jump-mode projectile rg god-mode which-key ivy-rich ivy-hydra counsel swiper ivy expand-region color-theme-sanityinc-tomorrow better-defaults use-package)))
+    (company-lsp lsp-ui lsp-mode idle-highlight-mode visual-fill-column clj-refactor cider git-link magit paredit neotree multiple-cursors beacon ace-jump-mode projectile rg god-mode which-key ivy-rich ivy-hydra counsel swiper ivy expand-region color-theme-sanityinc-tomorrow better-defaults use-package)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(ring-bell-function (quote ignore))
  '(vc-annotate-background nil)
