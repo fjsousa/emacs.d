@@ -609,10 +609,12 @@ Documentation in minibuffer
 
 #+BEGIN_SRC emacs-lisp
   (use-package clojure-mode
-    :hook (clojure-mode . display-line-numbers-mode))
+  :hook (clojure-mode . display-line-numbers-mode)
+  (clojure-mode . flyspell-prog-mode))
 
   (use-package clojurescript-mode
-    :hook (clojurescript-mode . display-line-numbers-mode))
+    :hook (clojurescript-mode . display-line-numbers-mode)
+    (clojurescript-mode . flyspell-prog-mode))
 #+END_SRC
 
 *** cider
@@ -669,6 +671,67 @@ Documentation in minibuffer
   (use-package clj-refactor
     :defer t
     :ensure t)
+#+END_SRC
+
+** language tool
+
+Using [[https://www.languagetool.org/#more][language tool]] so that I don't look like an ignorant.
+
+#+BEGIN_SRC emacs-lisp
+  ;; (if (eq system-type 'darwin)
+  ;;     (setq langtool-language-tool-jar "/usr/local/Cellar/languagetool/4.5/libexec/languagetool-commandline.jar")
+  ;;   (setq langtool-language-tool-jar "/home/fsousa/src/languagetool/languagetool-commandline.jar"))
+
+  ;;java -cp languagetool-server.jar org.languagetool.server.HTTPServer --port 8081 --allow-origin "*"
+
+  ;;(setq langtool-language-tool-server-jar "/path/to/languagetool-server.jar")
+  ;;(setq langtool-server-user-arguments '("-p" "8082"))
+
+  (use-package langtool
+    :ensure t
+    :config
+    (setq langtool-http-server-host "localhost"
+          langtool-http-server-port 8081
+          langtool-mother-tongue "en-GB"
+          langtool-disabled-rules '("WHITESPACE_RULE"
+                                    "EN_UNPAIRED_BRACKETS"
+                                    ;;"COMMA_PARENTHESIS_WHITESPACE"
+                                    "EN_QUOTES"))
+    :bind (("\C-x4w" . langtool-check)
+           ("\C-x4W" . langtool-check-done)
+           ("\C-x4l" . langtool-switch-default-language)
+           ("\C-x44" . langtool-show-message-at-point)
+           ("\C-x4c" . langtool-correct-buffer)))
+
+  (defun langtool-autoshow-detail-popup (overlays)
+    (unless (or popup-instances
+                ;; suppress popup after type `C-g` .
+                (memq last-command '(keyboard-quit)))
+      (let ((msg (langtool-details-error-message overlays)))
+        (popup-tip msg))))
+
+  (use-package popup
+    :ensure t
+    :config
+    (setq langtool-autoshow-message-function 'langtool-autoshow-detail-popup))
+#+END_SRC
+** flyspell popup
+
+#+BEGIN_SRC emacs-lisp
+  (use-package flyspell-popup
+    :ensure t
+    :hook
+    (org-mode . flyspell-mode)
+    ;;(flyspell-mode . flyspell-popup-auto-correct-mode)
+    :config
+    (setq ispell-program-name "aspell")
+    ;;(setq ispell-personal-dictionary "~/.emacs.d/.ispell")
+    (setq flyspell-popup-correct-delay 0.01)
+    :bind (:map flyspell-mode-map
+                ("s-." . flyspell-popup-correct)
+                ("C-." . nil)
+                ("s-," . flyspell-goto-next-error)
+                ("C-;" . flyspell-auto-correct-word)))
 #+END_SRC
 
 * terminal
