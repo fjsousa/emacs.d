@@ -97,7 +97,7 @@
          ("M-i" . counsel-imenu)
          ("C-c C-y" . counsel-yank-pop)
          ("C-c C-m" . counsel-mark-ring)
-         ("C-c C-s" . counsel-rg)
+         ("C-c r" . counsel-rg)
          :map minibuffer-local-map
          ("C-r" . counsel-minibuffer-history)))
 
@@ -360,30 +360,37 @@
    (cider-repl-mode . paredit-mode)))
 
 (use-package lsp-mode
-  :ensure t
-  :hook ((clojure-mode . lsp)
-         (clojurec-mode . lsp)
-         (clojurescript-mode . lsp))
-  :config
-  ;; add paths to your local installation of project mgmt tools, like lein
-  (setenv "PATH" (concat
-                   "/usr/local/bin" path-separator
-                   (getenv "PATH")))
-  (dolist (m '(clojure-mode
-               clojurec-mode
-               clojurescript-mode
-               clojurex-mode))
-     (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
-  (setq lsp-enable-indentation nil
-        lsp-clojure-server-command '("bash" "-c" "clojure-lsp")))
+    :ensure t
+    :hook ((clojure-mode . lsp)
+           (clojurec-mode . lsp)
+           (clojurescript-mode . lsp))
+    :config
+    ;; add paths to your local installation of project mgmt tools, like lein
+    (setenv "PATH" (concat
+                     "/usr/local/bin" path-separator
+                     (getenv "PATH")))
+    (dolist (m '(clojure-mode
+                 clojurec-mode
+                 clojurescript-mode
+                 clojurex-mode))
+       (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
+    (setq lsp-enable-indentation nil
+          lsp-clojure-server-command '("bash" "-c" "clojure-lsp")))
 
-(use-package lsp-ui
-  :ensure t
-  :commands lsp-ui-mode)
+  (use-package lsp-ui
+    :ensure t
+    :commands lsp-ui-mode)
 
-(use-package company-lsp
-  :ensure t
-  :commands company-lsp)
+  (use-package company-lsp
+    :ensure t
+    :commands company-lsp)
+
+(use-package lsp-ivy
+  :ensure t)
+
+;;lsp peek mode is not enabled by default
+
+;; needs to ignore target and resouces
 
 ;;comes with emacs
 (use-package eldoc
