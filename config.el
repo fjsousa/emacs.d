@@ -360,37 +360,37 @@
    (cider-repl-mode . paredit-mode)))
 
 (use-package lsp-mode
-    :ensure t
-    :hook ((clojure-mode . lsp)
-           (clojurec-mode . lsp)
-           (clojurescript-mode . lsp))
-    :config
-    ;; add paths to your local installation of project mgmt tools, like lein
-    (setenv "PATH" (concat
-                     "/usr/local/bin" path-separator
-                     (getenv "PATH")))
-    (dolist (m '(clojure-mode
-                 clojurec-mode
-                 clojurescript-mode
-                 clojurex-mode))
-       (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
-    (setq lsp-enable-indentation nil
-          lsp-clojure-server-command '("bash" "-c" "clojure-lsp")))
+  :ensure t
+  :hook ((clojure-mode . lsp)
+         (clojurec-mode . lsp)
+         (clojurescript-mode . lsp))
+  :config
+  ;; add paths to your local installation of project mgmt tools, like lein
+  (setenv "PATH" (concat
+                  "/usr/local/bin" path-separator
+                  (getenv "PATH")))
+  (dolist (m '(clojure-mode
+               clojurec-mode
+               clojurescript-mode
+               clojurex-mode))
+    (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
+  (setq lsp-enable-indentation nil
+        lsp-clojure-server-command '("bash" "-c" "clojure-lsp")))
 
-  (use-package lsp-ui
-    :ensure t
-    :commands lsp-ui-mode)
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
 
-  (use-package company-lsp
-    :ensure t
-    :commands company-lsp)
+(use-package company-lsp
+  :ensure t
+  :commands company-lsp)
 
 (use-package lsp-ivy
   :ensure t)
 
 ;;lsp peek mode is not enabled by default
 
-;; needs to ignore target and resouces
+;;needs to ignore target and resouces
 
 ;;comes with emacs
 (use-package eldoc
@@ -414,21 +414,37 @@
   :hook (clojurescript-mode . display-line-numbers-mode)
   (clojurescript-mode . flyspell-prog-mode))
 
+(defun fs/legend-server-stop ()
+  (interactive)
+  ;;(cider-jack-in '())
+  (cider-interactive-eval "(legend.user/stop)"))
+
 (defun fs/legend-server-start ()
   (interactive)
   ;;(cider-jack-in '())
-  (cider-interactive-eval "(legend.user/start)")
-  (message "server running"))
+  (cider-interactive-eval "(legend.user/start)"))
+
+(defun fs/legend-clean-config ()
+  (interactive)
+  ;;(cider-jack-in '())
+  (cider-interactive-eval "(alter-var-root #'think.config.core/*config-map* (fn [_] nil))"))
 
 (defun fs/legend-server-refresh ()
   (interactive)
   (cider-interactive-eval "(legend.user/refresh)")
-  (message "refresh ok"))
+  (message "refresh, no restart"))
 
-(defun fs/legend-server-restart ()
-    (interactive)
-    (cider-interactive-eval  "(legend.user/reset)")
-    (message "refresh and server restart ok"))
+(defun fs/legend-server-restart()
+  (interactive)
+  (cider-interactive-eval  "(legend.user/restart)")
+  (message "cleat config stop and start"))
+
+(defun fs/legend-server-reset ()
+  (interactive)
+  (cider-interactive-eval  "(legend.user/reset)")
+  (message "refresh and server restart"))
+
+
 
 (use-package cider
   :ensure t
@@ -496,20 +512,27 @@
   :config
   (setq langtool-autoshow-message-function 'langtool-autoshow-detail-popup))
 
-(use-package flyspell-popup
+(use-package flyspell-correct
   :ensure t
+  :after flyspell
   :hook
   (org-mode . flyspell-mode)
-  ;;(flyspell-mode . flyspell-popup-auto-correct-mode)
-  :config
-  (setq ispell-program-name "aspell")
-  ;;(setq ispell-personal-dictionary "~/.emacs.d/.ispell")
-  (setq flyspell-popup-correct-delay 0.01)
   :bind (:map flyspell-mode-map
-              ("s-." . flyspell-popup-correct)
+              ("s-." . flyspell-correct-wrapper)
               ("C-." . nil)
               ("s-," . flyspell-goto-next-error)
-              ("C-;" . flyspell-auto-correct-word)))
+              ("C-;" . flyspell-auto-correct-word))
+   :config (setq ispell-program-name "aspell"))
+
+(use-package flyspell-correct-ivy
+  :ensure t
+  :after flyspell-correct)
+
+(use-package clojure-snippets
+  :ensure t
+  :hook
+  (clojure-mode . yas-minor-mode-on)
+  (clojurescript-mode . yas-minor-mode-on))
 
 ;; (use-package vterm
 ;;     :ensure t)

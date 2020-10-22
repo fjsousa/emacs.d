@@ -31,7 +31,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (lsp-ivy flyspell-popup popup langtool company-lsp lsp-ui lsp-mode idle-highlight-mode visual-fill-column clj-refactor cider git-link magit paredit neotree multiple-cursors beacon ace-jump-mode projectile rg god-mode which-key ivy-rich ivy-hydra counsel swiper ivy expand-region color-theme-sanityinc-tomorrow better-defaults use-package)))
+    (dockerfile-mode load-env-vars flyspell-correct-ivy flyspell-correct clojure-snippets lsp-ivy flyspell-popup popup langtool company-lsp lsp-ui lsp-mode idle-highlight-mode visual-fill-column clj-refactor cider git-link magit paredit neotree multiple-cursors beacon ace-jump-mode projectile rg god-mode which-key ivy-rich ivy-hydra counsel swiper ivy expand-region color-theme-sanityinc-tomorrow better-defaults use-package)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(ring-bell-function (quote ignore))
  '(vc-annotate-background nil)

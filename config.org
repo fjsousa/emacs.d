@@ -548,38 +548,39 @@ without having to navigating to init.el and manually evaluating the org-babel-lo
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-    (use-package lsp-mode
-      :ensure t
-      :hook ((clojure-mode . lsp)
-             (clojurec-mode . lsp)
-             (clojurescript-mode . lsp))
-      :config
-      ;; add paths to your local installation of project mgmt tools, like lein
-      (setenv "PATH" (concat
-                       "/usr/local/bin" path-separator
-                       (getenv "PATH")))
-      (dolist (m '(clojure-mode
-                   clojurec-mode
-                   clojurescript-mode
-                   clojurex-mode))
-         (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
-      (setq lsp-enable-indentation nil
-            lsp-clojure-server-command '("bash" "-c" "clojure-lsp")))
+  (use-package lsp-mode
+    :ensure t
+    :hook ((clojure-mode . lsp)
+           (clojurec-mode . lsp)
+           (clojurescript-mode . lsp))
+    :config
+    ;; add paths to your local installation of project mgmt tools, like lein
+    (setenv "PATH" (concat
+                    "/usr/local/bin" path-separator
+                    (getenv "PATH")))
+    (dolist (m '(clojure-mode
+                 clojurec-mode
+                 clojurescript-mode
+                 clojurex-mode))
+      (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
+    (setq lsp-enable-indentation nil
+          lsp-clojure-server-command '("bash" "-c" "clojure-lsp")))
 
-    (use-package lsp-ui
-      :ensure t
-      :commands lsp-ui-mode)
+  (use-package lsp-ui
+    :ensure t
+    :commands lsp-ui-mode)
 
-    (use-package company-lsp
-      :ensure t
-      :commands company-lsp)
+  (use-package company-lsp
+    :ensure t
+    :commands company-lsp)
 
   (use-package lsp-ivy
     :ensure t)
 
   ;;lsp peek mode is not enabled by default
 
-  ;; needs to ignore target and resouces
+  ;;needs to ignore target and resouces
+
 #+END_SRC
 ** eldoc
 
@@ -625,21 +626,37 @@ Documentation in minibuffer
 
 *** cider
 #+BEGIN_SRC emacs-lisp
+  (defun fs/legend-server-stop ()
+    (interactive)
+    ;;(cider-jack-in '())
+    (cider-interactive-eval "(legend.user/stop)"))
+
   (defun fs/legend-server-start ()
     (interactive)
     ;;(cider-jack-in '())
-    (cider-interactive-eval "(legend.user/start)")
-    (message "server running"))
+    (cider-interactive-eval "(legend.user/start)"))
+
+  (defun fs/legend-clean-config ()
+    (interactive)
+    ;;(cider-jack-in '())
+    (cider-interactive-eval "(alter-var-root #'think.config.core/*config-map* (fn [_] nil))"))
 
   (defun fs/legend-server-refresh ()
     (interactive)
     (cider-interactive-eval "(legend.user/refresh)")
-    (message "refresh ok"))
+    (message "refresh, no restart"))
 
-  (defun fs/legend-server-restart ()
-      (interactive)
-      (cider-interactive-eval  "(legend.user/reset)")
-      (message "refresh and server restart ok"))
+  (defun fs/legend-server-restart()
+    (interactive)
+    (cider-interactive-eval  "(legend.user/restart)")
+    (message "cleat config stop and start"))
+
+  (defun fs/legend-server-reset ()
+    (interactive)
+    (cider-interactive-eval  "(legend.user/reset)")
+    (message "refresh and server restart"))
+
+
 
   (use-package cider
     :ensure t
@@ -724,22 +741,32 @@ Using [[https://www.languagetool.org/#more][language tool]] so that I don't look
 ** flyspell popup
 
 #+BEGIN_SRC emacs-lisp
-  (use-package flyspell-popup
+  (use-package flyspell-correct
     :ensure t
+    :after flyspell
     :hook
     (org-mode . flyspell-mode)
-    ;;(flyspell-mode . flyspell-popup-auto-correct-mode)
-    :config
-    (setq ispell-program-name "aspell")
-    ;;(setq ispell-personal-dictionary "~/.emacs.d/.ispell")
-    (setq flyspell-popup-correct-delay 0.01)
     :bind (:map flyspell-mode-map
-                ("s-." . flyspell-popup-correct)
+                ("s-." . flyspell-correct-wrapper)
                 ("C-." . nil)
                 ("s-," . flyspell-goto-next-error)
-                ("C-;" . flyspell-auto-correct-word)))
+                ("C-;" . flyspell-auto-correct-word))
+     :config (setq ispell-program-name "aspell"))
+
+  (use-package flyspell-correct-ivy
+    :ensure t
+    :after flyspell-correct)
 #+END_SRC
 
+** yasnippet
+#+BEGIN_SRC emacs-lisp
+  (use-package clojure-snippets
+    :ensure t
+    :hook
+    (clojure-mode . yas-minor-mode-on)
+    (clojurescript-mode . yas-minor-mode-on))
+
+#+END_SRC
 * terminal
 #+BEGIN_SRC emacs-lisp
   ;; (use-package vterm
